@@ -22,5 +22,9 @@
     <fragment
         android:id="@+id/coinDataFragment"
         android:name="com.sweetmay.advancedcryptoindicators2.view.ui.fragment.CoinDataFragment"
-        android:label="CoinDataFragment" />
+        android:label="CoinDataFragment" >
+        <argument
+            android:name="coin_name"
+            app:argType="com.sweetmay.advancedcryptoindicators2.model.entity.Coin" />
+    </fragment>
 </navigation>
