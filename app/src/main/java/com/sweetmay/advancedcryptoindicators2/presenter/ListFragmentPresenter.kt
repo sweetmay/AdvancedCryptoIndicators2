@@ -25,7 +25,7 @@ class ListFragmentPresenter(val coinsRepo: ICoinsListRepo, val scheduler: Schedu
         val coins = arrayListOf<CoinBase>()
 
         override fun saveFavCoin(view: CoinItemView) {
-            TODO()
+            Log.d("a", "a")
         }
 
         override fun deleteFavCoin(view: CoinItemView) {
