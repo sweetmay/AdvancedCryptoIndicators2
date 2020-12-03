@@ -1,5 +1,7 @@
 package com.sweetmay.advancedcryptoindicators2.view.ui
 
+import android.util.Log
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -17,6 +19,7 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainActivityV
         val navController = findNavController(this, R.id.nav_host_fragment)
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
         bottomNavigationView.setupWithNavController(navController)
+        setSupportActionBar(findViewById(R.id.toolbar))
     }
 
 }

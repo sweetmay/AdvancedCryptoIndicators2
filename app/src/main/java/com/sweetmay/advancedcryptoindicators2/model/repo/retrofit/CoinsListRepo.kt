@@ -1,12 +1,10 @@
 package com.sweetmay.advancedcryptoindicators2.model.repo.retrofit
 
-import com.sweetmay.advancedcryptoindicators2.model.entity.Coin
+import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
-import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.api.DataSource
 import com.sweetmay.advancedcryptoindicators2.utils.ApiHolder
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
-import retrofit2.Call
 
 class CoinsListRepo(private val apiHolder: ApiHolder): ICoinsListRepo {
 
@@ -27,7 +25,7 @@ class CoinsListRepo(private val apiHolder: ApiHolder): ICoinsListRepo {
     }
 
 
-    override fun getCoins(currencyAgainst: String, order: String): Single<List<Coin>> {
+    override fun getCoins(currencyAgainst: String, order: String): Single<List<CoinBase>> {
         return apiHolder.dataSource.getCoinsList(currencyAgainst, order).subscribeOn(Schedulers.io())
     }
 }

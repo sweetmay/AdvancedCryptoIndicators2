@@ -1,13 +1,17 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
 import android.util.Log
-import com.sweetmay.advancedcryptoindicators2.App
-import com.sweetmay.advancedcryptoindicators2.model.entity.Coin
+import android.widget.ImageButton
+import android.widget.ToggleButton
+import androidx.navigation.NavController
+import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.CoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.presenter.list.ICoinsListPresenter
 import com.sweetmay.advancedcryptoindicators2.view.CoinsListView
+import com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
 import com.sweetmay.advancedcryptoindicators2.view.item.CoinItemView
+import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.ListFragmentDirections
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 
@@ -18,10 +22,18 @@ class ListFragmentPresenter(val coinsRepo: ICoinsListRepo, val scheduler: Schedu
 
     inner class CoinsListPresenter(): ICoinsListPresenter{
 
-        val coins = arrayListOf<Coin>()
+        val coins = arrayListOf<CoinBase>()
+
+        override fun saveFavCoin(view: CoinItemView) {
+            TODO()
+        }
+
+        override fun deleteFavCoin(view: CoinItemView) {
+            TODO("Not yet implemented")
+        }
 
         override fun onItemClick(view: CoinItemView) {
-
+            viewState.selectCoin((coins[view.getPos()]))
         }
 
         override fun bindView(view: CoinItemView) {
@@ -40,6 +52,7 @@ class ListFragmentPresenter(val coinsRepo: ICoinsListRepo, val scheduler: Schedu
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
+        viewState.setTitle()
         viewState.initRv()
         loadData()
     }

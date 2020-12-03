@@ -14,7 +14,11 @@
     <fragment
         android:id="@+id/favFragment"
         android:name="com.sweetmay.advancedcryptoindicators2.view.ui.fragment.FavFragment"
-        android:label="FavFragment" />
+        android:label="FavFragment" >
+        <action
+            android:id="@+id/action_favFragment_to_coinDataFragment"
+            app:destination="@id/coinDataFragment" />
+    </fragment>
     <fragment
         android:id="@+id/fearGreedFragment"
         android:name="com.sweetmay.advancedcryptoindicators2.view.ui.fragment.FearGreedFragment"
@@ -24,7 +28,7 @@
         android:name="com.sweetmay.advancedcryptoindicators2.view.ui.fragment.CoinDataFragment"
         android:label="CoinDataFragment" >
         <argument
-            android:name="coin_name"
-            app:argType="com.sweetmay.advancedcryptoindicators2.model.entity.Coin" />
+            android:name="coin"
+            app:argType="com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase" />
     </fragment>
 </navigation>
