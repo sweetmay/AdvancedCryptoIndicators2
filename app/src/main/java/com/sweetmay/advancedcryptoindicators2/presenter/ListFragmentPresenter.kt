@@ -1,53 +1,37 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
 import android.util.Log
-import android.widget.ImageButton
-import android.widget.ToggleButton
-import androidx.navigation.NavController
+import com.sweetmay.advancedcryptoindicators2.model.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.CoinsListRepo
+import com.sweetmay.advancedcryptoindicators2.presenter.callback.CoinsListPresenterCallbacks
+import com.sweetmay.advancedcryptoindicators2.presenter.list.CoinsListPresenter
 import com.sweetmay.advancedcryptoindicators2.presenter.list.ICoinsListPresenter
 import com.sweetmay.advancedcryptoindicators2.view.CoinsListView
-import com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
 import com.sweetmay.advancedcryptoindicators2.view.item.CoinItemView
-import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.ListFragmentDirections
+import io.reactivex.rxjava3.core.CompletableObserver
 import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
 
-class ListFragmentPresenter(val coinsRepo: ICoinsListRepo, val scheduler: Scheduler): MvpPresenter<CoinsListView>() {
+class ListFragmentPresenter(val coinsRepo: ICoinsListRepo, val scheduler: Scheduler, val favCache: IFavCoinsCache): MvpPresenter<CoinsListView>(), CoinsListPresenterCallbacks {
+
     private val TAG: String = this::class.java.simpleName
 
-    val coinsListPresenter = CoinsListPresenter()
+    val coinsListPresenter = CoinsListPresenter(this)
 
-    inner class CoinsListPresenter(): ICoinsListPresenter{
+    override fun deleteFromCache(coinBase: CoinBase) {
+        favCache.deleteFavCoin(coinBase).observeOn(scheduler).subscribe()
+    }
 
-        val coins = arrayListOf<CoinBase>()
 
-        override fun saveFavCoin(view: CoinItemView) {
-            Log.d("a", "a")
-        }
+    override fun navigateToDetailedScreen(coinBase: CoinBase) {
+        viewState.selectCoin(coinBase)
+    }
 
-        override fun deleteFavCoin(view: CoinItemView) {
-            TODO("Not yet implemented")
-        }
-
-        override fun onItemClick(view: CoinItemView) {
-            viewState.selectCoin((coins[view.getPos()]))
-        }
-
-        override fun bindView(view: CoinItemView) {
-            with(view){
-                setIcon(coins[view.getPos()].image)
-                setName(coins[view.getPos()].name)
-                setPrice(coins[view.getPos()].current_price)
-            }
-        }
-
-        override fun getCount(): Int {
-            return coins.size
-        }
-
+    override fun saveToCache(coinBase: CoinBase) {
+        favCache.saveFavCoin(coinBase).observeOn(scheduler).subscribe()
     }
 
     override fun onFirstViewAttach() {

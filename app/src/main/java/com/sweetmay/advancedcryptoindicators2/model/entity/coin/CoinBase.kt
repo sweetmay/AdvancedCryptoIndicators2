@@ -8,5 +8,6 @@ import kotlinx.parcelize.Parcelize
 data class CoinBase(val id: String,
                     val name: String,
                     val image: String,
-                    val current_price: Float) : Parcelable {
+                    val current_price: Float,
+                    var is_favorite: Boolean = false) : Parcelable {
 }

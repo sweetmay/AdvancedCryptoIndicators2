@@ -10,8 +10,11 @@ import retrofit2.http.Query
 interface DataSource {
     @GET("api/v3/coins/markets")
     fun getCoinsList(@Query("vs_currency") currencyAgainst: String
+                     , @Query("ids") ids: String = ""
                      , @Query("order") order: String
                      , @Query("per_page") perPage: Int = 250): Single<List<CoinBase>>
+
+
 
     @GET("api/v3/coins/{coin}")
     fun getCoinDetailedData(@Path("coin") coinName: String,

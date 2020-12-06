@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sweetmay.advancedcryptoindicators2.App
 import com.sweetmay.advancedcryptoindicators2.R
+import com.sweetmay.advancedcryptoindicators2.model.cache.room.FavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.CoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.presenter.ListFragmentPresenter
@@ -23,9 +24,8 @@ import moxy.ktx.moxyPresenter
 
 class ListFragment: MvpAppCompatFragment(R.layout.list_fragment), CoinsListView {
 
-    val presenter: ListFragmentPresenter by moxyPresenter { ListFragmentPresenter(CoinsListRepo(
-            ApiHolder(App.BASE_URL)
-    ), AndroidSchedulers.mainThread()) }
+    val presenter: ListFragmentPresenter by moxyPresenter { ListFragmentPresenter(CoinsListRepo(ApiHolder(App.BASE_URL),
+            FavCoinsCache(App.instance.dao)), AndroidSchedulers.mainThread(), FavCoinsCache(App.instance.dao)) }
 
     lateinit var toolbar: Toolbar
     lateinit var recyclerView: RecyclerView

@@ -5,6 +5,7 @@ import com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
 import com.sweetmay.advancedcryptoindicators2.view.item.CoinItemView
 
 interface ICoinsListPresenter: IListPresenter<CoinItemView> {
-    fun saveFavCoin(view: CoinItemView)
-    fun deleteFavCoin(view: CoinItemView)
+    fun onFavButtonClicked(view: CoinItemView, state: Boolean)
+    fun saveFav(view: CoinItemView)
+    fun deleteFav(view: CoinItemView)
 }

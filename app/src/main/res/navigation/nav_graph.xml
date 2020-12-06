@@ -22,7 +22,11 @@
     <fragment
         android:id="@+id/fearGreedFragment"
         android:name="com.sweetmay.advancedcryptoindicators2.view.ui.fragment.FearGreedFragment"
-        android:label="FearGreedFragment" />
+        android:label="FearGreedFragment" >
+        <action
+            android:id="@+id/action_fearGreedFragment_to_coinDataFragment"
+            app:destination="@id/coinDataFragment" />
+    </fragment>
     <fragment
         android:id="@+id/coinDataFragment"
         android:name="com.sweetmay.advancedcryptoindicators2.view.ui.fragment.CoinDataFragment"
