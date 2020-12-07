@@ -11,8 +11,8 @@ import moxy.viewstate.strategy.alias.Skip
 @AddToEndSingle
 interface CoinsListView: MvpView {
     fun initRv()
-    fun setTitle()
     fun updateList()
+    fun setTitle()
     @Skip
     fun selectCoin(coinBase: CoinBase)
 }

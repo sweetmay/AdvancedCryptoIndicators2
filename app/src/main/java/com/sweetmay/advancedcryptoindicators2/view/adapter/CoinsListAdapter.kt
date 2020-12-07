@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.presenter.list.ICoinsListPresenter
 import com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
-import com.sweetmay.advancedcryptoindicators2.view.image.IImageLoader
+import com.sweetmay.advancedcryptoindicators2.utils.image.IImageLoader
 import com.sweetmay.advancedcryptoindicators2.view.item.CoinItemView
 import kotlinx.android.extensions.LayoutContainer
 

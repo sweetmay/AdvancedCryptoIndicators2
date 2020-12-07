@@ -10,6 +10,7 @@ interface FavView : MvpView {
     fun initRv()
     fun updateList()
     fun notifyItemRemoved(pos: Int, newSize: Int)
+    fun setTitle()
     @Skip
     fun navigateToDetailed(coinBase: CoinBase)
     fun showNoCoins()

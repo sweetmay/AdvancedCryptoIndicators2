@@ -4,4 +4,7 @@
     <string name="fear_greed">FEAR/GREED</string>
     <string name="fav">FAV</string>
     <string name="nothing_to_show">Nothing to show</string>
+    <string name="favorite_coins_title">Favorite coins</string>
+    <string name="search_title">Search</string>
+    <string name="coins_lis_title">Coins List</string>
 </resources>

@@ -1,6 +1,5 @@
-package com.sweetmay.advancedcryptoindicators2.view.image
+package com.sweetmay.advancedcryptoindicators2.utils.image
 
-import android.content.Context
 import android.graphics.drawable.Drawable
 import io.reactivex.rxjava3.core.Single
 

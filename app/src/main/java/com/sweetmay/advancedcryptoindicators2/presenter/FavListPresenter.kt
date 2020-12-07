@@ -19,6 +19,7 @@ class FavListPresenter(val coinsRepo: ICoinsListRepo,
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
+        viewState.setTitle()
         viewState.initRv()
         loadData()
     }
