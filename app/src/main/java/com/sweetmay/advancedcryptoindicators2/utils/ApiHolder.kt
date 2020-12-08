@@ -13,10 +13,10 @@ class ApiHolder(baseUrl: String) {
     init {
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+                .baseUrl(baseUrl)
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
         dataSource = retrofit.create(DataSource::class.java)
     }
 

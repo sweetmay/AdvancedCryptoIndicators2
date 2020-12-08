@@ -6,19 +6,19 @@ import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class RsiEvaluator(val argbEvaluator: ArgbEvaluator): IRsiEvaluator {
+class RsiEvaluator(val argbEvaluator: ArgbEvaluator) : IRsiEvaluator {
 
     override fun calculateRsi(chartData: ChartData, period: Int): Single<RsiEntity> {
         return Single.fromCallable {
             val priceList = arrayListOf<Float>()
-            for (element in chartData.prices){
+            for (element in chartData.prices) {
                 priceList.add(element[1])
             }
-            return@fromCallable RsiEntity(100-(100/(1+calculateRS(priceList, period))))
+            return@fromCallable RsiEntity(100 - (100 / (1 + calculateRS(priceList, period))))
         }.subscribeOn(Schedulers.computation())
     }
 
-    private fun calculateRS(prices: List<Float>, period: Int): Float{
+    private fun calculateRS(prices: List<Float>, period: Int): Float {
         var AvgGain = 0f
         var AvgLoss = 0f
         var upNum = 0
@@ -56,11 +56,11 @@ class RsiEvaluator(val argbEvaluator: ArgbEvaluator): IRsiEvaluator {
     }
 
     inner class RsiEntity(val rsi: Float,
-                         val possibleEntry: Float = 0f,
-                         val possibleTarget: Float = 0f,
-                         val stopLoss: Float = 0f){
-        fun getRsiColor(): Int{
-            return argbEvaluator.evaluate(rsi/100f, Color.GREEN, Color.RED) as Int
+                          val possibleEntry: Float = 0f,
+                          val possibleTarget: Float = 0f,
+                          val stopLoss: Float = 0f) {
+        fun getRsiColor(): Int {
+            return argbEvaluator.evaluate(rsi / 100f, Color.GREEN, Color.RED) as Int
         }
     }
 

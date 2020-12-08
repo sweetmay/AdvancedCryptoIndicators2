@@ -4,9 +4,8 @@ import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.presenter.callback.CoinsListPresenterCallbacks
 import com.sweetmay.advancedcryptoindicators2.utils.converter.PriceConverter
 import com.sweetmay.advancedcryptoindicators2.view.item.CoinItemView
-import java.util.*
 
-open class CoinsListPresenter(private val callback: CoinsListPresenterCallbacks): ICoinsListPresenter{
+open class CoinsListPresenter(private val callback: CoinsListPresenterCallbacks) : ICoinsListPresenter {
 
     val coins = arrayListOf<CoinBase>()
 
@@ -29,7 +28,7 @@ open class CoinsListPresenter(private val callback: CoinsListPresenterCallbacks)
     }
 
     override fun bindView(view: CoinItemView) {
-        with(view){
+        with(view) {
             setIcon(coins[view.getPos()].image)
             setName(coins[view.getPos()].name)
             setPrice(coins[view.getPos()].current_price)

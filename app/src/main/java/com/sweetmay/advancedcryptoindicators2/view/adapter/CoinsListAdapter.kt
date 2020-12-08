@@ -16,7 +16,7 @@ class CoinsListAdapter(val presenter: ICoinsListPresenter, val imageLoader: IIma
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemBinding = ItemCoinBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
+                .inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(itemBinding)
     }
 
@@ -29,9 +29,9 @@ class CoinsListAdapter(val presenter: ICoinsListPresenter, val imageLoader: IIma
         holder.imageButton.setOnClickListener {
             it as FavButton
             it.checked = !it.checked
-            if(it.checked){
+            if (it.checked) {
                 presenter.saveFav(holder)
-            }else presenter.deleteFav(holder)
+            } else presenter.deleteFav(holder)
         }
         presenter.bindView(holder)
     }
@@ -42,8 +42,7 @@ class CoinsListAdapter(val presenter: ICoinsListPresenter, val imageLoader: IIma
 
 
     inner class ViewHolder(private val itemCoinBinding: ItemCoinBinding)
-        : RecyclerView.ViewHolder(itemCoinBinding.root)
-        , CoinItemView{
+        : RecyclerView.ViewHolder(itemCoinBinding.root), CoinItemView {
         val imageButton: FavButton = itemCoinBinding.favButton
         var itemPos = -1
 
@@ -65,7 +64,7 @@ class CoinsListAdapter(val presenter: ICoinsListPresenter, val imageLoader: IIma
         }
 
         override fun setPriceChange(change: PriceConverter.ConvertedChange) {
-            with(itemCoinBinding.priceChange){
+            with(itemCoinBinding.priceChange) {
                 text = change.convertedPriceString
                 itemCoinBinding.priceChange.setTextColor(change.color)
             }

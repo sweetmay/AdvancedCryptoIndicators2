@@ -8,14 +8,14 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class CoinsListRepo(private val apiHolder: ApiHolder, private val cache: IFavCoinsCache): ICoinsListRepo {
+class CoinsListRepo(private val apiHolder: ApiHolder, private val cache: IFavCoinsCache) : ICoinsListRepo {
 
-    enum class Currency{
+    enum class Currency {
         usd,
         rub
     }
 
-    enum class ListFilter{
+    enum class ListFilter {
         market_cap_desc,
         gecko_desc,
         gecko_asc,
@@ -30,10 +30,10 @@ class CoinsListRepo(private val apiHolder: ApiHolder, private val cache: IFavCoi
     override fun getCoins(currencyAgainst: String, ids: String, order: String): Single<List<CoinBase>> {
         val apiObservable = apiHolder.dataSource.getCoinsList(currencyAgainst, ids, order).subscribeOn(Schedulers.io())
         val favCacheObservable = cache.getFavCoins()
-        return Single.zip(apiObservable, favCacheObservable, BiFunction{t1, t2 ->
-            for (coin in t1){
-                for (fav in t2){
-                    if(coin.id == fav.id){
+        return Single.zip(apiObservable, favCacheObservable, BiFunction { t1, t2 ->
+            for (coin in t1) {
+                for (fav in t2) {
+                    if (coin.id == fav.id) {
                         coin.is_favorite = true
                         break
                     }

@@ -1,5 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.view
 
+import android.os.Parcelable
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import moxy.MvpView
 import moxy.viewstate.strategy.StateStrategyType
@@ -13,6 +14,7 @@ interface CoinsListView: MvpView {
     fun initRv()
     fun updateList()
     fun setTitle()
+    fun restoreRVposition(pos: Int)
     @Skip
     fun selectCoin(coinBase: CoinBase)
 }
