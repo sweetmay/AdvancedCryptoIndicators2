@@ -7,4 +7,11 @@
     <string name="favorite_coins_title">Favorite coins</string>
     <string name="search_title">Search</string>
     <string name="coins_lis_title">Coins List</string>
+    <string name="rsi_indicator_name">RSI</string>
+    <string name="arima_indicator_name">ARIMA</string>
+
+    <string name="rsi_strength">Indicator strength: %1$s</string>
+    <string name="possible_entry">Possible entry: %1$f</string>
+    <string name="possible_target">Possible target: %1$f</string>
+    <string name="possible_sl">Stop Loss: %1$f</string>
 </resources>

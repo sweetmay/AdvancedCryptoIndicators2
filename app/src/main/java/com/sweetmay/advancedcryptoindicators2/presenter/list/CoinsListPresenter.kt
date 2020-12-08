@@ -2,6 +2,7 @@ package com.sweetmay.advancedcryptoindicators2.presenter.list
 
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.presenter.callback.CoinsListPresenterCallbacks
+import com.sweetmay.advancedcryptoindicators2.utils.converter.PriceConverter
 import com.sweetmay.advancedcryptoindicators2.view.item.CoinItemView
 import java.util.*
 
@@ -33,6 +34,8 @@ open class CoinsListPresenter(private val callback: CoinsListPresenterCallbacks)
             setName(coins[view.getPos()].name)
             setPrice(coins[view.getPos()].current_price)
             setFavIcon(coins[view.getPos()].is_favorite)
+            setPriceChange(PriceConverter
+                    .convertChange(coins[view.getPos()].price_change_percentage_24h))
         }
     }
 

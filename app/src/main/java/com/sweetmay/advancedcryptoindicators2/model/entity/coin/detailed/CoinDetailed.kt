@@ -1,5 +1,7 @@
 package com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed
 
+import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
+
 data class CoinDetailed(
     val community_data: CommunityData,
     val community_score: Double,
@@ -10,4 +12,5 @@ data class CoinDetailed(
     val name: String,
     val sentiment_votes_down_percentage: Double,
     val sentiment_votes_up_percentage: Double,
+    val chartData: ChartData? = null
 )

@@ -13,6 +13,6 @@
     <item
         android:id="@+id/favFragment"
         android:enabled="true"
-        android:icon="@drawable/favorite_24px_filled"
+        android:icon="@drawable/grade_24px"
         android:title="@string/fav"/>
 </menu>

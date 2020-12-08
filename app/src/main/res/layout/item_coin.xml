@@ -9,9 +9,16 @@
     app:strokeColor="@color/card_stroke_color"
     app:cardCornerRadius="0dp"
     app:cardElevation="0dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_weight="1"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/coin_icon"
@@ -37,17 +44,34 @@
         app:layout_constraintStart_toEndOf="@id/coin_icon"
         app:layout_constraintTop_toBottomOf="@id/coin_name" />
 
-    <com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
-        android:id="@+id/fav_button"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:background="@null"
-        android:src="@drawable/favorite_border_24px"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/price_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+            <com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
+                android:id="@+id/fav_button"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </com.google.android.material.card.MaterialCardView>

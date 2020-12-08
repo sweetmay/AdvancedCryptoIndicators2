@@ -1,24 +1,23 @@
 package com.sweetmay.advancedcryptoindicators2.view.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.sweetmay.advancedcryptoindicators2.R
+import com.sweetmay.advancedcryptoindicators2.databinding.ItemCoinBinding
 import com.sweetmay.advancedcryptoindicators2.presenter.list.ICoinsListPresenter
-import com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
+import com.sweetmay.advancedcryptoindicators2.utils.converter.PriceConverter
 import com.sweetmay.advancedcryptoindicators2.utils.image.IImageLoader
+import com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
 import com.sweetmay.advancedcryptoindicators2.view.item.CoinItemView
-import kotlinx.android.extensions.LayoutContainer
 
 class CoinsListAdapter(val presenter: ICoinsListPresenter, val imageLoader: IImageLoader<ImageView>)
     : RecyclerView.Adapter<CoinsListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_coin, parent, false))
+        val itemBinding = ItemCoinBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(itemBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -42,28 +41,34 @@ class CoinsListAdapter(val presenter: ICoinsListPresenter, val imageLoader: IIma
     }
 
 
-    inner class ViewHolder(override val containerView: View)
-        : RecyclerView.ViewHolder(containerView)
-        , LayoutContainer
+    inner class ViewHolder(private val itemCoinBinding: ItemCoinBinding)
+        : RecyclerView.ViewHolder(itemCoinBinding.root)
         , CoinItemView{
-        val imageButton: FavButton = containerView.findViewById(R.id.fav_button)
+        val imageButton: FavButton = itemCoinBinding.favButton
         var itemPos = -1
 
         override fun setIcon(imgUrl: String) {
-            imageLoader.loadImageIntoView(imgUrl, containerView.findViewById(R.id.coin_icon))
+            imageLoader.loadImageIntoView(imgUrl, itemCoinBinding.coinIcon)
         }
 
         override fun setName(name: String) {
-            containerView.findViewById<TextView>(R.id.coin_name).text = name
+            itemCoinBinding.coinName.text = name
         }
 
         override fun setPrice(price: Float) {
             val tmp = "$ $price"
-            containerView.findViewById<TextView>(R.id.coin_price).text = tmp
+            itemCoinBinding.coinPrice.text = tmp
         }
 
         override fun setFavIcon(boolean: Boolean) {
-            imageButton.checked = boolean
+            itemCoinBinding.favButton.checked = boolean
+        }
+
+        override fun setPriceChange(change: PriceConverter.ConvertedChange) {
+            with(itemCoinBinding.priceChange){
+                text = change.convertedPriceString
+                itemCoinBinding.priceChange.setTextColor(change.color)
+            }
         }
 
 
