@@ -3,6 +3,7 @@ package com.sweetmay.advancedcryptoindicators2.view
 import android.graphics.drawable.Drawable
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.CoinDetailed
 import com.sweetmay.advancedcryptoindicators2.utils.converter.PriceConverter
+import com.sweetmay.advancedcryptoindicators2.utils.rsi.RsiEntity
 import com.sweetmay.advancedcryptoindicators2.utils.rsi.RsiEvaluator
 import moxy.MvpView
 import moxy.viewstate.strategy.alias.AddToEnd
@@ -17,5 +18,5 @@ interface CoinDataView: MvpView {
     fun hideLoading()
     fun setTitle(title: String)
     fun setLogo(image: Drawable)
-    fun setRsi(rsi: RsiEvaluator.RsiEntity)
+    fun setRsi(rsi: RsiEntity)
 }

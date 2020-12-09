@@ -14,6 +14,7 @@ import com.sweetmay.advancedcryptoindicators2.presenter.CoinDataFragmentPresente
 import com.sweetmay.advancedcryptoindicators2.utils.ApiHolder
 import com.sweetmay.advancedcryptoindicators2.utils.converter.PriceConverter
 import com.sweetmay.advancedcryptoindicators2.utils.image.GlideImageLoaderAsDrawable
+import com.sweetmay.advancedcryptoindicators2.utils.rsi.RsiEntity
 import com.sweetmay.advancedcryptoindicators2.utils.rsi.RsiEvaluator
 import com.sweetmay.advancedcryptoindicators2.view.CoinDataView
 import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.base.BaseFragment
@@ -61,14 +62,18 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
         binding.toolbarInclude.toolbarLogo.setImageDrawable(image)
     }
 
-    override fun setRsi(rsi: RsiEvaluator.RsiEntity) {
+    override fun setRsi(rsi: RsiEntity) {
         with(binding) {
-            possibleEntry.text = resources.getString(R.string.possible_entry, rsi.possibleEntry)
-            stopLoss.text = resources.getString(R.string.possible_sl, rsi.stopLoss)
-            rsiStrength.text = resources.getString(R.string.rsi_strength, String.format("%.2f", rsi.rsi))
-            rsiStrength.setTextColor(rsi.getRsiColor())
-            target.text = resources.getString(R.string.possible_target, rsi.possibleTarget)
-
+            stopLoss.text = resources.getString(R.string.possible_sl, String.format("%.3f",rsi.stopLoss))
+            rsiStrength.text = resources.getString(R.string.rsi_strength, String.format("%.2f", rsi.signalStrength))
+            rsiStrength.setTextColor(rsi.indicatorColor)
+            target.text = resources.getString(R.string.possible_target, String.format("%.3f",rsi.possibleTarget))
+            if(rsi.isPositive){
+                buySellText.text = getString(R.string.buy_text)
+            }else {
+                buySellText.text = getString(R.string.sell_text)
+            }
+            buySellText.setTextColor(rsi.indicatorColor)
         }
 
     }

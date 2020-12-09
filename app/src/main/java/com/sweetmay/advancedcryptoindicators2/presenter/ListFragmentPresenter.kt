@@ -30,7 +30,7 @@ class ListFragmentPresenter(val coinsRepo: ICoinsListRepo, val scheduler: Schedu
     }
 
     override fun deleteFromCache(coinBase: CoinBase) {
-        favCache.deleteFavCoin(coinBase).observeOn(scheduler).subscribe()
+        favCache.deleteFavCoin(coinBase).subscribe()
     }
 
     override fun navigateToDetailedScreen(coinBase: CoinBase) {
@@ -38,7 +38,7 @@ class ListFragmentPresenter(val coinsRepo: ICoinsListRepo, val scheduler: Schedu
     }
 
     override fun saveToCache(coinBase: CoinBase) {
-        favCache.saveFavCoin(coinBase).observeOn(scheduler).subscribe()
+        favCache.saveFavCoin(coinBase).subscribe()
     }
 
     private fun loadData(currencyAgainst: String = CoinsListRepo.Currency.usd.toString()) {

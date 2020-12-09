@@ -7,6 +7,7 @@ import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.CoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.utils.converter.PriceConverter
 import com.sweetmay.advancedcryptoindicators2.utils.image.IImageLoaderAsDrawable
 import com.sweetmay.advancedcryptoindicators2.utils.rsi.IRsiEvaluator
+import com.sweetmay.advancedcryptoindicators2.utils.rsi.RsiEntity
 import com.sweetmay.advancedcryptoindicators2.view.CoinDataView
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
@@ -20,7 +21,7 @@ class CoinDataFragmentPresenter(val coinDataRepo: ICoinDataRepo, val scheduler: 
         viewState.setTitle(coinBase.name)
 
         coinDataRepo.getCoin(coinBase).observeOn(scheduler).subscribe { coinDetailed ->
-            viewState.setPrice("$ " + coinDetailed.market_data.current_price.usd.toString())
+            viewState.setPrice( coinDetailed.market_data.current_price.usd.toString() + "$ " )
             setChange(coinDetailed)
             loadImage(coinDetailed.image.small)
             viewState.hideLoading()
@@ -36,7 +37,7 @@ class CoinDataFragmentPresenter(val coinDataRepo: ICoinDataRepo, val scheduler: 
 
     private fun loadChartData(coinBase: CoinBase) {
         coinDataRepo.getCoinMarketChartData(coinBase, CoinsListRepo.Currency.usd.toString()).observeOn(scheduler).subscribe { chartData ->
-            rsiEvaluator.calculateRsi(chartData).observeOn(scheduler).subscribe { rsi ->
+            rsiEvaluator.calculateRsiEntity(chartData, riskReward = RsiEntity.RISK_REWARD.HIGH).observeOn(scheduler).subscribe { rsi ->
                 viewState.setRsi(rsi)
             }
         }
