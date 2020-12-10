@@ -1,5 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
+import com.sweetmay.advancedcryptoindicators2.App
 import com.sweetmay.advancedcryptoindicators2.model.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinDb
@@ -10,12 +11,22 @@ import com.sweetmay.advancedcryptoindicators2.presenter.list.FavCoinsListPresent
 import com.sweetmay.advancedcryptoindicators2.view.FavView
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-class FavListPresenter(val coinsRepo: ICoinsListRepo,
-                       val scheduler: Scheduler,
-                       val favCache: IFavCoinsCache): MvpPresenter<FavView>(), FavListPresenterCallbacks {
+class FavListPresenter : MvpPresenter<FavView>(), FavListPresenterCallbacks {
 
     val listPresenter = FavCoinsListPresenter(this)
+
+    init {
+        App.instance.initFavComponent()?.inject(this)
+    }
+
+    @Inject
+    lateinit var coinsRepo: ICoinsListRepo
+    @Inject
+    lateinit var scheduler: Scheduler
+    @Inject
+    lateinit var favCache: IFavCoinsCache
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -25,7 +36,12 @@ class FavListPresenter(val coinsRepo: ICoinsListRepo,
     }
 
     override fun navigateToDetailedScreen(coinBase: CoinBase) {
+        setupSubComponent()
         viewState.navigateToDetailed(coinBase)
+    }
+
+    private fun setupSubComponent() {
+        App.instance.initDetailedComponentFromFav()
     }
 
     override fun saveToCache(coinBase: CoinBase) {
@@ -69,5 +85,10 @@ class FavListPresenter(val coinsRepo: ICoinsListRepo,
             }
         }
         return result.toString()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        App.instance.releaseFavComponent()
     }
 }

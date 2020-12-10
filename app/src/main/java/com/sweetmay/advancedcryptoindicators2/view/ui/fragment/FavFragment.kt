@@ -5,31 +5,21 @@ import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sweetmay.advancedcryptoindicators2.App
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.FavFragmentBinding
-import com.sweetmay.advancedcryptoindicators2.model.cache.room.FavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
-import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.CoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.presenter.FavListPresenter
-import com.sweetmay.advancedcryptoindicators2.utils.ApiHolder
 import com.sweetmay.advancedcryptoindicators2.utils.image.GlideImageLoader
 import com.sweetmay.advancedcryptoindicators2.view.FavView
 import com.sweetmay.advancedcryptoindicators2.view.adapter.CoinsListAdapter
 import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.base.BaseFragment
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.ktx.moxyPresenter
 
 class FavFragment : BaseFragment<FavFragmentBinding>(), FavView {
 
     lateinit var navController: NavController
 
-    val presenter: FavListPresenter by moxyPresenter {
-        FavListPresenter(CoinsListRepo(ApiHolder(App.BASE_URL),
-                FavCoinsCache(App.instance.dao)),
-                AndroidSchedulers.mainThread(),
-                FavCoinsCache(App.instance.dao))
-    }
+    val presenter: FavListPresenter by moxyPresenter { FavListPresenter() }
 
     override fun setBinding(inflater: LayoutInflater, container: ViewGroup?): FavFragmentBinding {
         navController = findNavController()
@@ -69,4 +59,5 @@ class FavFragment : BaseFragment<FavFragmentBinding>(), FavView {
     override fun showNoCoins() {
         binding.error.text = getString(R.string.nothing_to_show)
     }
+
 }

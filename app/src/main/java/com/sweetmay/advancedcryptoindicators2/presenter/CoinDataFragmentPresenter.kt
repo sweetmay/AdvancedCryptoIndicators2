@@ -1,5 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
+import com.sweetmay.advancedcryptoindicators2.App
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.CoinDetailed
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinDataRepo
@@ -11,8 +12,22 @@ import com.sweetmay.advancedcryptoindicators2.utils.rsi.RsiEntity
 import com.sweetmay.advancedcryptoindicators2.view.CoinDataView
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-class CoinDataFragmentPresenter(val coinDataRepo: ICoinDataRepo, val scheduler: Scheduler, val imageLoader: IImageLoaderAsDrawable, val rsiEvaluator: IRsiEvaluator) : MvpPresenter<CoinDataView>() {
+class CoinDataFragmentPresenter : MvpPresenter<CoinDataView>() {
+
+    init {
+        App.instance.coinDetailedSubComponent?.inject(this)
+    }
+
+    @Inject
+    lateinit var coinDataRepo: ICoinDataRepo
+    @Inject
+    lateinit var scheduler: Scheduler
+    @Inject
+    lateinit var imageLoader: IImageLoaderAsDrawable
+    @Inject
+    lateinit var rsiEvaluator: IRsiEvaluator
 
 
     fun loadCoinData(coinBase: CoinBase) {
@@ -49,4 +64,8 @@ class CoinDataFragmentPresenter(val coinDataRepo: ICoinDataRepo, val scheduler: 
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        App.instance.releaseDetailedSubComponent()
+    }
 }

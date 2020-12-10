@@ -1,6 +1,7 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
 import android.util.Log
+import com.sweetmay.advancedcryptoindicators2.App
 import com.sweetmay.advancedcryptoindicators2.model.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
@@ -10,8 +11,20 @@ import com.sweetmay.advancedcryptoindicators2.presenter.list.CoinsListPresenter
 import com.sweetmay.advancedcryptoindicators2.view.CoinsListView
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-class ListFragmentPresenter(val coinsRepo: ICoinsListRepo, val scheduler: Scheduler, val favCache: IFavCoinsCache): MvpPresenter<CoinsListView>(), CoinsListPresenterCallbacks {
+class ListFragmentPresenter : MvpPresenter<CoinsListView>(), CoinsListPresenterCallbacks {
+
+    init {
+        App.instance.initListComponent()?.inject(this)
+    }
+
+    @Inject
+    lateinit var coinsRepo: ICoinsListRepo
+    @Inject
+    lateinit var scheduler: Scheduler
+    @Inject
+    lateinit var favCache: IFavCoinsCache
 
     companion object{
         var stateRVPos = 0
@@ -34,7 +47,12 @@ class ListFragmentPresenter(val coinsRepo: ICoinsListRepo, val scheduler: Schedu
     }
 
     override fun navigateToDetailedScreen(coinBase: CoinBase) {
+        setupSubComponent()
         viewState.selectCoin(coinBase)
+    }
+
+    private fun setupSubComponent() {
+        App.instance.initDetailedComponentFromList()
     }
 
     override fun saveToCache(coinBase: CoinBase) {
@@ -58,5 +76,10 @@ class ListFragmentPresenter(val coinsRepo: ICoinsListRepo, val scheduler: Schedu
 
     fun restoreRVState(): Int {
         return stateRVPos
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        App.instance.releaseListComponent()
     }
 }
