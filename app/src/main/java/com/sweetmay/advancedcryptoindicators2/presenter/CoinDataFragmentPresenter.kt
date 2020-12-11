@@ -4,7 +4,6 @@ import com.sweetmay.advancedcryptoindicators2.App
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.CoinDetailed
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinDataRepo
-import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.CoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.utils.arima.IArimaEvaluator
 import com.sweetmay.advancedcryptoindicators2.utils.converter.PriceConverter
 import com.sweetmay.advancedcryptoindicators2.utils.image.IImageLoaderAsDrawable
@@ -12,6 +11,7 @@ import com.sweetmay.advancedcryptoindicators2.utils.rsi.IRsiEvaluator
 import com.sweetmay.advancedcryptoindicators2.utils.rsi.RsiEntity
 import com.sweetmay.advancedcryptoindicators2.view.CoinDataView
 import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.core.Single
 import moxy.MvpPresenter
 import javax.inject.Inject
 
@@ -32,17 +32,21 @@ class CoinDataFragmentPresenter : MvpPresenter<CoinDataView>() {
     @Inject
     lateinit var arimaEvaluator: IArimaEvaluator
 
-    fun loadCoinData(coinBase: CoinBase) {
+    private var pendingCoin: CoinBase? = null
+
+    fun loadData(coinBase: CoinBase) {
+        pendingCoin = coinBase
 
         viewState.showLoading()
         viewState.setTitle(coinBase.name)
 
-        coinDataRepo.getCoin(coinBase).observeOn(scheduler).subscribe { coinDetailed ->
+        coinDataRepo.getCoin(coinBase).observeOn(scheduler).subscribe ({ coinDetailed ->
             viewState.setPrice( coinDetailed.market_data.current_price.usd.toString() + "$ " )
             setChange(coinDetailed)
             loadImage(coinDetailed.image.small)
-            viewState.hideLoading()
-        }
+        }, {
+            viewState.renderError(it.message?: "Error")
+        })
         loadChartData(coinBase)
     }
 
@@ -53,18 +57,36 @@ class CoinDataFragmentPresenter : MvpPresenter<CoinDataView>() {
     }
 
     private fun loadChartData(coinBase: CoinBase) {
-        coinDataRepo.getCoinMarketChartData(coinBase, CoinsListRepo.Currency.usd.toString(), "1").observeOn(scheduler).doAfterSuccess {
-            coinDataRepo.getCoinMarketChartData(coinBase, CoinsListRepo.Currency.usd.toString(), "max").subscribe { chartData->
-                arimaEvaluator.calculateArima(chartData).observeOn(scheduler).subscribe { forecast->
-                    viewState.setArima(String.format("%.4f", forecast.last()))
+        val rsiChartObservable = coinDataRepo
+                .getCoinMarketChartData(coinBase).observeOn(scheduler).doOnError {
+                    viewState.renderError(it.message?:"Error")
                 }
-            }
-        }.subscribe { chartData ->
-            rsiEvaluator.calculateRsiEntity(chartData, riskReward = RsiEntity.RISK_REWARD.HIGH).observeOn(scheduler).subscribe { rsi ->
-                viewState.setRsi(rsi)
-            }
-        }
+        val arimaChartObservable = coinDataRepo
+                .getCoinMarketChartData(coinBase, period = "max").observeOn(scheduler).doOnError {
+                    viewState.renderError(it.message?:"Error")
+                }
+
+        //zip two chartdata requests
+        Single.zip(rsiChartObservable, arimaChartObservable, { t1, t2->
+            rsiEvaluator.calculateRsiEntity(t1, riskReward = RsiEntity.RISK_REWARD.HIGH)
+                    .observeOn(scheduler)
+                    .subscribe ({ rsi ->
+                        viewState.setRsi(rsi)
+                    }, {
+                viewState.showRsiError()
+            })
+            arimaEvaluator.calculateArima(t2).observeOn(scheduler)
+                    .subscribe ({ forecast->
+                viewState.setArima(String.format("%.4f", forecast.last()))
+            }, {
+                viewState.showArimaError()
+            })
+        }).doAfterSuccess {
+            viewState.hideLoading()
+        }.subscribe()
     }
+
+
 
     private fun loadImage(url: String) {
         imageLoader.loadImageAsDrawable(url).observeOn(scheduler).subscribe { img ->

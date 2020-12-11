@@ -56,16 +56,18 @@ class FavListPresenter : MvpPresenter<FavView>(), FavListPresenterCallbacks {
         }
     }
 
-    private fun loadData(currencyAgainst: String = CoinsListRepo.Currency.usd.toString()){
+    fun loadData(currencyAgainst: String = CoinsListRepo.Currency.usd.toString()){
         favCache.getFavCoins().subscribe { listDb->
             if (listDb.isNotEmpty()){
             coinsRepo.getCoins(currencyAgainst, ids = convertIdsToString(listDb)).observeOn(scheduler)
-                    .subscribe { list->
+                    .subscribe ({ list->
                         listPresenter.coins.clear()
                         listPresenter.coins.addAll(list)
                         viewState.hideLoading()
                         viewState.updateList()
-            }
+            }, {
+                viewState.renderError(it.message?:"Error")
+                })
             }else {
                 viewState.showNoCoins()
             }
@@ -88,4 +90,5 @@ class FavListPresenter : MvpPresenter<FavView>(), FavListPresenterCallbacks {
         super.onDestroy()
         App.instance.releaseFavComponent()
     }
+
 }

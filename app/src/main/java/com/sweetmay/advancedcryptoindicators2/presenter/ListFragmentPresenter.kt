@@ -1,6 +1,5 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
-import android.util.Log
 import com.sweetmay.advancedcryptoindicators2.App
 import com.sweetmay.advancedcryptoindicators2.model.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
@@ -56,7 +55,7 @@ class ListFragmentPresenter : MvpPresenter<CoinsListView>(), CoinsListPresenterC
         favCache.saveFavCoin(coinBase).subscribe()
     }
 
-    private fun loadData(currencyAgainst: String = CoinsListRepo.Currency.usd.toString()) {
+    fun loadData(currencyAgainst: String = CoinsListRepo.Currency.usd.toString()) {
         coinsRepo.getCoins(currencyAgainst).observeOn(scheduler).subscribe({list ->
             coinsListPresenter.coins.clear()
             coinsListPresenter.coins.addAll(list)
@@ -64,7 +63,7 @@ class ListFragmentPresenter : MvpPresenter<CoinsListView>(), CoinsListPresenterC
             viewState.restoreRVposition(stateRVPos)
             viewState.hideLoading()
         }, {
-            Log.d(TAG, it.message.toString())
+            viewState.renderError(it.message?: "Error")
         })
     }
 

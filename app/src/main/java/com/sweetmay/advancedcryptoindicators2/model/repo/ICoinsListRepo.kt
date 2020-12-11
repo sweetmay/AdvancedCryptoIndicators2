@@ -6,5 +6,5 @@ import io.reactivex.rxjava3.core.Single
 
 interface ICoinsListRepo {
     fun getCoins(currencyAgainst: String = CoinsListRepo.Currency.usd.toString(), ids: String = "",
-                 order: String = CoinsListRepo.ListFilter.market_cap_desc.toString()): Single<List<CoinBase>>
+                    order: String = CoinsListRepo.ListFilter.market_cap_desc.toString()): Single<List<CoinBase>>
 }

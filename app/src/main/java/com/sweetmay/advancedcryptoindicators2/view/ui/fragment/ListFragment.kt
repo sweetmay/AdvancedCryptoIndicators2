@@ -17,9 +17,7 @@ import moxy.ktx.moxyPresenter
 
 class ListFragment : BaseFragment<ListFragmentBinding>(), CoinsListView {
 
-    val presenter: ListFragmentPresenter by moxyPresenter {
-        ListFragmentPresenter()
-    }
+    val presenter: ListFragmentPresenter by moxyPresenter { ListFragmentPresenter() }
 
     lateinit var navController: NavController
 
@@ -66,5 +64,7 @@ class ListFragment : BaseFragment<ListFragmentBinding>(), CoinsListView {
         return ListFragmentBinding.inflate(inflater, container, false)
     }
 
-
+    override fun onErrorHandleClick() {
+        presenter.loadData()
+    }
 }

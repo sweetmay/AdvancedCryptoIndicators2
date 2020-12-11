@@ -8,6 +8,7 @@
         android:id="@+id/toolbar_include"
         layout="@layout/app_bar" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/coin_rv"
         android:layout_width="match_parent"

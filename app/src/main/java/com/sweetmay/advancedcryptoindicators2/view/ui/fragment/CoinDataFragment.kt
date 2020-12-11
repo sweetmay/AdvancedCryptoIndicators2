@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.CoinDataFragmentBinding
+import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.presenter.CoinDataFragmentPresenter
 import com.sweetmay.advancedcryptoindicators2.utils.converter.PriceConverter
 import com.sweetmay.advancedcryptoindicators2.utils.rsi.RsiEntity
@@ -16,14 +17,14 @@ import moxy.ktx.moxyPresenter
 
 class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
 
-    val presenter: CoinDataFragmentPresenter by moxyPresenter { CoinDataFragmentPresenter() }
+    private val presenter: CoinDataFragmentPresenter by moxyPresenter { CoinDataFragmentPresenter() }
+    private var pendingCoin: CoinBase? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val coin = arguments?.let { CoinDataFragmentArgs.fromBundle(it).coin }
-        if (coin != null) {
-            presenter.loadCoinData(coin)
-        }
+
+        pendingCoin = arguments?.let { CoinDataFragmentArgs.fromBundle(it).coin }
+        pendingCoin?.let { presenter.loadData(it) }
     }
 
     override fun setPrice(price: String) {
@@ -68,11 +69,22 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
             }
             buySellText.setTextColor(rsi.indicatorColor)
         }
+    }
+
+    override fun showArimaError() {
+        binding.prediction.text = getString(R.string.not_enough_data_error)
+    }
+
+    override fun showRsiError() {
 
     }
 
     override fun setBinding(inflater: LayoutInflater, container: ViewGroup?): CoinDataFragmentBinding {
         return CoinDataFragmentBinding.inflate(inflater, container, false)
+    }
+
+    override fun onErrorHandleClick() {
+        pendingCoin?.let { presenter.loadData(it) }
     }
 
 }

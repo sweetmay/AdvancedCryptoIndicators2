@@ -18,4 +18,7 @@
     <string name="prediction_text">"Prediction: %1$s $"</string>
     <string name="app_logo">app logo</string>
     <string name="help_icon">help icon</string>
+    <string name="error_data_load">Couldn\'t load data</string>
+    <string name="retry">retry_text</string>
+    <string name="not_enough_data_error">Not enough data</string>
 </resources>

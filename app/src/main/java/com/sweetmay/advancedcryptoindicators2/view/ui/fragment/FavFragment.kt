@@ -19,7 +19,7 @@ class FavFragment : BaseFragment<FavFragmentBinding>(), FavView {
 
     lateinit var navController: NavController
 
-    val presenter: FavListPresenter by moxyPresenter { FavListPresenter() }
+    private val presenter: FavListPresenter by moxyPresenter { FavListPresenter() }
 
     override fun setBinding(inflater: LayoutInflater, container: ViewGroup?): FavFragmentBinding {
         navController = findNavController()
@@ -66,6 +66,10 @@ class FavFragment : BaseFragment<FavFragmentBinding>(), FavView {
 
     override fun showNoCoins() {
         binding.error.text = getString(R.string.nothing_to_show)
+    }
+
+    override fun onErrorHandleClick() {
+        presenter.loadData()
     }
 
 }

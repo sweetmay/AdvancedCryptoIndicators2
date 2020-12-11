@@ -30,6 +30,7 @@ class CoinsListRepo(private val apiHolder: ApiHolder, private val cache: IFavCoi
     override fun getCoins(currencyAgainst: String, ids: String, order: String): Single<List<CoinBase>> {
         val apiObservable = apiHolder.dataSource.getCoinsList(currencyAgainst, ids, order).subscribeOn(Schedulers.io())
         val favCacheObservable = cache.getFavCoins()
+
         return Single.zip(apiObservable, favCacheObservable, BiFunction { t1, t2 ->
             for (coin in t1) {
                 for (fav in t2) {
@@ -42,6 +43,5 @@ class CoinsListRepo(private val apiHolder: ApiHolder, private val cache: IFavCoi
             return@BiFunction t1
         }).subscribeOn(Schedulers.computation())
     }
-
-
 }
+
