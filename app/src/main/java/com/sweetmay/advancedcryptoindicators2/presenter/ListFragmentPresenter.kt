@@ -38,6 +38,7 @@ class ListFragmentPresenter : MvpPresenter<CoinsListView>(), CoinsListPresenterC
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.setTitle()
+        viewState.showLoading()
         viewState.initRv()
         loadData()
     }
@@ -47,13 +48,9 @@ class ListFragmentPresenter : MvpPresenter<CoinsListView>(), CoinsListPresenterC
     }
 
     override fun navigateToDetailedScreen(coinBase: CoinBase) {
-        setupSubComponent()
         viewState.selectCoin(coinBase)
     }
 
-    private fun setupSubComponent() {
-        App.instance.initDetailedComponentFromList()
-    }
 
     override fun saveToCache(coinBase: CoinBase) {
         favCache.saveFavCoin(coinBase).subscribe()
@@ -65,6 +62,7 @@ class ListFragmentPresenter : MvpPresenter<CoinsListView>(), CoinsListPresenterC
             coinsListPresenter.coins.addAll(list)
             viewState.updateList()
             viewState.restoreRVposition(stateRVPos)
+            viewState.hideLoading()
         }, {
             Log.d(TAG, it.message.toString())
         })

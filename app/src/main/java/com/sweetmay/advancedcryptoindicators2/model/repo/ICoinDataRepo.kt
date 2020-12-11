@@ -7,5 +7,5 @@ import io.reactivex.rxjava3.core.Single
 
 interface ICoinDataRepo {
     fun getCoin(coinBase: CoinBase): Single<CoinDetailed>
-    fun getCoinMarketChartData(coinBase: CoinBase, currencyAgainst: String): Single<ChartData>
+    fun getCoinMarketChartData(coinBase: CoinBase, currencyAgainst: String, period: String): Single<ChartData>
 }

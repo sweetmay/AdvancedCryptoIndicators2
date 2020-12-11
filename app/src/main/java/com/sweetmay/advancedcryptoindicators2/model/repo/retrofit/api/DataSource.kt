@@ -27,5 +27,5 @@ interface DataSource {
     @GET("api/v3/coins/{coin}/market_chart")
     fun getMarketChart(@Path("coin") id: String,
                        @Query("vs_currency") currencyAgainst: String,
-                       @Query("days") days: String = "1"): Single<ChartData>
+                       @Query("days") days: String): Single<ChartData>
 }

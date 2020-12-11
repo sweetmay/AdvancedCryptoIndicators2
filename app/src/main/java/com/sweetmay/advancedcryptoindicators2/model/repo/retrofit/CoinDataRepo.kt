@@ -14,7 +14,7 @@ class CoinDataRepo(val apiHolder: ApiHolder) : ICoinDataRepo {
         return apiHolder.dataSource.getCoinDetailedData(coinBase.id).subscribeOn(Schedulers.io())
     }
 
-    override fun getCoinMarketChartData(coinBase: CoinBase, currencyAgainst: String): Single<ChartData> {
-        return apiHolder.dataSource.getMarketChart(coinBase.id, currencyAgainst).subscribeOn(Schedulers.io())
+    override fun getCoinMarketChartData(coinBase: CoinBase, currencyAgainst: String, period: String): Single<ChartData> {
+        return apiHolder.dataSource.getMarketChart(coinBase.id, currencyAgainst, period).subscribeOn(Schedulers.io())
     }
 }

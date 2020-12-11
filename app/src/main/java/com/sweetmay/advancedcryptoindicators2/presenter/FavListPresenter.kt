@@ -31,17 +31,13 @@ class FavListPresenter : MvpPresenter<FavView>(), FavListPresenterCallbacks {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.setTitle()
+        viewState.showLoading()
         viewState.initRv()
         loadData()
     }
 
     override fun navigateToDetailedScreen(coinBase: CoinBase) {
-        setupSubComponent()
         viewState.navigateToDetailed(coinBase)
-    }
-
-    private fun setupSubComponent() {
-        App.instance.initDetailedComponentFromFav()
     }
 
     override fun saveToCache(coinBase: CoinBase) {
@@ -65,9 +61,10 @@ class FavListPresenter : MvpPresenter<FavView>(), FavListPresenterCallbacks {
             if (listDb.isNotEmpty()){
             coinsRepo.getCoins(currencyAgainst, ids = convertIdsToString(listDb)).observeOn(scheduler)
                     .subscribe { list->
-                listPresenter.coins.clear()
-                listPresenter.coins.addAll(list)
-                viewState.updateList()
+                        listPresenter.coins.clear()
+                        listPresenter.coins.addAll(list)
+                        viewState.hideLoading()
+                        viewState.updateList()
             }
             }else {
                 viewState.showNoCoins()

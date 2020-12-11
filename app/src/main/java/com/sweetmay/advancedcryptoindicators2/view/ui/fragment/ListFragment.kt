@@ -48,6 +48,14 @@ class ListFragment : BaseFragment<ListFragmentBinding>(), CoinsListView {
         binding.coinRv.layoutManager?.scrollToPosition(presenter.restoreRVState())
     }
 
+    override fun showLoading() {
+        binding.toolbarInclude.progressBar.show()
+    }
+
+    override fun hideLoading() {
+        binding.toolbarInclude.progressBar.hide()
+    }
+
     override fun selectCoin(coinBase: CoinBase) {
         val action = ListFragmentDirections.actionListFragmentToCoinDataFragment(coinBase)
         navController.navigate(action)

@@ -33,7 +33,7 @@ open class CoinsListPresenter(private val callback: CoinsListPresenterCallbacks)
             setName(coins[view.getPos()].name)
             setPrice(coins[view.getPos()].current_price)
             setFavIcon(coins[view.getPos()].is_favorite)
-            setPriceChange(PriceConverter
+            setPriceChange(PriceConverter()
                     .convertChange(coins[view.getPos()].price_change_percentage_24h))
         }
     }

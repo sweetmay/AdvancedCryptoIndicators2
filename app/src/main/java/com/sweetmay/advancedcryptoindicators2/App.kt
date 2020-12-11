@@ -50,15 +50,11 @@ class App: Application() {
         return favSubComponent
     }
 
-    fun initDetailedComponentFromFav(): CoinDetailedSubComponent? {
-        coinDetailedSubComponent = favSubComponent?.coinDetailedSubComponent()
+    fun initDetailedComponent(): CoinDetailedSubComponent? {
+        coinDetailedSubComponent = appComponent.favComponent().coinDetailedSubComponent()
         return coinDetailedSubComponent
     }
 
-    fun initDetailedComponentFromList(): CoinDetailedSubComponent? {
-        coinDetailedSubComponent = listSubComponent?.coinDetailedSubComponent()
-        return coinDetailedSubComponent
-    }
 
     fun releaseDetailedSubComponent(){
         coinDetailedSubComponent = null

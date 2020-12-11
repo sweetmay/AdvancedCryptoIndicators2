@@ -5,6 +5,7 @@ import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.CoinDetailed
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinDataRepo
 import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.CoinsListRepo
+import com.sweetmay.advancedcryptoindicators2.utils.arima.IArimaEvaluator
 import com.sweetmay.advancedcryptoindicators2.utils.converter.PriceConverter
 import com.sweetmay.advancedcryptoindicators2.utils.image.IImageLoaderAsDrawable
 import com.sweetmay.advancedcryptoindicators2.utils.rsi.IRsiEvaluator
@@ -17,7 +18,7 @@ import javax.inject.Inject
 class CoinDataFragmentPresenter : MvpPresenter<CoinDataView>() {
 
     init {
-        App.instance.coinDetailedSubComponent?.inject(this)
+        App.instance.initDetailedComponent()?.inject(this)
     }
 
     @Inject
@@ -28,7 +29,8 @@ class CoinDataFragmentPresenter : MvpPresenter<CoinDataView>() {
     lateinit var imageLoader: IImageLoaderAsDrawable
     @Inject
     lateinit var rsiEvaluator: IRsiEvaluator
-
+    @Inject
+    lateinit var arimaEvaluator: IArimaEvaluator
 
     fun loadCoinData(coinBase: CoinBase) {
 
@@ -46,12 +48,18 @@ class CoinDataFragmentPresenter : MvpPresenter<CoinDataView>() {
 
     private fun setChange(coinDetailed: CoinDetailed) {
         val change = coinDetailed.market_data.price_change_percentage_24h_in_currency.usd
-        val convertedChange = PriceConverter.convertChange(change)
+        val convertedChange = PriceConverter().convertChange(change)
         viewState.set24hChange(convertedChange)
     }
 
     private fun loadChartData(coinBase: CoinBase) {
-        coinDataRepo.getCoinMarketChartData(coinBase, CoinsListRepo.Currency.usd.toString()).observeOn(scheduler).subscribe { chartData ->
+        coinDataRepo.getCoinMarketChartData(coinBase, CoinsListRepo.Currency.usd.toString(), "1").observeOn(scheduler).doAfterSuccess {
+            coinDataRepo.getCoinMarketChartData(coinBase, CoinsListRepo.Currency.usd.toString(), "max").subscribe { chartData->
+                arimaEvaluator.calculateArima(chartData).observeOn(scheduler).subscribe { forecast->
+                    viewState.setArima(String.format("%.4f", forecast.last()))
+                }
+            }
+        }.subscribe { chartData ->
             rsiEvaluator.calculateRsiEntity(chartData, riskReward = RsiEntity.RISK_REWARD.HIGH).observeOn(scheduler).subscribe { rsi ->
                 viewState.setRsi(rsi)
             }

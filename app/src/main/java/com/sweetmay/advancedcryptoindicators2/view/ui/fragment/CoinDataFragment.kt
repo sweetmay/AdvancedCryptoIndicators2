@@ -43,6 +43,10 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
         binding.toolbarInclude.progressBar.hide()
     }
 
+    override fun setArima(prediction: String) {
+        binding.prediction.text = resources.getString(R.string.prediction_text, prediction)
+    }
+
     override fun setTitle(title: String) {
         binding.toolbarInclude.toolbar.title = title
     }
@@ -67,7 +71,7 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
 
     }
 
-    override fun setBinding(inflater: LayoutInflater, container: ViewGroup?): CoinDataFragmentBinding? {
+    override fun setBinding(inflater: LayoutInflater, container: ViewGroup?): CoinDataFragmentBinding {
         return CoinDataFragmentBinding.inflate(inflater, container, false)
     }
 

@@ -51,6 +51,14 @@ class FavFragment : BaseFragment<FavFragmentBinding>(), FavView {
         }
     }
 
+    override fun showLoading() {
+        binding.toolbarInclude.progressBar.show()
+    }
+
+    override fun hideLoading() {
+        binding.toolbarInclude.progressBar.hide()
+    }
+
     override fun navigateToDetailed(coinBase: CoinBase) {
         val action = FavFragmentDirections.actionFavFragmentToCoinDataFragment(coinBase)
         navController.navigate(action)

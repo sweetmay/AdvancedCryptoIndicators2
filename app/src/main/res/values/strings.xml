@@ -15,4 +15,7 @@
     <string name="possible_sl">Stop Loss: %1$s $</string>
     <string name="buy_text">BUY</string>
     <string name="sell_text">SELL</string>
+    <string name="prediction_text">"Prediction: %1$s $"</string>
+    <string name="app_logo">app logo</string>
+    <string name="help_icon">help icon</string>
 </resources>

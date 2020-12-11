@@ -1,14 +1,15 @@
 package com.sweetmay.advancedcryptoindicators2.utils.converter
 
 import android.graphics.Color
+import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
 
 class PriceConverter {
-    companion object{
-        fun convertChange(change: Double): ConvertedChange{
-            return ConvertedChange(change).convert()
-        }
+
+    fun convertChange(change: Double): ConvertedChange{
+        return ConvertedChange(change).convert()
     }
-    class ConvertedChange(val change: Double){
+
+    class ConvertedChange(change: Double){
         val color: Int
         val convertedPriceString: String
 
@@ -24,5 +25,21 @@ class PriceConverter {
         fun convert(): ConvertedChange {
             return this
         }
+    }
+
+    fun convertChartDataForRsi(chartData: ChartData): ArrayList<Float> {
+        val priceList = arrayListOf<Float>()
+        for (element in chartData.prices) {
+            priceList.add(element[1])
+        }
+        return priceList
+    }
+
+    fun convertChartDataForArima(chartData: ChartData): DoubleArray{
+        val priceList = DoubleArray(chartData.prices.size)
+        for (i in chartData.prices.indices) {
+            priceList[i] = chartData.prices[i][1].toDouble()
+        }
+        return priceList
     }
 }
