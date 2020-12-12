@@ -1,7 +1,7 @@
 package com.sweetmay.advancedcryptoindicators2.utils.arima
 
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
-import com.sweetmay.advancedcryptoindicators2.utils.converter.PriceConverter
+import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.workday.insights.timeseries.arima.Arima
 import com.workday.insights.timeseries.arima.struct.ArimaParams
 import io.reactivex.rxjava3.core.Single
@@ -17,7 +17,7 @@ class ArimaEvaluator : IArimaEvaluator {
     private val Q = 0
     private val m = 0
 
-    val priceConverter = PriceConverter()
+    val priceConverter = Converter()
     private val arimaParams = ArimaParams(p, d, q, P, D, Q, m)
 
     override fun calculateArima(chartData: ChartData, predictionPeriod: Int): Single<DoubleArray> {

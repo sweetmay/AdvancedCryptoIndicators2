@@ -1,6 +1,5 @@
 package com.sweetmay.advancedcryptoindicators2.di.fav
 
-import com.sweetmay.advancedcryptoindicators2.di.detailed.CoinDetailedSubComponent
 import com.sweetmay.advancedcryptoindicators2.di.modules.CacheModule
 import com.sweetmay.advancedcryptoindicators2.di.modules.CoinListRepoModule
 import com.sweetmay.advancedcryptoindicators2.di.modules.ImageLoaderModule
@@ -14,6 +13,5 @@ import dagger.Subcomponent
     ImageLoaderModule::class
 ])
 interface FavSubComponent {
-    fun coinDetailedSubComponent(): CoinDetailedSubComponent
     fun inject(favListPresenter: FavListPresenter)
 }

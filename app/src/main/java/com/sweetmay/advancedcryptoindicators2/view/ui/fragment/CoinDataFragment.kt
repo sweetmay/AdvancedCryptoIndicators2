@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.CoinDataFragmentBinding
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.presenter.CoinDataFragmentPresenter
-import com.sweetmay.advancedcryptoindicators2.utils.converter.PriceConverter
+import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.utils.rsi.RsiEntity
 import com.sweetmay.advancedcryptoindicators2.view.CoinDataView
 import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.base.BaseFragment
@@ -25,13 +26,48 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
 
         pendingCoin = arguments?.let { CoinDataFragmentArgs.fromBundle(it).coin }
         pendingCoin?.let { presenter.loadData(it) }
+
+        binding.currentPeriod.text = getString(R.string.current_prediction_period, 30)
+        binding.dayPredictionPicker.setOnClickListener {
+            showPopUpMenu(it)
+        }
+    }
+
+    private fun showPopUpMenu(view: View) {
+        val menu = PopupMenu(context, view)
+        menu.inflate(R.menu.arima_settings_menu)
+        menu.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id._30_day -> {
+                    presenter.changeArima(30, pendingCoin)
+                    binding.currentPeriod.text = getString(R.string.current_prediction_period, 30)
+                    return@setOnMenuItemClickListener true
+                }
+                R.id._60_day -> {
+                    presenter.changeArima(60, pendingCoin)
+                    binding.currentPeriod.text = getString(R.string.current_prediction_period, 60)
+                    return@setOnMenuItemClickListener true
+                }
+                R.id._90_day -> {
+                    presenter.changeArima(90, pendingCoin)
+                    binding.currentPeriod.text = getString(R.string.current_prediction_period, 90)
+                    return@setOnMenuItemClickListener true
+                }
+                R.id.year_prediction -> {
+                    presenter.changeArima(365, pendingCoin)
+                    binding.currentPeriod.text = getString(R.string.current_prediction_period, 365)
+                    return@setOnMenuItemClickListener true
+                }else-> return@setOnMenuItemClickListener false
+            }
+        }
+        menu.show()
     }
 
     override fun setPrice(price: String) {
         binding.priceDetailed.text = price
     }
 
-    override fun set24hChange(convertedChange: PriceConverter.ConvertedChange) {
+    override fun set24hChange(convertedChange: Converter.ConvertedChange) {
         binding.priceChange.text = convertedChange.convertedPriceString
         binding.priceChange.setTextColor(convertedChange.color)
     }

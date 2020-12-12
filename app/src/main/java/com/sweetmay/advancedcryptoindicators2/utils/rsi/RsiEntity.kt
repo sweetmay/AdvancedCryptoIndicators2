@@ -1,7 +1,7 @@
 package com.sweetmay.advancedcryptoindicators2.utils.rsi
 
 class RsiEntity(prices: List<Float> = emptyList(),
-                val period: Int,
+                period: Int,
                 val rr: Float = RISK_REWARD.LOW) {
 
     object RISK_REWARD{

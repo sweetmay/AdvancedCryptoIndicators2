@@ -21,4 +21,9 @@
     <string name="error_data_load">Couldn\'t load data</string>
     <string name="retry">retry_text</string>
     <string name="not_enough_data_error">Not enough data</string>
+    <string name="_30_day_prediction">30 day prediction</string>
+    <string name="year_prediction">365 day prediction</string>
+    <string name="_90_day_prediction">90 day prediction</string>
+    <string name="_60_day_prediction">60 day prediction</string>
+    <string name="current_prediction_period">Current prediction period: %1$d days </string>
 </resources>

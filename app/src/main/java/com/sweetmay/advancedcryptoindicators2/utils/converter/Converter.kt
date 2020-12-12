@@ -3,7 +3,7 @@ package com.sweetmay.advancedcryptoindicators2.utils.converter
 import android.graphics.Color
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
 
-class PriceConverter {
+class Converter {
 
     fun convertChange(change: Double): ConvertedChange{
         return ConvertedChange(change).convert()

@@ -5,7 +5,7 @@ import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.CoinDetailed
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinDataRepo
 import com.sweetmay.advancedcryptoindicators2.utils.arima.IArimaEvaluator
-import com.sweetmay.advancedcryptoindicators2.utils.converter.PriceConverter
+import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.utils.image.IImageLoaderAsDrawable
 import com.sweetmay.advancedcryptoindicators2.utils.rsi.IRsiEvaluator
 import com.sweetmay.advancedcryptoindicators2.utils.rsi.RsiEntity
@@ -32,39 +32,32 @@ class CoinDataFragmentPresenter : MvpPresenter<CoinDataView>() {
     @Inject
     lateinit var arimaEvaluator: IArimaEvaluator
 
-    private var pendingCoin: CoinBase? = null
-
     fun loadData(coinBase: CoinBase) {
-        pendingCoin = coinBase
 
         viewState.showLoading()
         viewState.setTitle(coinBase.name)
-
         coinDataRepo.getCoin(coinBase).observeOn(scheduler).subscribe ({ coinDetailed ->
             viewState.setPrice( coinDetailed.market_data.current_price.usd.toString() + "$ " )
             setChange(coinDetailed)
             loadImage(coinDetailed.image.small)
+
         }, {
             viewState.renderError(it.message?: "Error")
         })
-        loadChartData(coinBase)
+        loadAllData(coinBase)
     }
 
     private fun setChange(coinDetailed: CoinDetailed) {
         val change = coinDetailed.market_data.price_change_percentage_24h_in_currency.usd
-        val convertedChange = PriceConverter().convertChange(change)
+        val convertedChange = Converter().convertChange(change)
         viewState.set24hChange(convertedChange)
     }
 
-    private fun loadChartData(coinBase: CoinBase) {
+    private fun loadAllData(coinBase: CoinBase) {
         val rsiChartObservable = coinDataRepo
-                .getCoinMarketChartData(coinBase).observeOn(scheduler).doOnError {
-                    viewState.renderError(it.message?:"Error")
-                }
+                .getCoinMarketChartData(coinBase).observeOn(scheduler)
         val arimaChartObservable = coinDataRepo
-                .getCoinMarketChartData(coinBase, period = "max").observeOn(scheduler).doOnError {
-                    viewState.renderError(it.message?:"Error")
-                }
+                .getCoinMarketChartData(coinBase, period = "max").observeOn(scheduler)
 
         //zip two chartdata requests
         Single.zip(rsiChartObservable, arimaChartObservable, { t1, t2->
@@ -83,9 +76,10 @@ class CoinDataFragmentPresenter : MvpPresenter<CoinDataView>() {
             })
         }).doAfterSuccess {
             viewState.hideLoading()
-        }.subscribe()
+        }.subscribe({}, {
+            viewState.renderError(it.message?:"Error")
+        })
     }
-
 
 
     private fun loadImage(url: String) {
@@ -97,5 +91,20 @@ class CoinDataFragmentPresenter : MvpPresenter<CoinDataView>() {
     override fun onDestroy() {
         super.onDestroy()
         App.instance.releaseDetailedSubComponent()
+    }
+
+    fun changeArima(period: Int, coinBase: CoinBase?) {
+        coinBase?.let { coinDataRepo
+                .getCoinMarketChartData(it, period = "max").observeOn(scheduler).doOnError {
+                    viewState.renderError(it.message?:"Error")
+                }.subscribe{chart->
+                    arimaEvaluator.calculateArima(chart, predictionPeriod = period).observeOn(scheduler)
+                            .subscribe ({ forecast->
+                                viewState.setArima(String.format("%.4f", forecast.last()))
+                            }, {
+                                viewState.showArimaError()
+                            })
+                }
+        }
     }
 }

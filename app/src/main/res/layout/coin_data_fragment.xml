@@ -104,12 +104,11 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageView
-                android:contentDescription="@string/help_icon"
                 android:id="@+id/help_icon"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:contentDescription="@string/help_icon"
                 android:src="@drawable/help_outline_24px"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -135,12 +134,32 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/current_period"
+            android:text="@string/_30_day_prediction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/arima_indicator_name"
+            />
+
+
+        <TextView
             android:id="@+id/prediction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/arima_indicator_name"
+            app:layout_constraintTop_toBottomOf="@id/current_period"
             app:layout_constraintStart_toStartOf="parent"
             />
+
+        <ImageButton
+            android:id="@+id/day_prediction_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/settings_24px"
+            app:layout_constraintBottom_toBottomOf="@+id/arima_indicator_name"
+            app:layout_constraintStart_toEndOf="@+id/arima_indicator_name"
+            app:layout_constraintTop_toTopOf="@+id/arima_indicator_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

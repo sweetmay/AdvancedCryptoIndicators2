@@ -6,7 +6,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.sweetmay.advancedcryptoindicators2.databinding.ItemCoinBinding
 import com.sweetmay.advancedcryptoindicators2.presenter.list.ICoinsListPresenter
-import com.sweetmay.advancedcryptoindicators2.utils.converter.PriceConverter
+import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.utils.image.IImageLoader
 import com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
 import com.sweetmay.advancedcryptoindicators2.view.item.CoinItemView
@@ -63,7 +63,7 @@ class CoinsListAdapter(val presenter: ICoinsListPresenter, val imageLoader: IIma
             itemCoinBinding.favButton.checked = boolean
         }
 
-        override fun setPriceChange(change: PriceConverter.ConvertedChange) {
+        override fun setPriceChange(change: Converter.ConvertedChange) {
             with(itemCoinBinding.priceChange) {
                 text = change.convertedPriceString
                 itemCoinBinding.priceChange.setTextColor(change.color)
