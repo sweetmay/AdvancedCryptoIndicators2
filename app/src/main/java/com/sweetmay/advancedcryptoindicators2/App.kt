@@ -51,7 +51,7 @@ class App: Application() {
     }
 
     fun initDetailedComponent(): CoinDetailedSubComponent? {
-        coinDetailedSubComponent = appComponent.favComponent().coinDetailedSubComponent()
+        coinDetailedSubComponent = appComponent.listSubComponent().coinDetailedSubComponent()
         return coinDetailedSubComponent
     }
 

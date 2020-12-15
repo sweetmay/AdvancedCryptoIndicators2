@@ -118,50 +118,56 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/arima_block"
-        android:background="@drawable/coin_detailed_border"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/arima_indicator_name"
-            style="@style/IndicatorTextStyle"
-            android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="8dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/arima_block"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/arima_indicator_name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_margin="24dp">
 
-        <TextView
-            android:id="@+id/current_period"
-            android:text="@string/_30_day_prediction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/arima_indicator_name"
-            />
+            <TextView
+                android:id="@+id/arima_indicator_name"
+                style="@style/IndicatorTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/arima_indicator_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/current_period"
+                android:text="@string/_30_day_prediction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/arima_indicator_name"
+                />
 
 
-        <TextView
-            android:id="@+id/prediction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/current_period"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+            <TextView
+                android:id="@+id/prediction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/current_period"
+                app:layout_constraintStart_toStartOf="parent"
+                />
 
-        <ImageButton
-            android:id="@+id/day_prediction_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:src="@drawable/settings_24px"
-            app:layout_constraintBottom_toBottomOf="@+id/arima_indicator_name"
-            app:layout_constraintStart_toEndOf="@+id/arima_indicator_name"
-            app:layout_constraintTop_toTopOf="@+id/arima_indicator_name" />
+            <ImageButton
+                android:id="@+id/day_prediction_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/settings_24px"
+                app:layout_constraintBottom_toBottomOf="@+id/arima_indicator_name"
+                app:layout_constraintStart_toEndOf="@+id/arima_indicator_name"
+                app:layout_constraintTop_toTopOf="@+id/arima_indicator_name" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
 
 </androidx.appcompat.widget.LinearLayoutCompat>
 

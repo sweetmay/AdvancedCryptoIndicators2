@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="FearGreedView">
-        <attr name="widthAAA" format="dimension" />
+        <attr name="needle" format="integer" />
+        <attr name="needleHeight" format="dimension"/>
+        <attr name="needleWidth" format="dimension"/>
     </declare-styleable>
 </resources>
