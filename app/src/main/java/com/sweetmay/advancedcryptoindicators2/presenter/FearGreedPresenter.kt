@@ -1,9 +1,23 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
+import com.sweetmay.advancedcryptoindicators2.App
+import com.sweetmay.advancedcryptoindicators2.model.repo.IFnGRepo
 import com.sweetmay.advancedcryptoindicators2.view.FnGView
+import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
+import javax.inject.Inject
 
 class FearGreedPresenter: MvpPresenter<FnGView>() {
+
+    init {
+        App.instance.initFngComponent()?.inject(this)
+    }
+
+    @Inject
+    lateinit var fngRepo: IFnGRepo
+    @Inject
+    lateinit var scheduler: Scheduler
+
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -12,14 +26,22 @@ class FearGreedPresenter: MvpPresenter<FnGView>() {
     }
 
     fun loadData() {
-        viewState.showData(90)
+        viewState.showLoading()
+        fngRepo.getFnG("10").observeOn(scheduler).subscribe ({ fng->
+            viewState.showData(fng)
+            viewState.hideLoading()
+        }, {
+            viewState.renderError(it.message?: "Error")
+        })
+
     }
 
     private fun setTitle() {
         viewState.setTitle()
     }
 
-    fun showData(fng: Int){
-        viewState.showData(fng)
+    override fun onDestroy() {
+        super.onDestroy()
+        App.instance.releaseFngSubComponent()
     }
 }

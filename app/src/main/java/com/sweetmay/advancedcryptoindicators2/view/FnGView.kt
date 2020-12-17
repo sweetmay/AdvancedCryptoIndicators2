@@ -1,5 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.view
 
+import com.sweetmay.advancedcryptoindicators2.model.entity.fng.FnGEntity
 import com.sweetmay.advancedcryptoindicators2.view.base.BaseView
 import moxy.viewstate.strategy.alias.AddToEndSingle
 
@@ -8,5 +9,5 @@ interface FnGView: BaseView {
     fun setTitle()
     fun showLoading()
     fun hideLoading()
-    fun showData(fng: Int)
+    fun showData(fng: FnGEntity)
 }

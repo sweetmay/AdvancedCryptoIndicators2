@@ -1,14 +1,14 @@
-package com.sweetmay.advancedcryptoindicators2.utils
+package com.sweetmay.advancedcryptoindicators2.utils.apiholder
 
-import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.api.DataSource
+import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.api.DataSourceCoinGecko
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class ApiHolder(baseUrl: String) {
+class ApiHolderCoinGecko(baseUrl: String) {
 
-    val dataSource: DataSource
+    val dataSourceCoinGecko: DataSourceCoinGecko
 
     init {
 
@@ -17,7 +17,7 @@ class ApiHolder(baseUrl: String) {
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-        dataSource = retrofit.create(DataSource::class.java)
+        dataSourceCoinGecko = retrofit.create(DataSourceCoinGecko::class.java)
     }
 
 }

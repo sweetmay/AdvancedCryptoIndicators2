@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.FearGreedFragmentBinding
+import com.sweetmay.advancedcryptoindicators2.model.entity.fng.FnGEntity
 import com.sweetmay.advancedcryptoindicators2.presenter.FearGreedPresenter
 import com.sweetmay.advancedcryptoindicators2.view.FnGView
 import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.base.BaseFragment
@@ -38,17 +39,27 @@ class FearGreedFragment: BaseFragment<FearGreedFragmentBinding>(), FnGView{
         binding.toolbarInclude.toolbar.title = getString(R.string.fear_greed_title)
     }
 
+    override fun showLoading() {
+        binding.toolbarInclude.progressBar.show()
+    }
 
-    override fun showData(fng: Int) {
+    override fun hideLoading() {
+        binding.toolbarInclude.progressBar.hide()
+    }
+
+
+    override fun showData(fng: FnGEntity) {
+        val data = fng.data
+        animateFnGView(data[0].value.toInt())
+
+    }
+
+    private fun animateFnGView(fng: Int) {
         with(binding.fearGreedView){
             doOnLayout {
                 this.rotateToAnimation(fng)
             }
         }
-    }
-
-    override fun renderError(msg: String) {
-
     }
 
 }

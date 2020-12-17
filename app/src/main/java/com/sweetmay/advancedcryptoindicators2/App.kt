@@ -6,6 +6,7 @@ import com.sweetmay.advancedcryptoindicators2.di.app.AppComponent
 import com.sweetmay.advancedcryptoindicators2.di.app.DaggerAppComponent
 import com.sweetmay.advancedcryptoindicators2.di.detailed.CoinDetailedSubComponent
 import com.sweetmay.advancedcryptoindicators2.di.fav.FavSubComponent
+import com.sweetmay.advancedcryptoindicators2.di.fng.FnGSubComponent
 import com.sweetmay.advancedcryptoindicators2.di.list.ListSubComponent
 import com.sweetmay.advancedcryptoindicators2.di.modules.AppModule
 import com.sweetmay.advancedcryptoindicators2.model.db.DataBase
@@ -14,13 +15,16 @@ import com.sweetmay.advancedcryptoindicators2.model.db.dao.FavCoinsDao
 class App: Application() {
 
     lateinit var dao: FavCoinsDao
-    val BASE_URL = "https://api.coingecko.com/"
+    val BASE_URL_CG = "https://api.coingecko.com/"
+    val BASE_URL_FNG = "https://api.alternative.me/"
     lateinit var appComponent: AppComponent
     var listSubComponent: ListSubComponent? = null
         private set
     var favSubComponent: FavSubComponent? = null
         private set
     var coinDetailedSubComponent: CoinDetailedSubComponent? = null
+        private set
+    var fnGSubComponent: FnGSubComponent? = null
         private set
 
 
@@ -45,6 +49,11 @@ class App: Application() {
         return listSubComponent
     }
 
+    fun initFngComponent(): FnGSubComponent?{
+        fnGSubComponent = appComponent.fngComponent()
+        return fnGSubComponent
+    }
+
     fun initFavComponent(): FavSubComponent? {
         favSubComponent = appComponent.favComponent()
         return favSubComponent
@@ -60,6 +69,10 @@ class App: Application() {
         coinDetailedSubComponent = null
     }
 
+    fun releaseFngSubComponent(){
+        fnGSubComponent = null
+    }
+
     fun releaseFavComponent(){
         favSubComponent = null
     }
@@ -73,8 +86,7 @@ class App: Application() {
             applicationContext,
             DataBase::class.java,
             "CoinDb"
-        )
-            .build()
-            .getDao()
+        ).build()
+                .getDao()
     }
 }

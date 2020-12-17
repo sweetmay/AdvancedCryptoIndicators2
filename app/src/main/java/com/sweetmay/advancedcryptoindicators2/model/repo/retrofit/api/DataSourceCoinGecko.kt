@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface DataSource {
+interface DataSourceCoinGecko {
     @GET("api/v3/coins/markets")
     fun getCoinsList(@Query("vs_currency") currencyAgainst: String,
                      @Query("ids") ids: String = "",
