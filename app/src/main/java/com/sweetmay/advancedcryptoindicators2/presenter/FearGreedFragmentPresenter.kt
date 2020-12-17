@@ -1,16 +1,16 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
-import com.sweetmay.advancedcryptoindicators2.App
+import com.sweetmay.advancedcryptoindicators2.IAppInjection
 import com.sweetmay.advancedcryptoindicators2.model.repo.IFnGRepo
 import com.sweetmay.advancedcryptoindicators2.view.FnGView
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import javax.inject.Inject
 
-class FearGreedPresenter: MvpPresenter<FnGView>() {
+class FearGreedFragmentPresenter(private val injection: IAppInjection): MvpPresenter<FnGView>() {
 
     init {
-        App.instance.initFngComponent()?.inject(this)
+        injection.initFngComponent()?.inject(this)
     }
 
     @Inject
@@ -42,6 +42,6 @@ class FearGreedPresenter: MvpPresenter<FnGView>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        App.instance.releaseFngSubComponent()
+        injection.releaseFngSubComponent()
     }
 }

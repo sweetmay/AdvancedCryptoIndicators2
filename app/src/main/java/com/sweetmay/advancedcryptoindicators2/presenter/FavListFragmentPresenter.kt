@@ -1,7 +1,7 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
-import com.sweetmay.advancedcryptoindicators2.App
-import com.sweetmay.advancedcryptoindicators2.model.cache.IFavCoinsCache
+import com.sweetmay.advancedcryptoindicators2.IAppInjection
+import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinDb
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
@@ -13,13 +13,15 @@ import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import javax.inject.Inject
 
-class FavListPresenter : MvpPresenter<FavView>(), FavListPresenterCallbacks {
+class FavListFragmentPresenter(private val injection: IAppInjection) : MvpPresenter<FavView>(), FavListPresenterCallbacks {
+
+    init {
+        injection.initFavComponent()?.inject(this)
+    }
 
     val listPresenter = FavCoinsListPresenter(this)
 
-    init {
-        App.instance.initFavComponent()?.inject(this)
-    }
+
 
     @Inject
     lateinit var coinsRepo: ICoinsListRepo
@@ -31,7 +33,6 @@ class FavListPresenter : MvpPresenter<FavView>(), FavListPresenterCallbacks {
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.setTitle()
-        viewState.showLoading()
         viewState.initRv()
         loadData()
     }
@@ -53,10 +54,12 @@ class FavListPresenter : MvpPresenter<FavView>(), FavListPresenterCallbacks {
         viewState.notifyItemRemoved(pos, listPresenter.coins.size)
         if (listPresenter.coins.isEmpty()){
             viewState.showNoCoins()
+
         }
     }
 
     fun loadData(currencyAgainst: String = CoinsListRepo.Currency.usd.toString()){
+        viewState.showLoading()
         favCache.getFavCoins().subscribe { listDb->
             if (listDb.isNotEmpty()){
             coinsRepo.getCoins(currencyAgainst, ids = convertIdsToString(listDb)).observeOn(scheduler)
@@ -88,7 +91,7 @@ class FavListPresenter : MvpPresenter<FavView>(), FavListPresenterCallbacks {
 
     override fun onDestroy() {
         super.onDestroy()
-        App.instance.releaseFavComponent()
+        injection.releaseFavComponent()
     }
 
 }

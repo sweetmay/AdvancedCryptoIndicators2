@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sweetmay.advancedcryptoindicators2.App
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.FavFragmentBinding
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
-import com.sweetmay.advancedcryptoindicators2.presenter.FavListPresenter
+import com.sweetmay.advancedcryptoindicators2.presenter.FavListFragmentPresenter
 import com.sweetmay.advancedcryptoindicators2.utils.image.GlideImageLoader
 import com.sweetmay.advancedcryptoindicators2.view.FavView
 import com.sweetmay.advancedcryptoindicators2.view.adapter.CoinsListAdapter
@@ -19,7 +20,9 @@ class FavFragment : BaseFragment<FavFragmentBinding>(), FavView {
 
     lateinit var navController: NavController
 
-    private val presenter: FavListPresenter by moxyPresenter { FavListPresenter() }
+    private val fragmentPresenter: FavListFragmentPresenter by moxyPresenter {
+        FavListFragmentPresenter(App.injection)
+    }
 
     override fun setBinding(inflater: LayoutInflater, container: ViewGroup?): FavFragmentBinding {
         navController = findNavController()
@@ -29,7 +32,7 @@ class FavFragment : BaseFragment<FavFragmentBinding>(), FavView {
     override fun initRv() {
         with(binding.coinFavRv) {
             layoutManager = LinearLayoutManager(context)
-            adapter = CoinsListAdapter(presenter.listPresenter, GlideImageLoader())
+            adapter = CoinsListAdapter(fragmentPresenter.listPresenter, GlideImageLoader())
         }
     }
 
@@ -69,7 +72,7 @@ class FavFragment : BaseFragment<FavFragmentBinding>(), FavView {
     }
 
     override fun onErrorHandleClick() {
-        presenter.loadData()
+        fragmentPresenter.loadData()
     }
 
 }

@@ -1,6 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.di.modules
 
-import com.sweetmay.advancedcryptoindicators2.model.cache.IFavCoinsCache
+import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.CoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.utils.apiholder.ApiHolderCoinGecko

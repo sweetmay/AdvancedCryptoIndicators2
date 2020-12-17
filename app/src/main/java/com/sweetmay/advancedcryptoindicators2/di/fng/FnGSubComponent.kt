@@ -2,7 +2,7 @@ package com.sweetmay.advancedcryptoindicators2.di.fng
 
 import com.sweetmay.advancedcryptoindicators2.di.modules.ApiFnGModule
 import com.sweetmay.advancedcryptoindicators2.di.modules.FnGRepoModule
-import com.sweetmay.advancedcryptoindicators2.presenter.FearGreedPresenter
+import com.sweetmay.advancedcryptoindicators2.presenter.FearGreedFragmentPresenter
 import dagger.Subcomponent
 
 @FnGSubComponentScope
@@ -11,5 +11,5 @@ import dagger.Subcomponent
     FnGRepoModule::class
 ])
 interface FnGSubComponent{
-    fun inject(fearGreedPresenter: FearGreedPresenter)
+    fun inject(fearGreedFragmentPresenter: FearGreedFragmentPresenter)
 }

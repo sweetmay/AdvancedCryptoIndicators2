@@ -13,6 +13,7 @@ interface CoinsListView: BaseView {
     fun restoreRVposition(pos: Int)
     fun showLoading()
     fun hideLoading()
+    fun setSearch()
     @Skip
     fun selectCoin(coinBase: CoinBase)
 }

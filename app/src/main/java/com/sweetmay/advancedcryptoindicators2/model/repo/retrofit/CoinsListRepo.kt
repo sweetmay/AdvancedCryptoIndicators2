@@ -1,7 +1,8 @@
 package com.sweetmay.advancedcryptoindicators2.model.repo.retrofit
 
-import com.sweetmay.advancedcryptoindicators2.model.cache.IFavCoinsCache
+import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
+import com.sweetmay.advancedcryptoindicators2.model.entity.coin.GeneralInfoCoinDb
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.utils.apiholder.ApiHolderCoinGecko
 import io.reactivex.rxjava3.core.Single
@@ -27,8 +28,8 @@ class CoinsListRepo(private val apiHolderCoinGecko: ApiHolderCoinGecko, private 
     }
 
 
-    override fun getCoins(currencyAgainst: String, ids: String, order: String): Single<List<CoinBase>> {
-        val apiObservable = apiHolderCoinGecko.dataSourceCoinGecko.getCoinsList(currencyAgainst, ids, order).subscribeOn(Schedulers.io())
+    override fun getCoins(currencyAgainst: String, ids: String, order: String, page: Int): Single<List<CoinBase>> {
+        val apiObservable = apiHolderCoinGecko.dataSourceCoinGecko.getCoinsList(currencyAgainst, ids, order, page = page).subscribeOn(Schedulers.io())
         val favCacheObservable = cache.getFavCoins()
 
         return Single.zip(apiObservable, favCacheObservable, BiFunction { t1, t2 ->
@@ -42,6 +43,10 @@ class CoinsListRepo(private val apiHolderCoinGecko: ApiHolderCoinGecko, private 
             }
             return@BiFunction t1
         }).subscribeOn(Schedulers.computation())
+    }
+
+    override fun saveFullList(): Single<List<GeneralInfoCoinDb>> {
+        return apiHolderCoinGecko.dataSourceCoinGecko.getCompleteList().subscribeOn(Schedulers.io())
     }
 }
 

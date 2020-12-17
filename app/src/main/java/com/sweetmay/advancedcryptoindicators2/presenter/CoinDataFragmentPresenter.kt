@@ -1,6 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
-import com.sweetmay.advancedcryptoindicators2.App
+import com.sweetmay.advancedcryptoindicators2.IAppInjection
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.CoinDetailed
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinDataRepo
@@ -15,10 +15,10 @@ import io.reactivex.rxjava3.core.Single
 import moxy.MvpPresenter
 import javax.inject.Inject
 
-class CoinDataFragmentPresenter : MvpPresenter<CoinDataView>() {
+class CoinDataFragmentPresenter(private val injection: IAppInjection) : MvpPresenter<CoinDataView>() {
 
     init {
-        App.instance.initDetailedComponent()?.inject(this)
+        injection.initDetailedComponent()?.inject(this)
     }
 
     @Inject
@@ -40,7 +40,6 @@ class CoinDataFragmentPresenter : MvpPresenter<CoinDataView>() {
             viewState.setPrice( coinDetailed.market_data.current_price.usd.toString() + "$ " )
             setChange(coinDetailed)
             loadImage(coinDetailed.image.small)
-
         }, {
             viewState.renderError(it.message?: "Error")
         })
@@ -88,10 +87,6 @@ class CoinDataFragmentPresenter : MvpPresenter<CoinDataView>() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        App.instance.releaseDetailedSubComponent()
-    }
 
     fun changeArima(period: Int, coinBase: CoinBase?) {
         coinBase?.let { coinDataRepo
@@ -106,5 +101,10 @@ class CoinDataFragmentPresenter : MvpPresenter<CoinDataView>() {
                             })
                 }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        injection.releaseDetailedSubComponent()
     }
 }

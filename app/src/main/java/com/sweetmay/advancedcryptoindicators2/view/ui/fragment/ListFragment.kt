@@ -2,9 +2,12 @@ package com.sweetmay.advancedcryptoindicators2.view.ui.fragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.sweetmay.advancedcryptoindicators2.App
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.ListFragmentBinding
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
@@ -17,7 +20,7 @@ import moxy.ktx.moxyPresenter
 
 class ListFragment : BaseFragment<ListFragmentBinding>(), CoinsListView {
 
-    val presenter: ListFragmentPresenter by moxyPresenter { ListFragmentPresenter() }
+    val presenter: ListFragmentPresenter by moxyPresenter { ListFragmentPresenter(App.injection) }
 
     lateinit var navController: NavController
 
@@ -25,7 +28,25 @@ class ListFragment : BaseFragment<ListFragmentBinding>(), CoinsListView {
         with(binding.coinRv){
             layoutManager = LinearLayoutManager(context)
             adapter = CoinsListAdapter(presenter.coinsListPresenter, GlideImageLoader())
+            extendListOnScroll()
         }
+    }
+
+    private fun RecyclerView.extendListOnScroll() {
+        addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)
+                    && newState == RecyclerView.SCROLL_STATE_IDLE
+                ) {
+                    presenter.saveRVPos(
+                        (layoutManager as LinearLayoutManager)
+                            .findFirstCompletelyVisibleItemPosition()
+                    )
+                    presenter.loadData()
+                }
+            }
+        })
     }
 
     override fun onPause() {
@@ -54,6 +75,12 @@ class ListFragment : BaseFragment<ListFragmentBinding>(), CoinsListView {
         binding.toolbarInclude.progressBar.hide()
     }
 
+    override fun setSearch() {
+        binding.search.addTextChangedListener {
+            presenter.searchForCoins(it.toString())
+        }
+    }
+
     override fun selectCoin(coinBase: CoinBase) {
         val action = ListFragmentDirections.actionListFragmentToCoinDataFragment(coinBase)
         navController.navigate(action)
@@ -67,4 +94,6 @@ class ListFragment : BaseFragment<ListFragmentBinding>(), CoinsListView {
     override fun onErrorHandleClick() {
         presenter.loadData()
     }
+
+
 }

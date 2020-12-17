@@ -1,7 +1,9 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
-import com.sweetmay.advancedcryptoindicators2.App
-import com.sweetmay.advancedcryptoindicators2.model.cache.IFavCoinsCache
+import android.util.Log
+import com.sweetmay.advancedcryptoindicators2.IAppInjection
+import com.sweetmay.advancedcryptoindicators2.model.db.cache.IAllCoinsCache
+import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.CoinsListRepo
@@ -12,10 +14,10 @@ import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import javax.inject.Inject
 
-class ListFragmentPresenter : MvpPresenter<CoinsListView>(), CoinsListPresenterCallbacks {
+class ListFragmentPresenter(private val injection: IAppInjection) : MvpPresenter<CoinsListView>(), CoinsListPresenterCallbacks {
 
     init {
-        App.instance.initListComponent()?.inject(this)
+        injection.initListComponent()?.inject(this)
     }
 
     @Inject
@@ -24,21 +26,25 @@ class ListFragmentPresenter : MvpPresenter<CoinsListView>(), CoinsListPresenterC
     lateinit var scheduler: Scheduler
     @Inject
     lateinit var favCache: IFavCoinsCache
+    @Inject
+    lateinit var allCoinsCache: IAllCoinsCache
 
     companion object{
-        var stateRVPos = 0
+        var stateRVPos: Int = 0
     }
-
     private val TAG: String = this::class.java.simpleName
+
 
     val coinsListPresenter = CoinsListPresenter(this)
 
 
+    var pageToLoad = 1
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.setTitle()
-        viewState.showLoading()
         viewState.initRv()
+        viewState.setSearch()
         loadData()
     }
 
@@ -54,17 +60,33 @@ class ListFragmentPresenter : MvpPresenter<CoinsListView>(), CoinsListPresenterC
     override fun saveToCache(coinBase: CoinBase) {
         favCache.saveFavCoin(coinBase).subscribe()
     }
-
     fun loadData(currencyAgainst: String = CoinsListRepo.Currency.usd.toString()) {
-        coinsRepo.getCoins(currencyAgainst).observeOn(scheduler).subscribe({list ->
-            coinsListPresenter.coins.clear()
-            coinsListPresenter.coins.addAll(list)
-            viewState.updateList()
-            viewState.restoreRVposition(stateRVPos)
-            viewState.hideLoading()
-        }, {
-            viewState.renderError(it.message?: "Error")
-        })
+        viewState.showLoading()
+            coinsRepo.getCoins(currencyAgainst, page = pageToLoad).doAfterSuccess {
+                fetchAllcoins()
+            }.observeOn(scheduler).subscribe({list ->
+                coinsListPresenter.coins.addAll(list)
+                pageToLoad++
+                viewState.updateList()
+                viewState.hideLoading()
+                viewState.restoreRVposition(stateRVPos)
+            }, {
+                viewState.renderError(it.message?: "Error")
+                viewState.hideLoading()
+            })
+    }
+
+    private fun fetchAllcoins() {
+        coinsRepo.saveFullList().subscribe {list->
+            allCoinsCache.saveCoins(list).subscribe()
+        }
+    }
+
+
+    fun searchForCoins(name: String) {
+        allCoinsCache.findByName(name).subscribe { list->
+            Log.d(TAG, list.toString())
+        }
     }
 
     fun saveRVPos(itemPos: Int) {
@@ -77,6 +99,6 @@ class ListFragmentPresenter : MvpPresenter<CoinsListView>(), CoinsListPresenterC
 
     override fun onDestroy() {
         super.onDestroy()
-        App.instance.releaseListComponent()
+        injection.releaseListComponent()
     }
 }

@@ -7,7 +7,7 @@ import com.sweetmay.advancedcryptoindicators2.view.item.CoinItemView
 
 open class CoinsListPresenter(private val callback: CoinsListPresenterCallbacks) : ICoinsListPresenter {
 
-    val coins = arrayListOf<CoinBase>()
+    val coins = ArrayList<CoinBase>()
 
     override fun onFavButtonClicked(view: CoinItemView, state: Boolean) {
         coins[view.getPos()].is_favorite = state

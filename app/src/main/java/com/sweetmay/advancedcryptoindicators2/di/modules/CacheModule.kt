@@ -1,9 +1,9 @@
 package com.sweetmay.advancedcryptoindicators2.di.modules
 
 import com.sweetmay.advancedcryptoindicators2.App
-import com.sweetmay.advancedcryptoindicators2.model.cache.IFavCoinsCache
-import com.sweetmay.advancedcryptoindicators2.model.cache.room.FavCoinsCache
-import com.sweetmay.advancedcryptoindicators2.model.db.dao.FavCoinsDao
+import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
+import com.sweetmay.advancedcryptoindicators2.model.db.cache.room.FavCoinsCache
+import com.sweetmay.advancedcryptoindicators2.model.db.dao.CoinsDbDao
 import dagger.Module
 import dagger.Provides
 
@@ -11,12 +11,12 @@ import dagger.Provides
 class CacheModule {
 
     @Provides
-    fun dao(app: App): FavCoinsDao {
-        return app.dao
+    fun dao(app: App): CoinsDbDao {
+        return app.dbDao
     }
 
     @Provides
-    fun cache(dao: FavCoinsDao): IFavCoinsCache{
-        return FavCoinsCache(dao)
+    fun cache(dbDao: CoinsDbDao): IFavCoinsCache{
+        return FavCoinsCache(dbDao)
     }
 }

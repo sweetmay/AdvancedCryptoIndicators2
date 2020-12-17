@@ -1,4 +1,4 @@
-package com.sweetmay.advancedcryptoindicators2.model.cache
+package com.sweetmay.advancedcryptoindicators2.model.db.cache
 
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinDb

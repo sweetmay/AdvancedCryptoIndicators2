@@ -1,6 +1,7 @@
 package com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.api
 
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
+import com.sweetmay.advancedcryptoindicators2.model.entity.coin.GeneralInfoCoinDb
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.CoinDetailed
 import io.reactivex.rxjava3.core.Single
@@ -13,8 +14,10 @@ interface DataSourceCoinGecko {
     fun getCoinsList(@Query("vs_currency") currencyAgainst: String,
                      @Query("ids") ids: String = "",
                      @Query("order") order: String,
-                     @Query("per_page") perPage: Int = 250): Single<List<CoinBase>>
+                     @Query("per_page") perPage: Int = 100, @Query ("page") page: Int): Single<List<CoinBase>>
 
+    @GET("api/v3/coins/list")
+    fun getCompleteList(): Single<List<GeneralInfoCoinDb>>
 
 
     @GET("api/v3/coins/{coin}")

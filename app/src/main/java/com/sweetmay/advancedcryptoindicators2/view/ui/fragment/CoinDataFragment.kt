@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import com.sweetmay.advancedcryptoindicators2.App
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.CoinDataFragmentBinding
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
@@ -18,7 +19,9 @@ import moxy.ktx.moxyPresenter
 
 class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
 
-    private val presenter: CoinDataFragmentPresenter by moxyPresenter { CoinDataFragmentPresenter() }
+    private val presenter: CoinDataFragmentPresenter by moxyPresenter {
+        CoinDataFragmentPresenter(App.injection)
+    }
     private var pendingCoin: CoinBase? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -112,7 +115,11 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
     }
 
     override fun showRsiError() {
-
+        with(binding){
+            rsiStrength.text = getString(R.string.not_enough_data_error)
+            stopLoss.text = getString(R.string.not_enough_data_error)
+            target.text = getString(R.string.not_enough_data_error)
+        }
     }
 
     override fun setBinding(inflater: LayoutInflater, container: ViewGroup?): CoinDataFragmentBinding {
