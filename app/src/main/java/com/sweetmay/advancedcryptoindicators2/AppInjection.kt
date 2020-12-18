@@ -7,6 +7,7 @@ import com.sweetmay.advancedcryptoindicators2.di.fav.FavSubComponent
 import com.sweetmay.advancedcryptoindicators2.di.fng.FnGSubComponent
 import com.sweetmay.advancedcryptoindicators2.di.list.ListSubComponent
 import com.sweetmay.advancedcryptoindicators2.di.modules.AppModule
+import com.sweetmay.advancedcryptoindicators2.di.search.SearchSubComponent
 
 class AppInjection(val app: App): IAppInjection {
 
@@ -23,6 +24,8 @@ class AppInjection(val app: App): IAppInjection {
         private set
     var fnGSubComponent: FnGSubComponent? = null
         private set
+    var searchSubComponent: SearchSubComponent? = null
+        private set
 
 
     override fun initListComponent(): ListSubComponent? {
@@ -38,6 +41,11 @@ class AppInjection(val app: App): IAppInjection {
     override fun initFavComponent(): FavSubComponent? {
         favSubComponent = appComponent.favComponent()
         return favSubComponent
+    }
+
+    override fun initSearchComponent(): SearchSubComponent? {
+        searchSubComponent = appComponent.listSubComponent().searchComponent()
+        return searchSubComponent
     }
 
     override fun initDetailedComponent(): CoinDetailedSubComponent? {
@@ -59,5 +67,9 @@ class AppInjection(val app: App): IAppInjection {
 
     override fun releaseListComponent() {
         listSubComponent = null
+    }
+
+    override fun releaseSearchComponent() {
+        searchSubComponent = null
     }
 }

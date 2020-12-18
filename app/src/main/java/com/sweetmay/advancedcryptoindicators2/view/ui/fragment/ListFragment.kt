@@ -1,8 +1,9 @@
 package com.sweetmay.advancedcryptoindicators2.view.ui.fragment
 
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +24,22 @@ class ListFragment : BaseFragment<ListFragmentBinding>(), CoinsListView {
     val presenter: ListFragmentPresenter by moxyPresenter { ListFragmentPresenter(App.injection) }
 
     lateinit var navController: NavController
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navigateToSearch()
+    }
+
+    private fun navigateToSearch() {
+        with(binding.toolbarInclude.toolbar) {
+            inflateMenu(R.menu.options_menu)
+            menu.findItem(R.id.search_button_menu).setOnMenuItemClickListener {
+                navController.navigate(ListFragmentDirections.actionListFragmentToSearchFragment())
+                true
+            }
+        }
+    }
+
 
     override fun initRv() {
         with(binding.coinRv){
@@ -60,7 +77,7 @@ class ListFragment : BaseFragment<ListFragmentBinding>(), CoinsListView {
     }
 
     override fun setTitle() {
-        binding.toolbarInclude.toolbar.title = getString(R.string.coins_lis_title)
+        binding.toolbarInclude.toolbar.title = getString(R.string.coins_list_title)
     }
 
     override fun restoreRVposition(pos: Int) {
@@ -73,12 +90,6 @@ class ListFragment : BaseFragment<ListFragmentBinding>(), CoinsListView {
 
     override fun hideLoading() {
         binding.toolbarInclude.progressBar.hide()
-    }
-
-    override fun setSearch() {
-        binding.search.addTextChangedListener {
-            presenter.searchForCoins(it.toString())
-        }
     }
 
     override fun selectCoin(coinBase: CoinBase) {

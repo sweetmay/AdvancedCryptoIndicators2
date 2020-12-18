@@ -3,11 +3,11 @@ package com.sweetmay.advancedcryptoindicators2.presenter
 import com.sweetmay.advancedcryptoindicators2.IAppInjection
 import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinDb
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.CoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.presenter.callback.FavListPresenterCallbacks
 import com.sweetmay.advancedcryptoindicators2.presenter.list.FavCoinsListPresenter
+import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.view.FavView
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
@@ -20,8 +20,6 @@ class FavListFragmentPresenter(private val injection: IAppInjection) : MvpPresen
     }
 
     val listPresenter = FavCoinsListPresenter(this)
-
-
 
     @Inject
     lateinit var coinsRepo: ICoinsListRepo
@@ -62,7 +60,7 @@ class FavListFragmentPresenter(private val injection: IAppInjection) : MvpPresen
         viewState.showLoading()
         favCache.getFavCoins().subscribe { listDb->
             if (listDb.isNotEmpty()){
-            coinsRepo.getCoins(currencyAgainst, ids = convertIdsToString(listDb)).observeOn(scheduler)
+            coinsRepo.getCoins(currencyAgainst, ids = Converter().convertIdsToString(listDb)).observeOn(scheduler)
                     .subscribe ({ list->
                         listPresenter.coins.clear()
                         listPresenter.coins.addAll(list)
@@ -75,18 +73,6 @@ class FavListFragmentPresenter(private val injection: IAppInjection) : MvpPresen
                 viewState.showNoCoins()
             }
         }
-    }
-
-    private fun convertIdsToString(list: List<CoinDb>): String{
-        val result = StringBuilder()
-        for (coin in list){
-            if(result.isNotEmpty()){
-                result.append(",${coin.id}")
-            }else {
-                result.append(coin.id)
-            }
-        }
-        return result.toString()
     }
 
     override fun onDestroy() {

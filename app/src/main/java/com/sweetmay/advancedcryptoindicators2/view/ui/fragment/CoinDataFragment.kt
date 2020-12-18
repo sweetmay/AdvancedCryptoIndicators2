@@ -14,6 +14,7 @@ import com.sweetmay.advancedcryptoindicators2.presenter.CoinDataFragmentPresente
 import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.utils.rsi.RsiEntity
 import com.sweetmay.advancedcryptoindicators2.view.CoinDataView
+import com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
 import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.base.BaseFragment
 import moxy.ktx.moxyPresenter
 
@@ -95,6 +96,20 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
         binding.toolbarInclude.toolbarLogo.setImageDrawable(image)
     }
 
+    override fun setFavButton(coinBase: CoinBase) {
+        with(binding.favButton){
+            checked = coinBase.is_favorite
+            this.setOnClickListener {
+                (it as FavButton).toggle()
+                if(it.checked){
+                    presenter.saveToCache(coinBase)
+                }else presenter.deleteFromCache(coinBase)
+            }
+        }
+
+
+    }
+
     override fun setRsi(rsi: RsiEntity) {
         with(binding) {
             stopLoss.text = resources.getString(R.string.possible_sl, String.format("%.3f",rsi.stopLoss))
@@ -121,6 +136,8 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
             target.text = getString(R.string.not_enough_data_error)
         }
     }
+
+
 
     override fun setBinding(inflater: LayoutInflater, container: ViewGroup?): CoinDataFragmentBinding {
         return CoinDataFragmentBinding.inflate(inflater, container, false)

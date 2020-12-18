@@ -10,6 +10,9 @@
         <action
             android:id="@+id/action_listFragment_to_coinDataFragment"
             app:destination="@id/coinDataFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/favFragment"
@@ -34,5 +37,13 @@
         <argument
             android:name="coin"
             app:argType="com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.sweetmay.advancedcryptoindicators2.view.ui.fragment.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_coinDataFragment"
+            app:destination="@id/coinDataFragment" />
     </fragment>
 </navigation>

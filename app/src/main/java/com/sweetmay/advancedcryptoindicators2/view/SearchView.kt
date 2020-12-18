@@ -6,11 +6,10 @@ import moxy.viewstate.strategy.alias.AddToEndSingle
 import moxy.viewstate.strategy.alias.Skip
 
 @AddToEndSingle
-interface CoinsListView: BaseView {
-    fun initRv()
-    fun updateList()
+interface SearchView: BaseView {
+    fun initRV()
     fun setTitle()
-    fun restoreRVposition(pos: Int)
+    fun updateList()
     fun showLoading()
     fun hideLoading()
     @Skip

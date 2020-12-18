@@ -11,7 +11,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [
     AppModule::class,
-    ApiCGModule::class,
+    ApiCGModule::class
 ])
 interface AppComponent {
     fun listSubComponent(): ListSubComponent

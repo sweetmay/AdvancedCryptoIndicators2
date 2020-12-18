@@ -1,6 +1,7 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
 import com.sweetmay.advancedcryptoindicators2.IAppInjection
+import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.CoinDetailed
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinDataRepo
@@ -31,11 +32,13 @@ class CoinDataFragmentPresenter(private val injection: IAppInjection) : MvpPrese
     lateinit var rsiEvaluator: IRsiEvaluator
     @Inject
     lateinit var arimaEvaluator: IArimaEvaluator
+    @Inject
+    lateinit var favCache: IFavCoinsCache
 
     fun loadData(coinBase: CoinBase) {
-
         viewState.showLoading()
         viewState.setTitle(coinBase.name)
+        viewState.setFavButton(coinBase)
         coinDataRepo.getCoin(coinBase).observeOn(scheduler).subscribe ({ coinDetailed ->
             viewState.setPrice( coinDetailed.market_data.current_price.usd.toString() + "$ " )
             setChange(coinDetailed)
@@ -80,6 +83,13 @@ class CoinDataFragmentPresenter(private val injection: IAppInjection) : MvpPrese
         })
     }
 
+    fun deleteFromCache(coinBase: CoinBase) {
+        favCache.deleteFavCoin(coinBase).subscribe()
+    }
+
+    fun saveToCache(coinBase: CoinBase) {
+        favCache.saveFavCoin(coinBase).subscribe()
+    }
 
     private fun loadImage(url: String) {
         imageLoader.loadImageAsDrawable(url).observeOn(scheduler).subscribe { img ->

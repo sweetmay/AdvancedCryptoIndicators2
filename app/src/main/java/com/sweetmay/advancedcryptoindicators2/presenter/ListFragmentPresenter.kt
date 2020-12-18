@@ -1,8 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
-import android.util.Log
 import com.sweetmay.advancedcryptoindicators2.IAppInjection
-import com.sweetmay.advancedcryptoindicators2.model.db.cache.IAllCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
@@ -26,8 +24,6 @@ class ListFragmentPresenter(private val injection: IAppInjection) : MvpPresenter
     lateinit var scheduler: Scheduler
     @Inject
     lateinit var favCache: IFavCoinsCache
-    @Inject
-    lateinit var allCoinsCache: IAllCoinsCache
 
     companion object{
         var stateRVPos: Int = 0
@@ -44,7 +40,6 @@ class ListFragmentPresenter(private val injection: IAppInjection) : MvpPresenter
         super.onFirstViewAttach()
         viewState.setTitle()
         viewState.initRv()
-        viewState.setSearch()
         loadData()
     }
 
@@ -62,9 +57,7 @@ class ListFragmentPresenter(private val injection: IAppInjection) : MvpPresenter
     }
     fun loadData(currencyAgainst: String = CoinsListRepo.Currency.usd.toString()) {
         viewState.showLoading()
-            coinsRepo.getCoins(currencyAgainst, page = pageToLoad).doAfterSuccess {
-                fetchAllcoins()
-            }.observeOn(scheduler).subscribe({list ->
+            coinsRepo.getCoins(currencyAgainst, page = pageToLoad).observeOn(scheduler).subscribe({list ->
                 coinsListPresenter.coins.addAll(list)
                 pageToLoad++
                 viewState.updateList()
@@ -74,19 +67,6 @@ class ListFragmentPresenter(private val injection: IAppInjection) : MvpPresenter
                 viewState.renderError(it.message?: "Error")
                 viewState.hideLoading()
             })
-    }
-
-    private fun fetchAllcoins() {
-        coinsRepo.saveFullList().subscribe {list->
-            allCoinsCache.saveCoins(list).subscribe()
-        }
-    }
-
-
-    fun searchForCoins(name: String) {
-        allCoinsCache.findByName(name).subscribe { list->
-            Log.d(TAG, list.toString())
-        }
     }
 
     fun saveRVPos(itemPos: Int) {

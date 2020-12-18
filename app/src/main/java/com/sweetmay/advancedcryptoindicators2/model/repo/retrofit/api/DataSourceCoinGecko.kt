@@ -14,7 +14,7 @@ interface DataSourceCoinGecko {
     fun getCoinsList(@Query("vs_currency") currencyAgainst: String,
                      @Query("ids") ids: String = "",
                      @Query("order") order: String,
-                     @Query("per_page") perPage: Int = 100, @Query ("page") page: Int): Single<List<CoinBase>>
+                     @Query("per_page") perPage: Int = 250, @Query ("page") page: Int): Single<List<CoinBase>>
 
     @GET("api/v3/coins/list")
     fun getCompleteList(): Single<List<GeneralInfoCoinDb>>

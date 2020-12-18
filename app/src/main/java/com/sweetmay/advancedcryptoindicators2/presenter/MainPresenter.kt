@@ -9,4 +9,6 @@ class MainPresenter: MvpPresenter<MainActivityView>() {
         super.onFirstViewAttach()
         viewState.initBottomNav()
     }
+
+
 }

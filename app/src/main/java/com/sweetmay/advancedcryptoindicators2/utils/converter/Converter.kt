@@ -1,6 +1,8 @@
 package com.sweetmay.advancedcryptoindicators2.utils.converter
 
 import android.graphics.Color
+import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinDb
+import com.sweetmay.advancedcryptoindicators2.model.entity.coin.GeneralInfoCoinDb
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
 
 class Converter {
@@ -42,4 +44,30 @@ class Converter {
         }
         return priceList
     }
+
+    fun convertIdsToString(list: List<CoinDb>): String{
+        val result = StringBuilder()
+        for (coin in list){
+            if(result.isNotEmpty()){
+                result.append(",${coin.id}")
+            }else {
+                result.append(coin.id)
+            }
+        }
+        return result.toString()
+    }
+
+
+    fun convertIdsToStringFromSearch(list: List<GeneralInfoCoinDb>): String{
+        val result = StringBuilder()
+        for (coin in list){
+            if(result.isNotEmpty()){
+                result.append(",${coin.id}")
+            }else {
+                result.append(coin.id)
+            }
+        }
+        return result.toString()
+    }
+
 }
