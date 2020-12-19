@@ -17,9 +17,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/PrimaryCard">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/price_block"
-        android:background="@drawable/coin_detailed_border"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -51,17 +54,23 @@
             android:background="@null"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/PrimaryCard">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/rsi_block"
         android:orientation="horizontal"
-        android:background="@drawable/coin_detailed_border"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="24dp"
             android:layout_weight="1">
 
             <TextView
@@ -122,15 +131,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
     </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="8dp">
+        style="@style/PrimaryCard">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/arima_block"
             android:layout_width="match_parent"
@@ -177,9 +184,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
-
 </androidx.appcompat.widget.LinearLayoutCompat>
-
-
 </ScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>

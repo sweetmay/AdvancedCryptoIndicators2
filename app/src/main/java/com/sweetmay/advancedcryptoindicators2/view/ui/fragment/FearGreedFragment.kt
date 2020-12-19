@@ -57,30 +57,19 @@ class FearGreedFragment: BaseFragment<FearGreedFragmentBinding>(), FnGView{
         val converter = Converter()
         animateFnGView(data[0].value.toInt())
         with(binding){
-            textNowFngStatus.text =
-                    getString(converter
-                            .convertFnGToTextStatus
-                            (data[0].value.toInt()))
+            textNowFngStatus.text = data[0].value_classification
 
             valueNow.text = data[0].value
 
-            textYesterdayFngStatus.text =
-                    getString(converter
-                            .convertFnGToTextStatus
-                            (data[1].value.toInt()))
+            textYesterdayFngStatus.text = data[1].value_classification
 
             valueYesterday.text = data[1].value
 
-            textLastWeekFngStatus.text =
-                    getString(converter
-                            .convertFnGToTextStatus(data[6].value.toInt()))
+            textLastWeekFngStatus.text = data[6].value_classification
 
             valueLastWeek.text = data[6].value
 
-            textLastMonthFngStatus.text =
-                    getString(converter
-                            .convertFnGToTextStatus
-                            (data[30].value.toInt()))
+            textLastMonthFngStatus.text = data[30].value_classification
 
             valueLastMonth.text = data[30].value
         }

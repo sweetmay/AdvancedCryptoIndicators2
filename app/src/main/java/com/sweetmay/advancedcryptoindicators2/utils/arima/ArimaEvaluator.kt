@@ -9,11 +9,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class ArimaEvaluator : IArimaEvaluator {
 
-    private val p = 2
-    private val d = 1
+    private val p = 1
+    private val d = 0
     private val q = 1
-    private val P = 1
-    private val D = 1
+    private val P = 0
+    private val D = 0
     private val Q = 0
     private val m = 0
 
