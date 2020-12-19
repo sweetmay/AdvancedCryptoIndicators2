@@ -16,7 +16,7 @@ import io.reactivex.rxjava3.core.Single
 import moxy.MvpPresenter
 import javax.inject.Inject
 
-class CoinDataFragmentPresenter(private val injection: IAppInjection) : MvpPresenter<CoinDataView>() {
+class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<CoinDataView>() {
 
     init {
         injection.initDetailedComponent()?.inject(this)

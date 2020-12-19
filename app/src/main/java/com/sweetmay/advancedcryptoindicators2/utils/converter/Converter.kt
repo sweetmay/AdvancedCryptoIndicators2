@@ -1,6 +1,7 @@
 package com.sweetmay.advancedcryptoindicators2.utils.converter
 
 import android.graphics.Color
+import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinDb
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.GeneralInfoCoinDb
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
@@ -68,6 +69,16 @@ class Converter {
             }
         }
         return result.toString()
+    }
+
+    fun convertFnGToTextStatus(value: Int): Int{
+        return when(value){
+            in 0..25 -> R.string.extreme_fear
+            in 25..50 -> R.string.fear
+            in 50..75 -> R.string.greed
+            in 75..100-> R.string.extreme_greed
+            else -> R.string.error_data_load
+        }
     }
 
 }

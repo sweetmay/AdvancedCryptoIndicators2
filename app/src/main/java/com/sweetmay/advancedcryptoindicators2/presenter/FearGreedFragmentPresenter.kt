@@ -27,7 +27,7 @@ class FearGreedFragmentPresenter(private val injection: IAppInjection): MvpPrese
 
     fun loadData() {
         viewState.showLoading()
-        fngRepo.getFnG("10").observeOn(scheduler).subscribe ({ fng->
+        fngRepo.getFnG("31").observeOn(scheduler).subscribe ({ fng->
             viewState.showData(fng)
             viewState.hideLoading()
         }, {

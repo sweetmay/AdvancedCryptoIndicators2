@@ -12,6 +12,7 @@ import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.FearGreedFragmentBinding
 import com.sweetmay.advancedcryptoindicators2.model.entity.fng.FnGEntity
 import com.sweetmay.advancedcryptoindicators2.presenter.FearGreedFragmentPresenter
+import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.view.FnGView
 import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.base.BaseFragment
 import moxy.ktx.moxyPresenter
@@ -53,8 +54,36 @@ class FearGreedFragment: BaseFragment<FearGreedFragmentBinding>(), FnGView{
 
     override fun showData(fng: FnGEntity) {
         val data = fng.data
+        val converter = Converter()
         animateFnGView(data[0].value.toInt())
+        with(binding){
+            textNowFngStatus.text =
+                    getString(converter
+                            .convertFnGToTextStatus
+                            (data[0].value.toInt()))
 
+            valueNow.text = data[0].value
+
+            textYesterdayFngStatus.text =
+                    getString(converter
+                            .convertFnGToTextStatus
+                            (data[1].value.toInt()))
+
+            valueYesterday.text = data[1].value
+
+            textLastWeekFngStatus.text =
+                    getString(converter
+                            .convertFnGToTextStatus(data[6].value.toInt()))
+
+            valueLastWeek.text = data[6].value
+
+            textLastMonthFngStatus.text =
+                    getString(converter
+                            .convertFnGToTextStatus
+                            (data[30].value.toInt()))
+
+            valueLastMonth.text = data[30].value
+        }
     }
 
     private fun animateFnGView(fng: Int) {
