@@ -50,6 +50,7 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
                             settings.getPriceByPreference(coinDetailed.market_data.current_price)))
 
             setChange(coinDetailed)
+            viewState.setSentimentView(coinDetailed.sentiment_votes_up_percentage.toInt())
             loadImage(coinDetailed.image.small)
         }, {
             viewState.renderError(it as Exception)

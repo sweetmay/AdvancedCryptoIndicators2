@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import androidx.annotation.Dimension
-import androidx.annotation.Dimension.DP
 import androidx.core.graphics.drawable.toBitmap
 import com.sweetmay.advancedcryptoindicators2.R
 import kotlin.properties.Delegates
@@ -85,10 +84,6 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
             currentAngle+= angleToRotate
             invalidate()
         }
-    }
-
-    fun rotateTo(fng:Int){
-        needleMatrix.postRotate(fng-currentAngle, sizeWidth/2, sizeHeight-newWidth/2)
     }
 
     override fun onDraw(canvas: Canvas?) {

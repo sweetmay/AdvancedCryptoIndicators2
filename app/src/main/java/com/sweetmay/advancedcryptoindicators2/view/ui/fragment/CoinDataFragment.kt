@@ -110,6 +110,10 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
 
     }
 
+    override fun setSentimentView(value: Int) {
+        binding.sentiment.setSentiment(value)
+    }
+
     override fun setRsi(rsi: RsiEntity) {
         with(binding) {
             stopLoss.text = resources.getString(R.string.possible_sl, String.format("%.8f",rsi.stopLoss))
