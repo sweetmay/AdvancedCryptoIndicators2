@@ -8,8 +8,8 @@
     <string name="favorite_coins_title">Favorite coins</string>
     <string name="search_title">Search</string>
     <string name="coins_list_title">Coins List</string>
-    <string name="rsi_indicator_name">RSI</string>
-    <string name="arima_indicator_name">ARIMA</string>
+    <string name="rsi_indicator_name">Bounce Indicator</string>
+    <string name="arima_indicator_name">AI prediction</string>
 
     <string name="rsi_strength">Indicator strength: %1$s %%</string>
     <string name="possible_target">Possible target:  %1$s $</string>
@@ -37,4 +37,5 @@
     <string name="yesterday">Yesterday</string>
     <string name="last_week">Last Week</string>
     <string name="last_month">Last Month</string>
+    <string name="no_results">No results, try full coin name</string>
 </resources>

@@ -12,7 +12,6 @@ import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.FearGreedFragmentBinding
 import com.sweetmay.advancedcryptoindicators2.model.entity.fng.FnGEntity
 import com.sweetmay.advancedcryptoindicators2.presenter.FearGreedFragmentPresenter
-import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.view.FnGView
 import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.base.BaseFragment
 import moxy.ktx.moxyPresenter
@@ -54,7 +53,6 @@ class FearGreedFragment: BaseFragment<FearGreedFragmentBinding>(), FnGView{
 
     override fun showData(fng: FnGEntity) {
         val data = fng.data
-        val converter = Converter()
         animateFnGView(data[0].value.toInt())
         with(binding){
             textNowFngStatus.text = data[0].value_classification

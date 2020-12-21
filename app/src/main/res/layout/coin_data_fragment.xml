@@ -24,17 +24,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/price_block"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        style="@style/CoinDetailedBlocks">
         <TextView
             android:id="@+id/price_detailed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="32sp"
+            style="@style/MainPrice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/price_change"
             android:layout_width="wrap_content"
@@ -43,7 +42,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/price_detailed" />
-
         <com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
             android:id="@+id/fav_button"
             android:layout_width="32dp"
@@ -52,27 +50,24 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@null"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
+
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/PrimaryCard">
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/rsi_block"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        style="@style/CoinDetailedBlocks">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="24dp"
             android:layout_weight="1">
-
             <TextView
                 android:id="@+id/rsi_indicator_name"
                 style="@style/IndicatorTextStyle"
@@ -80,22 +75,20 @@
                 android:layout_height="wrap_content"
                 android:text="@string/rsi_indicator_name"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/bottom_layout_border"/>
             <TextView
                 android:id="@+id/rsi_strength"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rsi_indicator_name" />
-
             <TextView
                 android:id="@+id/stop_loss"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rsi_strength" />
-
             <TextView
                 android:id="@+id/target"
                 android:layout_width="wrap_content"
@@ -103,14 +96,12 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stop_loss" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -120,7 +111,6 @@
                 app:layout_constraintEnd_toStartOf="@+id/help_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
-
             <ImageView
                 android:id="@+id/help_icon"
                 android:layout_width="32dp"
@@ -129,7 +119,6 @@
                 android:src="@drawable/help_outline_24px"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
     </com.google.android.material.card.MaterialCardView>
@@ -138,38 +127,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/PrimaryCard">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/arima_block"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="24dp">
+            android:layout_height="match_parent"
+            style="@style/CoinDetailedBlocks">
 
             <TextView
                 android:id="@+id/arima_indicator_name"
                 style="@style/IndicatorTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bottom_layout_border"
                 android:text="@string/arima_indicator_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/current_period"
-                android:text="@string/_30_day_prediction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/_30_day_prediction"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/arima_indicator_name"
-                />
-
+                app:layout_constraintTop_toBottomOf="@id/arima_indicator_name" />
 
             <TextView
                 android:id="@+id/prediction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/current_period"
                 app:layout_constraintStart_toStartOf="parent"
-                />
+                app:layout_constraintTop_toBottomOf="@id/current_period" />
 
             <ImageButton
                 android:id="@+id/day_prediction_picker"
@@ -180,7 +168,6 @@
                 app:layout_constraintBottom_toBottomOf="@+id/arima_indicator_name"
                 app:layout_constraintStart_toEndOf="@+id/arima_indicator_name"
                 app:layout_constraintTop_toTopOf="@+id/arima_indicator_name" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 

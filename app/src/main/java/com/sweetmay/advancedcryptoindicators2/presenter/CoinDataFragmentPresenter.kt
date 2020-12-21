@@ -34,24 +34,26 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
     lateinit var arimaEvaluator: IArimaEvaluator
     @Inject
     lateinit var favCache: IFavCoinsCache
+    @Inject
+    lateinit var converter: Converter
 
     fun loadData(coinBase: CoinBase) {
         viewState.showLoading()
         viewState.setTitle(coinBase.name)
         viewState.setFavButton(coinBase)
         coinDataRepo.getCoin(coinBase).observeOn(scheduler).subscribe ({ coinDetailed ->
-            viewState.setPrice( coinDetailed.market_data.current_price.usd.toString() + "$ " )
+            viewState.setPrice(converter.convertPrice(coinDetailed.market_data.current_price.usd))
             setChange(coinDetailed)
             loadImage(coinDetailed.image.small)
         }, {
-            viewState.renderError(it.message?: "Error")
+            viewState.renderError(it as Exception)
         })
         loadAllData(coinBase)
     }
 
     private fun setChange(coinDetailed: CoinDetailed) {
         val change = coinDetailed.market_data.price_change_percentage_24h_in_currency.usd
-        val convertedChange = Converter().convertChange(change)
+        val convertedChange = converter.convertChange(change)
         viewState.set24hChange(convertedChange)
     }
 
@@ -72,14 +74,14 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
             })
             arimaEvaluator.calculateArima(t2).observeOn(scheduler)
                     .subscribe ({ forecast->
-                viewState.setArima(String.format("%.4f", forecast.last()))
+                viewState.setArima(String.format("%.5f", forecast.last()))
             }, {
                 viewState.showArimaError()
             })
         }).doAfterSuccess {
             viewState.hideLoading()
         }.subscribe({}, {
-            viewState.renderError(it.message?:"Error")
+            viewState.renderError(it as Exception)
         })
     }
 
@@ -99,13 +101,13 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
 
 
     fun changeArima(period: Int, coinBase: CoinBase?) {
-        coinBase?.let { coinDataRepo
-                .getCoinMarketChartData(it, period = "max").observeOn(scheduler).doOnError {
-                    viewState.renderError(it.message?:"Error")
+        coinBase?.let { coin-> coinDataRepo
+                .getCoinMarketChartData(coin, period = "max").observeOn(scheduler).doOnError {
+                    viewState.renderError(it as Exception)
                 }.subscribe{chart->
                     arimaEvaluator.calculateArima(chart, predictionPeriod = period).observeOn(scheduler)
                             .subscribe ({ forecast->
-                                viewState.setArima(String.format("%.4f", forecast.last()))
+                                viewState.setArima(String.format("%.5f", forecast.last()))
                             }, {
                                 viewState.showArimaError()
                             })

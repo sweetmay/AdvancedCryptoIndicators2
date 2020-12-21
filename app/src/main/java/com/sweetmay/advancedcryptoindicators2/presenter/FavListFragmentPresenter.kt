@@ -1,5 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
+import android.widget.ImageView
 import com.sweetmay.advancedcryptoindicators2.IAppInjection
 import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
@@ -8,7 +9,9 @@ import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.CoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.presenter.callback.FavListPresenterCallbacks
 import com.sweetmay.advancedcryptoindicators2.presenter.list.FavCoinsListPresenter
 import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
+import com.sweetmay.advancedcryptoindicators2.utils.image.IImageLoader
 import com.sweetmay.advancedcryptoindicators2.view.FavView
+import com.sweetmay.advancedcryptoindicators2.view.adapter.CoinsListAdapter
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import javax.inject.Inject
@@ -27,6 +30,8 @@ class FavListFragmentPresenter(private val injection: IAppInjection) : MvpPresen
     lateinit var scheduler: Scheduler
     @Inject
     lateinit var favCache: IFavCoinsCache
+    @Inject
+    lateinit var imageLoader: IImageLoader<ImageView>
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -67,12 +72,16 @@ class FavListFragmentPresenter(private val injection: IAppInjection) : MvpPresen
                         viewState.hideLoading()
                         viewState.updateList()
             }, {
-                viewState.renderError(it.message?:"Error")
+                viewState.renderError(it as Exception)
                 })
             }else {
                 viewState.showNoCoins()
             }
         }
+    }
+
+    fun createAdapter(): CoinsListAdapter {
+        return CoinsListAdapter(listPresenter, imageLoader)
     }
 
     override fun onDestroy() {

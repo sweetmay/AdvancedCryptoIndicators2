@@ -5,13 +5,15 @@ import com.sweetmay.advancedcryptoindicators2.di.fng.FnGSubComponent
 import com.sweetmay.advancedcryptoindicators2.di.list.ListSubComponent
 import com.sweetmay.advancedcryptoindicators2.di.modules.ApiCGModule
 import com.sweetmay.advancedcryptoindicators2.di.modules.AppModule
+import com.sweetmay.advancedcryptoindicators2.di.modules.ConverterModule
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
     AppModule::class,
-    ApiCGModule::class
+    ApiCGModule::class,
+    ConverterModule::class
 ])
 interface AppComponent {
     fun listSubComponent(): ListSubComponent

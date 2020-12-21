@@ -31,7 +31,7 @@ class FearGreedFragmentPresenter(private val injection: IAppInjection): MvpPrese
             viewState.showData(fng)
             viewState.hideLoading()
         }, {
-            viewState.renderError(it.message?: "Error")
+            viewState.renderError(it as Exception)
         })
 
     }

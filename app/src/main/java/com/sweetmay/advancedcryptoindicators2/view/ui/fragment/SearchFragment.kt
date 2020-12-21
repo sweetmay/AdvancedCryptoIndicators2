@@ -12,37 +12,39 @@ import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.SearchFragmentBinding
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.presenter.SearchFragmentPresenter
-import com.sweetmay.advancedcryptoindicators2.utils.image.GlideImageLoader
+import com.sweetmay.advancedcryptoindicators2.utils.exception.NoResultsException
 import com.sweetmay.advancedcryptoindicators2.view.SearchView
-import com.sweetmay.advancedcryptoindicators2.view.adapter.CoinsListAdapter
 import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.base.BaseFragment
 import moxy.ktx.moxyPresenter
 
 class SearchFragment: BaseFragment<SearchFragmentBinding>(), SearchView {
 
-    val fragmentPresenter: SearchFragmentPresenter by moxyPresenter { SearchFragmentPresenter(App.injection) }
+    private val presenter: SearchFragmentPresenter by moxyPresenter { SearchFragmentPresenter(App.injection) }
 
     lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fragmentPresenter.fetchAllcoins()
+        presenter.fetchAllcoins()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setOnSearchQueryListener()
+    }
+
+    private fun setOnSearchQueryListener() {
         binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText != null && newText.length>1 && newText != "") {
-                    fragmentPresenter.searchForCoins(newText)
+                if (newText != null && newText.length > 1 && newText != "") {
+                    presenter.searchForCoins(newText)
                 }
                 return true
             }
-
         })
     }
 
@@ -54,15 +56,16 @@ class SearchFragment: BaseFragment<SearchFragmentBinding>(), SearchView {
     override fun initRV() {
         with(binding.coinRv){
             layoutManager = LinearLayoutManager(context)
-            adapter = CoinsListAdapter(fragmentPresenter.coinsListPresenter, GlideImageLoader())
+            adapter = presenter.createAdapter()
         }
     }
 
     override fun onErrorHandleClick() {
-        fragmentPresenter.fetchAllcoins()
+        presenter.fetchAllcoins()
     }
 
     override fun updateList() {
+        binding.noResultText.visibility = View.GONE
         binding.coinRv.adapter?.notifyDataSetChanged()
     }
 
@@ -81,5 +84,13 @@ class SearchFragment: BaseFragment<SearchFragmentBinding>(), SearchView {
     override fun selectCoin(coinBase: CoinBase) {
         val action = SearchFragmentDirections.actionSearchFragmentToCoinDataFragment(coinBase)
         navController.navigate(action)
+    }
+
+    override fun renderError(e: Exception) {
+        if(e is NoResultsException){
+            binding.noResultText.visibility = View.VISIBLE
+        }else{
+            super.renderError(e)
+        }
     }
 }

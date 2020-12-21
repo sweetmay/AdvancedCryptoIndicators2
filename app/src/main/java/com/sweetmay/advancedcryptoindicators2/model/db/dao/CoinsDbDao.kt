@@ -31,5 +31,5 @@ interface CoinsDbDao {
     fun getFullList(): List<GeneralInfoCoinDb>
 
     @Query("SELECT * FROM GeneralInfoCoinDb WHERE name LIKE '%' || :search || '%'")
-    fun findById(search: String): List<GeneralInfoCoinDb>
+    fun fundByName(search: String): List<GeneralInfoCoinDb>
 }

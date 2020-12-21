@@ -1,6 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
-import android.util.Log
+import android.widget.ImageView
 import com.sweetmay.advancedcryptoindicators2.IAppInjection
 import com.sweetmay.advancedcryptoindicators2.model.db.cache.IAllCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
@@ -10,7 +10,10 @@ import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.CoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.presenter.callback.CoinsListPresenterCallbacks
 import com.sweetmay.advancedcryptoindicators2.presenter.list.CoinsListPresenter
 import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
+import com.sweetmay.advancedcryptoindicators2.utils.exception.NoResultsException
+import com.sweetmay.advancedcryptoindicators2.utils.image.IImageLoader
 import com.sweetmay.advancedcryptoindicators2.view.SearchView
+import com.sweetmay.advancedcryptoindicators2.view.adapter.CoinsListAdapter
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import javax.inject.Inject
@@ -29,6 +32,10 @@ class SearchFragmentPresenter(private val injection: IAppInjection): MvpPresente
     lateinit var coinsRepo: ICoinsListRepo
     @Inject
     lateinit var favCache: IFavCoinsCache
+    @Inject
+    lateinit var imageLoader: IImageLoader<ImageView>
+    @Inject
+    lateinit var converter: Converter
 
     val coinsListPresenter = CoinsListPresenter(this)
 
@@ -41,19 +48,28 @@ class SearchFragmentPresenter(private val injection: IAppInjection): MvpPresente
 
     fun searchForCoins(name: String) {
         viewState.showLoading()
-        allCoinsCache.findByName(name).subscribe { list->
-            if(list.isNotEmpty()){
-                coinsRepo.getCoins(CoinsListRepo.Currency.usd.toString(),
-                        ids = Converter().convertIdsToStringFromSearch(list))
-                        .observeOn(scheduler)
-                        .subscribe ({ coins->
-                            coinsListPresenter.coins.clear()
-                            coinsListPresenter.coins.addAll(coins)
-                            viewState.updateList()
-                            viewState.hideLoading()
-                        }, {
-                            Log.d("A", it.toString())
-                        })
+        allCoinsCache.findByName(name).observeOn(scheduler).subscribe { list->
+            try {
+                if(list.isNotEmpty()){
+                    coinsRepo.getCoins(CoinsListRepo.Currency.usd.toString(),
+                            converter.convertIdsToStringFromSearch(list))
+                            .observeOn(scheduler)
+                            .subscribe ({ coins->
+                                coinsListPresenter.coins.clear()
+                                coinsListPresenter.coins.addAll(coins)
+                                viewState.updateList()
+                                viewState.hideLoading()
+                            }, {
+                                viewState.renderError(it as Exception)
+                            })
+                }else {
+                    throw NoResultsException()
+                }
+            }catch (e: NoResultsException){
+                viewState.hideLoading()
+                coinsListPresenter.coins.clear()
+                viewState.updateList()
+                viewState.renderError(e)
             }
         }
     }
@@ -62,7 +78,7 @@ class SearchFragmentPresenter(private val injection: IAppInjection): MvpPresente
         coinsRepo.saveFullList().subscribe ({list->
             allCoinsCache.saveCoins(list).subscribe()
         },{
-            viewState.renderError(it.message ?: "Error")
+            viewState.renderError(it as Exception)
         })
     }
 
@@ -76,6 +92,10 @@ class SearchFragmentPresenter(private val injection: IAppInjection): MvpPresente
 
     override fun deleteFromCache(coinBase: CoinBase) {
         favCache.deleteFavCoin(coinBase).subscribe()
+    }
+
+    fun createAdapter(): CoinsListAdapter {
+        return CoinsListAdapter(coinsListPresenter, imageLoader)
     }
 
     override fun onDestroy() {

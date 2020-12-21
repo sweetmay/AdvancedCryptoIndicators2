@@ -55,7 +55,12 @@ class CoinsListAdapter(val presenter: ICoinsListPresenter, val imageLoader: IIma
         }
 
         override fun setPrice(price: Float) {
-            val tmp = "$ $price"
+            var tmp = ""
+            if(price<1){
+                tmp = "$" + String.format("%.8f", price)
+            }else{
+                tmp = "$$price"
+            }
             itemCoinBinding.coinPrice.text = tmp
         }
 

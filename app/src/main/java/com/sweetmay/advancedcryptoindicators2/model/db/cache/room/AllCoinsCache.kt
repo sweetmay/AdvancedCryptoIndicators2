@@ -29,7 +29,7 @@ class AllCoinsCache(private val dao: CoinsDbDao): IAllCoinsCache {
 
     override fun findByName(id: String): Single<List<GeneralInfoCoinDb>> {
         return Single.fromCallable {
-            dao.findById(id)
+            dao.fundByName(id)
         }.subscribeOn(Schedulers.io())
     }
 }

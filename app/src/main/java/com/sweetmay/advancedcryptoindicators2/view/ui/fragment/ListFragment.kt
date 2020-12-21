@@ -13,9 +13,7 @@ import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.ListFragmentBinding
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.presenter.ListFragmentPresenter
-import com.sweetmay.advancedcryptoindicators2.utils.image.GlideImageLoader
 import com.sweetmay.advancedcryptoindicators2.view.CoinsListView
-import com.sweetmay.advancedcryptoindicators2.view.adapter.CoinsListAdapter
 import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.base.BaseFragment
 import moxy.ktx.moxyPresenter
 
@@ -32,7 +30,7 @@ class ListFragment : BaseFragment<ListFragmentBinding>(), CoinsListView {
 
     private fun navigateToSearch() {
         with(binding.toolbarInclude.toolbar) {
-            inflateMenu(R.menu.options_menu)
+            inflateMenu(R.menu.options_menu_search)
             menu.findItem(R.id.search_button_menu).setOnMenuItemClickListener {
                 navController.navigate(ListFragmentDirections.actionListFragmentToSearchFragment())
                 true
@@ -44,7 +42,7 @@ class ListFragment : BaseFragment<ListFragmentBinding>(), CoinsListView {
     override fun initRv() {
         with(binding.coinRv){
             layoutManager = LinearLayoutManager(context)
-            adapter = CoinsListAdapter(presenter.coinsListPresenter, GlideImageLoader())
+            adapter = presenter.createAdapter()
             extendListOnScroll()
         }
     }

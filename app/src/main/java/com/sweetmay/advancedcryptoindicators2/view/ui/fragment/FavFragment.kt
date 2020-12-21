@@ -10,9 +10,7 @@ import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.FavFragmentBinding
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.presenter.FavListFragmentPresenter
-import com.sweetmay.advancedcryptoindicators2.utils.image.GlideImageLoader
 import com.sweetmay.advancedcryptoindicators2.view.FavView
-import com.sweetmay.advancedcryptoindicators2.view.adapter.CoinsListAdapter
 import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.base.BaseFragment
 import moxy.ktx.moxyPresenter
 
@@ -20,7 +18,7 @@ class FavFragment : BaseFragment<FavFragmentBinding>(), FavView {
 
     lateinit var navController: NavController
 
-    private val fragmentPresenter: FavListFragmentPresenter by moxyPresenter {
+    private val presenter: FavListFragmentPresenter by moxyPresenter {
         FavListFragmentPresenter(App.injection)
     }
 
@@ -32,7 +30,7 @@ class FavFragment : BaseFragment<FavFragmentBinding>(), FavView {
     override fun initRv() {
         with(binding.coinFavRv) {
             layoutManager = LinearLayoutManager(context)
-            adapter = CoinsListAdapter(fragmentPresenter.listPresenter, GlideImageLoader())
+            adapter = presenter.createAdapter()
         }
     }
 
@@ -72,7 +70,7 @@ class FavFragment : BaseFragment<FavFragmentBinding>(), FavView {
     }
 
     override fun onErrorHandleClick() {
-        fragmentPresenter.loadData()
+        presenter.loadData()
     }
 
 }

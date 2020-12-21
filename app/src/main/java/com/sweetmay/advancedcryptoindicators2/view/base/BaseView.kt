@@ -5,5 +5,5 @@ import moxy.viewstate.strategy.alias.Skip
 
 interface BaseView: MvpView {
     @Skip
-    fun renderError(msg: String)
+    fun renderError(e: Exception)
 }
