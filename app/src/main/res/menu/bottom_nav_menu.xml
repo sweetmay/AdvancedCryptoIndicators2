@@ -3,16 +3,16 @@
     <item
         android:id="@+id/listFragment"
         android:enabled="true"
-        android:icon="@drawable/subject_24px"
+        android:icon="@drawable/list_selector"
         android:title="@string/list"/>
     <item
         android:id="@+id/fearGreedFragment"
         android:enabled="true"
-        android:icon="@drawable/assessment_24px"
+        android:icon="@drawable/fng_selector"
         android:title="@string/fear_greed"/>
     <item
         android:id="@+id/favFragment"
         android:enabled="true"
-        android:icon="@drawable/grade_24px"
+        android:icon="@drawable/fav_selector"
         android:title="@string/fav"/>
 </menu>

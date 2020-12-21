@@ -5,6 +5,7 @@ import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.CoinDetailed
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinDataRepo
+import com.sweetmay.advancedcryptoindicators2.model.settings.ISettings
 import com.sweetmay.advancedcryptoindicators2.utils.arima.IArimaEvaluator
 import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.utils.image.IImageLoaderAsDrawable
@@ -36,13 +37,18 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
     lateinit var favCache: IFavCoinsCache
     @Inject
     lateinit var converter: Converter
+    @Inject
+    lateinit var settings: ISettings
 
     fun loadData(coinBase: CoinBase) {
         viewState.showLoading()
         viewState.setTitle(coinBase.name)
         viewState.setFavButton(coinBase)
         coinDataRepo.getCoin(coinBase).observeOn(scheduler).subscribe ({ coinDetailed ->
-            viewState.setPrice(converter.convertPrice(coinDetailed.market_data.current_price.usd))
+            viewState.setPrice(
+                    converter.convertPrice(
+                            settings.getPriceByPreference(coinDetailed.market_data.current_price)))
+
             setChange(coinDetailed)
             loadImage(coinDetailed.image.small)
         }, {

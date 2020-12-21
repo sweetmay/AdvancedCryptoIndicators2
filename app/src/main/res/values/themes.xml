@@ -1,5 +1,6 @@
 <resources>
     <style name="Theme.AdvancedCryptoIndicators2" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/black</item>
     </style>
 
     <style name="IndicatorTextStyle">

@@ -12,9 +12,9 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
         set(value) {
             field = value
             if (field) {
-                setImageResource(R.drawable.grade_24px)
+                setImageResource(R.drawable.favorite_24px_filled)
             } else {
-                setImageResource(R.drawable.grade_24px_outlined)
+                setImageResource(R.drawable.favorite_border_24px)
             }
         }
 
