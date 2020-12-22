@@ -75,6 +75,7 @@ class FavListFragmentPresenter(private val injection: IAppInjection) : MvpPresen
                 viewState.renderError(it as Exception)
                 })
             }else {
+                viewState.hideLoading()
                 viewState.showNoCoins()
             }
         }

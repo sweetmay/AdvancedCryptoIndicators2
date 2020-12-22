@@ -44,17 +44,29 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
         viewState.setTitle(coinBase.name)
         viewState.setFavButton(coinBase)
         coinDataRepo.getCoin(coinBase).observeOn(scheduler).subscribe ({ coinDetailed ->
-            viewState.setPrice(
-                    converter.convertPrice(
-                            settings.getPriceByPreference(coinDetailed.market_data.current_price)))
-
+            setPrice(coinDetailed)
             setChange(coinDetailed)
-            viewState.setSentimentView(coinDetailed.sentiment_votes_up_percentage.toInt())
+            setSentiment(coinDetailed)
             loadImage(coinDetailed.image.small)
         }, {
             viewState.renderError(it as Exception)
         })
         loadAllData(coinBase)
+    }
+
+    private fun setPrice(coinDetailed: CoinDetailed) {
+        viewState.setPrice(
+                converter.convertPrice(
+                        settings.getPriceByPreference(coinDetailed.market_data.current_price)))
+    }
+
+    private fun setSentiment(coinDetailed: CoinDetailed) {
+        val sentiment = coinDetailed.sentiment_votes_up_percentage.toInt()
+        if (sentiment > 0) {
+            viewState.setSentimentView(sentiment)
+        }else{
+            viewState.onSentimentError()
+        }
     }
 
     private fun setChange(coinDetailed: CoinDetailed) {
@@ -80,7 +92,7 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
             })
             arimaEvaluator.calculateArima(t2).observeOn(scheduler)
                     .subscribe ({ forecast->
-                viewState.setArima(String.format("%.5f", forecast.last()))
+                viewState.setArima(converter.convertPriceArima(forecast.last()))
             }, {
                 viewState.showArimaError()
             })

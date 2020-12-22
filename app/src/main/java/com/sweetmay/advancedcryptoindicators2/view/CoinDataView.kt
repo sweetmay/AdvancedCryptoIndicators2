@@ -21,4 +21,5 @@ interface CoinDataView: BaseView {
     fun showRsiError()
     fun setFavButton(coinBase: CoinBase)
     fun setSentimentView(value: Int)
+    fun onSentimentError()
 }

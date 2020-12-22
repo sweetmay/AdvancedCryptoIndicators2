@@ -17,8 +17,16 @@ import com.sweetmay.advancedcryptoindicators2.view.CoinDataView
 import com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
 import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.base.BaseFragment
 import moxy.ktx.moxyPresenter
+import javax.inject.Inject
 
 class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
+
+    init {
+        App.injection.initDetailedComponent()?.inject(this)
+    }
+
+    @Inject
+    lateinit var converter: Converter
 
     private val presenter: CoinDataFragmentPresenter by moxyPresenter {
         CoinDataFragmentPresenter(App.injection)
@@ -114,12 +122,17 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
         binding.sentiment.setSentiment(value)
     }
 
+    override fun onSentimentError() {
+        binding.sentiment.visibility = View.GONE
+        binding.noSentimentResults.visibility = View.VISIBLE
+    }
+
     override fun setRsi(rsi: RsiEntity) {
         with(binding) {
-            stopLoss.text = resources.getString(R.string.possible_sl, String.format("%.6f",rsi.stopLoss), String.format("%.2f", rsi.possibleSLPerc))
+            stopLoss.text = resources.getString(R.string.possible_sl, converter.convertPrice(rsi.stopLoss), String.format("%.2f", rsi.possibleSLPerc))
             rsiStrength.text = resources.getString(R.string.rsi_strength, String.format("%.2f", rsi.signalStrength))
             rsiStrength.setTextColor(rsi.indicatorColor)
-            target.text = resources.getString(R.string.possible_target, String.format("%.6f",rsi.possibleTarget), String.format("%.2f", rsi.possibleTargetPerc))
+            target.text = resources.getString(R.string.possible_target, converter.convertPrice(rsi.possibleTarget), String.format("%.2f", rsi.possibleTargetPerc))
             if(rsi.isPositive){
                 buySellText.text = getString(R.string.buy_text)
             }else {

@@ -5,6 +5,7 @@ import com.sweetmay.advancedcryptoindicators2.di.modules.CoinDataRepoModule
 import com.sweetmay.advancedcryptoindicators2.di.modules.ImageLoaderModule
 import com.sweetmay.advancedcryptoindicators2.di.modules.RsiEvaluatorModule
 import com.sweetmay.advancedcryptoindicators2.presenter.CoinDataFragmentPresenter
+import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.CoinDataFragment
 import dagger.Subcomponent
 
 @CoinDetailedSubComponentScope
@@ -16,4 +17,5 @@ import dagger.Subcomponent
 ])
 interface CoinDetailedSubComponent {
     fun inject(coinDataFragmentPresenter: CoinDataFragmentPresenter)
+    fun inject(coinDataFragment: CoinDataFragment)
 }

@@ -69,9 +69,18 @@ class Converter {
 
     fun convertPrice(price: Float): String{
         return if(price<1) {
-            "$" + String.format("%.8f", price)
+            "$" + String.format("%.6f", price)
         } else {
             "$$price"
         }
+    }
+    fun convertPriceArima(price: Double): String{
+        return if(price>1){
+            "$" + String.format("%.4f", price)
+        }else{
+            "$" + String.format("%.6f", price)
+        }
+
+
     }
 }
