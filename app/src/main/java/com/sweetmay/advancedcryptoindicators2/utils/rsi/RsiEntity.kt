@@ -1,11 +1,9 @@
 package com.sweetmay.advancedcryptoindicators2.utils.rsi
 
-import android.util.Log
-
 class RsiEntity(prices: List<Float> = emptyList(),
                 period: Int) {
 
-    private var basePerc: Float = 0.2f
+    private var basePerc: Float = 0.1f
     private val currentPrice = prices[prices.size-1]
 
     val rsi = calculateRSI(prices, period)
@@ -26,7 +24,6 @@ class RsiEntity(prices: List<Float> = emptyList(),
     }
 
     private fun calculateStrenth(): Float {
-        Log.d("a", rsi.toString())
         return if (isPositive){
             (100-rsi-50)/50*100
         }else {
@@ -35,7 +32,6 @@ class RsiEntity(prices: List<Float> = emptyList(),
     }
 
     private fun calculateBasePercent(): Float {
-        Log.d("Strength", signalStrength.toString())
         return basePerc*(signalStrength/100)
     }
 

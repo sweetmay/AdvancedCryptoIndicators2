@@ -58,9 +58,10 @@
 
             <com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
                 android:id="@+id/fav_button"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:background="@null"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>

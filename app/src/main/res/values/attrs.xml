@@ -5,4 +5,10 @@
         <attr name="needleHeight" format="dimension"/>
         <attr name="needleWidth" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="SentimentView">
+        <attr name="thumbUp" format="integer"/>
+        <attr name="thumbDown" format="integer"/>
+        <attr name="thumbSize" format="dimension"/>
+    </declare-styleable>
 </resources>

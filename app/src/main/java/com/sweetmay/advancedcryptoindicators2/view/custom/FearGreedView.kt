@@ -30,8 +30,8 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
     private val needleMatrix: Matrix
     private val needle: Bitmap
 
-    @Dimension (unit = DP) private var needleHeight = 60
-    @Dimension (unit = DP) private var needleWidtht = 15
+    @Dimension (unit = DP) private var needleHeight: Int
+    @Dimension (unit = DP) private var needleWidtht: Int
 
     init {
         paint.color = Color.BLACK
