@@ -10,7 +10,6 @@ import com.sweetmay.advancedcryptoindicators2.utils.arima.IArimaEvaluator
 import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.utils.image.IImageLoaderAsDrawable
 import com.sweetmay.advancedcryptoindicators2.utils.rsi.IRsiEvaluator
-import com.sweetmay.advancedcryptoindicators2.utils.rsi.RsiEntity
 import com.sweetmay.advancedcryptoindicators2.view.CoinDataView
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
@@ -72,7 +71,7 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
 
         //zip two chartdata requests
         Single.zip(rsiChartObservable, arimaChartObservable, { t1, t2->
-            rsiEvaluator.calculateRsiEntity(t1, riskReward = RsiEntity.RISK_REWARD.HIGH)
+            rsiEvaluator.calculateRsiEntity(t1)
                     .observeOn(scheduler)
                     .subscribe ({ rsi ->
                         viewState.setRsi(rsi)

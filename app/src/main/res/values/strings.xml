@@ -12,8 +12,8 @@
     <string name="arima_indicator_name">AI prediction</string>
 
     <string name="rsi_strength">Indicator strength: %1$s %%</string>
-    <string name="possible_target">Possible target:  %1$s $</string>
-    <string name="possible_sl">Stop Loss: %1$s $</string>
+    <string name="possible_target">Possible target:  %1$s$ (%2$s %%)</string>
+    <string name="possible_sl">Stop Loss: %1$s$ (%2$s %%)</string>
     <string name="buy_text">BUY</string>
     <string name="sell_text">SELL</string>
     <string name="prediction_text">"Prediction: %1$s $"</string>

@@ -116,10 +116,10 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
 
     override fun setRsi(rsi: RsiEntity) {
         with(binding) {
-            stopLoss.text = resources.getString(R.string.possible_sl, String.format("%.8f",rsi.stopLoss))
+            stopLoss.text = resources.getString(R.string.possible_sl, String.format("%.6f",rsi.stopLoss), String.format("%.2f", rsi.possibleSLPerc))
             rsiStrength.text = resources.getString(R.string.rsi_strength, String.format("%.2f", rsi.signalStrength))
             rsiStrength.setTextColor(rsi.indicatorColor)
-            target.text = resources.getString(R.string.possible_target, String.format("%.8f",rsi.possibleTarget))
+            target.text = resources.getString(R.string.possible_target, String.format("%.6f",rsi.possibleTarget), String.format("%.2f", rsi.possibleTargetPerc))
             if(rsi.isPositive){
                 buySellText.text = getString(R.string.buy_text)
             }else {

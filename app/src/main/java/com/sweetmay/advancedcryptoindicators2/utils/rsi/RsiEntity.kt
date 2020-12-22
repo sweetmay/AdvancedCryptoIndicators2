@@ -1,16 +1,11 @@
 package com.sweetmay.advancedcryptoindicators2.utils.rsi
 
+import android.util.Log
+
 class RsiEntity(prices: List<Float> = emptyList(),
-                period: Int,
-                val rr: Float = RISK_REWARD.LOW) {
+                period: Int) {
 
-    object RISK_REWARD{
-        val LOW: Float = 0.33f
-        val MEDIUM: Float = 0.66f
-        val HIGH: Float = 0.99f
-    }
-
-    private var basePerc: Float = 0.03f
+    private var basePerc: Float = 0.2f
     private val currentPrice = prices[prices.size-1]
 
     val rsi = calculateRSI(prices, period)
@@ -20,41 +15,51 @@ class RsiEntity(prices: List<Float> = emptyList(),
     val possibleTarget: Float
     val stopLoss: Float
     val isPositive: Boolean = rsi <= 50
-
+    var possibleTargetPerc = 0f
+    var possibleSLPerc = 0f
     init {
         signalStrength = calculateStrenth()
         basePerc = calculateBasePercent()
         possibleTarget = calculateTarget(currentPrice)
         stopLoss = calculateSL(currentPrice)
+
     }
 
     private fun calculateStrenth(): Float {
+        Log.d("a", rsi.toString())
         return if (isPositive){
-            100-rsi
+            (100-rsi-50)/50*100
         }else {
-            rsi
+            (rsi-50)/50*100
         }
     }
 
     private fun calculateBasePercent(): Float {
-        return basePerc*(1+signalStrength/100)*rr
+        Log.d("Strength", signalStrength.toString())
+        return basePerc*(signalStrength/100)
     }
 
     private fun calculateTarget(currentPrice: Float): Float {
         return if (isPositive) {
             val temp = currentPrice * (1+basePerc)
+            possibleTargetPerc = (1-currentPrice/temp) * 100
             temp
         }else {
             val temp = currentPrice * (1-basePerc)
+            possibleTargetPerc = (currentPrice/temp-1) * 100
             temp
         }
     }
 
     private fun calculateSL(currentPrice: Float): Float {
         return if (isPositive) {
-            currentPrice * (1 - basePerc / 3)
+            val temp = currentPrice * (1 - basePerc / 3)
+            possibleSLPerc = (currentPrice/temp-1) * 100
+            temp
         } else {
-            currentPrice * (1 + basePerc / 3)
+            val temp = currentPrice * (1 + basePerc / 3)
+            possibleSLPerc = (1-currentPrice/temp) * 100
+            temp
         }
     }
 

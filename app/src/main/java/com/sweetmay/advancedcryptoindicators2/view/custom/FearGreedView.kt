@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import androidx.annotation.Dimension
+import androidx.annotation.Dimension.DP
 import androidx.core.graphics.drawable.toBitmap
 import com.sweetmay.advancedcryptoindicators2.R
 import kotlin.properties.Delegates
