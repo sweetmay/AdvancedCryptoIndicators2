@@ -2,14 +2,17 @@ package com.sweetmay.advancedcryptoindicators2.view.ui.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.sweetmay.advancedcryptoindicators2.R
+import com.sweetmay.advancedcryptoindicators2.databinding.RsiSettingsDialogBinding
 import com.sweetmay.advancedcryptoindicators2.model.settings.ISettings
+import com.sweetmay.advancedcryptoindicators2.view.ui.dialogs.base.BaseAlertDialog
 
-class RsiSettingsDialog private constructor(): DialogFragment(){
+class RsiSettingsDialog private constructor(): BaseAlertDialog<RsiSettingsDialogBinding>(){
     private lateinit var listener: RsiCallBack
     private lateinit var settings: ISettings
 
@@ -22,31 +25,29 @@ class RsiSettingsDialog private constructor(): DialogFragment(){
         }
     }
 
+    override fun setBinding(inflater: LayoutInflater): RsiSettingsDialogBinding {
+        return RsiSettingsDialogBinding.inflate(inflater)
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        super.onCreateDialog(savedInstanceState)
         return activity?.let {
-            val builder = AlertDialog.Builder(it)
-            val inflater = requireActivity().layoutInflater
-
-            val layout = inflater.inflate(R.layout.rsi_settings_dialog, null)
-
-            val timeFrame = layout.findViewById<MaterialAutoCompleteTextView>(R.id.time_frame_rsi)
-            val rr = layout.findViewById<MaterialAutoCompleteTextView>(R.id.risk_reward_rsi)
-
-            timeFrame.setText(settings.getRsiTimeFrameRes())
-            rr.setText(settings.getRsiRiskRewardRes())
-
-            ArrayAdapter.createFromResource(layout.context, R.array.time_frame, android.R.layout.simple_spinner_item).also { adapter ->
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                timeFrame.setAdapter(adapter)
+            with(binding){
+                timeFrameRsi.setText(settings.getRsiTimeFrameRes())
+                riskRewardRsi.setText(settings.getRsiRiskRewardRes())
             }
 
-            ArrayAdapter.createFromResource(layout.context, R.array.risk_reward, android.R.layout.simple_spinner_item).also { adapter ->
+            ArrayAdapter.createFromResource(requireContext(), R.array.time_frame, android.R.layout.simple_spinner_item).also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                rr.setAdapter(adapter)
+                binding.timeFrameRsi.setAdapter(adapter)
             }
-            builder.setView(layout)
 
-            onButtonsClick(builder, timeFrame, rr)
+            ArrayAdapter.createFromResource(requireContext(), R.array.risk_reward, android.R.layout.simple_spinner_item).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.riskRewardRsi.setAdapter(adapter)
+            }
+
+            onButtonsClick(builder, binding.timeFrameRsi, binding.riskRewardRsi)
 
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")

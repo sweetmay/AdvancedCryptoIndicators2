@@ -1,23 +1,24 @@
 package com.sweetmay.advancedcryptoindicators2.view.ui.dialogs
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import com.sweetmay.advancedcryptoindicators2.R
+import com.sweetmay.advancedcryptoindicators2.databinding.ArimaSettingsDialogBinding
 import com.sweetmay.advancedcryptoindicators2.model.settings.ISettings
+import com.sweetmay.advancedcryptoindicators2.view.ui.dialogs.base.BaseAlertDialog
 
-class ArimaSettingsDialog private constructor(): DialogFragment() {
+class ArimaSettingsDialog private constructor(): BaseAlertDialog<ArimaSettingsDialogBinding>() {
 
-    private lateinit var listener: ArimaCallBack
-    private lateinit var settings: ISettings
+    lateinit var listener: ArimaCallBack
+    lateinit var settings: ISettings
 
     companion object{
-        fun getInstance(listener: ArimaCallBack, settings: ISettings): DialogFragment{
+        fun getInstance(listener: ArimaCallBack, settings: ISettings): ArimaSettingsDialog{
             val instance = ArimaSettingsDialog()
             instance.settings = settings
             instance.listener = listener
@@ -25,29 +26,24 @@ class ArimaSettingsDialog private constructor(): DialogFragment() {
         }
     }
 
-    @SuppressLint("InflateParams")
+    override fun setBinding(inflater: LayoutInflater): ArimaSettingsDialogBinding {
+        return ArimaSettingsDialogBinding.inflate(inflater)
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        super.onCreateDialog(savedInstanceState)
         return activity?.let {
-            val builder = AlertDialog.Builder(it)
-            val inflater = requireActivity().layoutInflater
-
-            val layout = inflater.inflate(R.layout.arima_settings_dialog, null)
-
-            val timeFrame = layout.findViewById<MaterialAutoCompleteTextView>(R.id.time_frame_arima)
-            val predictionPeriod = layout.findViewById<TextInputEditText>(R.id.prediction_period)
-
-            timeFrame.setText(settings.getArimaTimeFrameRes())
-
-            predictionPeriod.setText(settings.arimaPredictionPeriod.toString())
-
-            ArrayAdapter.createFromResource(layout.context, R.array.time_frame, android.R.layout.simple_spinner_item).also { adapter ->
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                timeFrame.setAdapter(adapter)
+            with(binding){
+                timeFrameArima.setText(settings.getArimaTimeFrameRes())
+                predictionPeriod.setText(settings.arimaPredictionPeriod.toString())
             }
 
-            builder.setView(layout)
+            ArrayAdapter.createFromResource(requireContext(), R.array.time_frame, android.R.layout.simple_spinner_item).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.timeFrameArima.setAdapter(adapter)
+            }
 
-            onButtonsClick(builder, timeFrame, predictionPeriod)
+            onButtonsClick(builder, binding.timeFrameArima, binding.predictionPeriod)
 
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
@@ -71,4 +67,6 @@ class ArimaSettingsDialog private constructor(): DialogFragment() {
             //nothing to do
         }
     }
+
+
 }
