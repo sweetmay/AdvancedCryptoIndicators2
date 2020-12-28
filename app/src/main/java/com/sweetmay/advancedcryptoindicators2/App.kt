@@ -3,17 +3,22 @@ package com.sweetmay.advancedcryptoindicators2
 import android.app.Application
 import androidx.room.Room
 import com.sweetmay.advancedcryptoindicators2.model.db.DataBase
-import com.sweetmay.advancedcryptoindicators2.model.db.dao.CoinsDbDao
+import com.sweetmay.advancedcryptoindicators2.model.db.dao.CoinsGeneralInfoDao
+import com.sweetmay.advancedcryptoindicators2.model.db.dao.FavCoinsDao
 
 class App: Application() {
 
-    lateinit var dbDao: CoinsDbDao
+    lateinit var favCoinsDao: FavCoinsDao
+    lateinit var generalInfoDao: CoinsGeneralInfoDao
+
+    val SETTINGS = "prefs"
     val BASE_URL_CG = "https://api.coingecko.com/"
     val BASE_URL_FNG = "https://api.alternative.me/"
 
-
     companion object{
         lateinit var instance: App
+        private set
+
         lateinit var injection: IAppInjection
         private set
     }
@@ -30,11 +35,15 @@ class App: Application() {
     }
 
     private fun initDb() {
-        dbDao = Room.databaseBuilder(
-            applicationContext,
-            DataBase::class.java,
-            "CoinDb"
+        val db = Room.databaseBuilder(
+                applicationContext,
+                DataBase::class.java,
+                "CoinDb"
         ).build()
-                .getDao()
+
+        with(db){
+            favCoinsDao = favCoinsDao()
+            generalInfoDao = generalInfoDao()
+        }
     }
 }

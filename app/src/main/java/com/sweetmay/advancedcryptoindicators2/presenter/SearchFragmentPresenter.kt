@@ -6,7 +6,7 @@ import com.sweetmay.advancedcryptoindicators2.model.db.cache.IAllCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
-import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.CoinsListRepo
+import com.sweetmay.advancedcryptoindicators2.model.settings.ISettings
 import com.sweetmay.advancedcryptoindicators2.presenter.callback.CoinsListPresenterCallbacks
 import com.sweetmay.advancedcryptoindicators2.presenter.list.CoinsListPresenter
 import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
@@ -36,8 +36,10 @@ class SearchFragmentPresenter(private val injection: IAppInjection): MvpPresente
     lateinit var imageLoader: IImageLoader<ImageView>
     @Inject
     lateinit var converter: Converter
+    @Inject
+    lateinit var settings: ISettings
 
-    val coinsListPresenter = CoinsListPresenter(this)
+    private val coinsListPresenter = CoinsListPresenter(this, converter)
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -51,8 +53,8 @@ class SearchFragmentPresenter(private val injection: IAppInjection): MvpPresente
         allCoinsCache.findByName(name).observeOn(scheduler).subscribe { list->
             try {
                 if(list.isNotEmpty()){
-                    coinsRepo.getCoins(CoinsListRepo.Currency.usd.toString(),
-                            converter.convertIdsToStringFromSearch(list))
+                    coinsRepo.getCoins(settings.currencyAgainst,
+                            converter.convertIdsToStringFromSearch(list), settings.order)
                             .observeOn(scheduler)
                             .subscribe ({ coins->
                                 coinsListPresenter.coins.clear()

@@ -22,11 +22,9 @@
     <string name="error_data_load">Couldn\'t load data</string>
     <string name="retry">retry_text</string>
     <string name="not_enough_data_error">Not enough data</string>
-    <string name="_30_day_prediction">30 day prediction</string>
-    <string name="year_prediction">365 day prediction</string>
-    <string name="_90_day_prediction">90 day prediction</string>
-    <string name="_60_day_prediction">60 day prediction</string>
     <string name="current_prediction_period">Current prediction period: %1$d days </string>
+    <string name="time_frame">Time Frame: %1$s</string>
+
     <string name="action_search">action_search</string>
     <string name="search_fragment_title">Search</string>
     <string name="now">Now</string>
@@ -40,4 +38,25 @@
     <string name="no_results">No results, try full coin name</string>
     <string name="no_sentiment_data">No sentiment data</string>
     <string name="sentiment">Sentiment</string>
+    <string name="settings_icon">settings icon</string>
+    <string name="prediction_period_label">Prediction period (days)</string>
+    <string name="positive_dialog_button">Apply</string>
+    <string name="negative_dialog_button">Cancel</string>
+    <string name="time_frame_label">Time Frame</string>
+    <string name="prediction_period">Prediction period</string>
+
+    <string name="_7_days">7 days</string>
+    <string name="_14_days">14 days</string>
+    <string name="_30_days">30 days</string>
+    <string name="_365_days">365 days</string>
+    <string name="_Max">Max</string>
+
+
+    <string-array name="time_frame_arima">
+        <item name="7_days">7 days</item>
+        <item name="14_days">14 days</item>
+        <item name="30_days">30 days</item>
+        <item name="365_days">365 days</item>
+        <item name="Max">Max</item>
+    </string-array>
 </resources>

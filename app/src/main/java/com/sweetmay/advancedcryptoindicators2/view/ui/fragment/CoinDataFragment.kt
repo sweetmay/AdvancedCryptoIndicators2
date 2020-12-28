@@ -5,21 +5,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.sweetmay.advancedcryptoindicators2.App
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.CoinDataFragmentBinding
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
+import com.sweetmay.advancedcryptoindicators2.model.settings.ISettings
 import com.sweetmay.advancedcryptoindicators2.presenter.CoinDataFragmentPresenter
+import com.sweetmay.advancedcryptoindicators2.utils.arima.ArimaEntity
 import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.utils.rsi.RsiEntity
 import com.sweetmay.advancedcryptoindicators2.view.CoinDataView
 import com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
+import com.sweetmay.advancedcryptoindicators2.view.ui.dialogs.ArimaCallBack
+import com.sweetmay.advancedcryptoindicators2.view.ui.dialogs.ArimaSettingsDialog
 import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.base.BaseFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 
-class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
+class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, ArimaCallBack {
 
     init {
         App.injection.initDetailedComponent()?.inject(this)
@@ -27,6 +32,10 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
 
     @Inject
     lateinit var converter: Converter
+    @Inject
+    lateinit var settings: ISettings
+
+    lateinit var navController: NavController
 
     private val presenter: CoinDataFragmentPresenter by moxyPresenter {
         CoinDataFragmentPresenter(App.injection)
@@ -39,40 +48,18 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
         pendingCoin = arguments?.let { CoinDataFragmentArgs.fromBundle(it).coin }
         pendingCoin?.let { presenter.loadData(it) }
 
-        binding.currentPeriod.text = getString(R.string.current_prediction_period, 30)
-        binding.dayPredictionPicker.setOnClickListener {
-            showPopUpMenu(it)
-        }
+        initArimaIndicator()
     }
 
-    private fun showPopUpMenu(view: View) {
-        val menu = PopupMenu(context, view)
-        menu.inflate(R.menu.arima_settings_menu)
-        menu.setOnMenuItemClickListener {
-            when(it.itemId){
-                R.id._30_day -> {
-                    presenter.changeArima(30, pendingCoin)
-                    binding.currentPeriod.text = getString(R.string.current_prediction_period, 30)
-                    return@setOnMenuItemClickListener true
-                }
-                R.id._60_day -> {
-                    presenter.changeArima(60, pendingCoin)
-                    binding.currentPeriod.text = getString(R.string.current_prediction_period, 60)
-                    return@setOnMenuItemClickListener true
-                }
-                R.id._90_day -> {
-                    presenter.changeArima(90, pendingCoin)
-                    binding.currentPeriod.text = getString(R.string.current_prediction_period, 90)
-                    return@setOnMenuItemClickListener true
-                }
-                R.id.year_prediction -> {
-                    presenter.changeArima(365, pendingCoin)
-                    binding.currentPeriod.text = getString(R.string.current_prediction_period, 365)
-                    return@setOnMenuItemClickListener true
-                }else-> return@setOnMenuItemClickListener false
-            }
+    private fun initArimaIndicator() {
+        binding.timeFrame.text = getString(R.string.time_frame,
+                getString(settings.getArimaTimeFrameRes()))
+        binding.currentPeriod.text = getString(R.string.current_prediction_period,
+                settings.arimaPredictionPeriod)
+        binding.settingsArima.setOnClickListener {
+            val dialog = ArimaSettingsDialog.getInstance(this, settings)
+            dialog.show(requireActivity().supportFragmentManager, "ArimaSettingsDialog")
         }
-        menu.show()
     }
 
     override fun setPrice(price: String) {
@@ -92,8 +79,24 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
         binding.toolbarInclude.progressBar.hide()
     }
 
-    override fun setArima(prediction: String) {
-        binding.prediction.text = resources.getString(R.string.prediction_text, prediction)
+    override fun setArima(arimaEntity: ArimaEntity) {
+        with(binding){
+            prediction.text = resources.getString(R.string.prediction_text,
+                    converter.convertPriceArima(arimaEntity.forecastLast))
+            if(arimaEntity.isPositive){
+                buySellTextArima.text = getString(R.string.buy_text)
+            }else {
+                buySellTextArima.text = getString(R.string.sell_text)
+            }
+        }
+    }
+
+    override fun saveArimaSettings() {
+        binding.currentPeriod.text = getString(R.string.current_prediction_period,
+                settings.arimaPredictionPeriod)
+        binding.timeFrame.text = getString(R.string.time_frame,
+                getString(settings.getArimaTimeFrameRes()))
+        presenter.loadArima(pendingCoin)
     }
 
     override fun setTitle(title: String) {
@@ -114,8 +117,6 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
                 }else presenter.deleteFromCache(coinBase)
             }
         }
-
-
     }
 
     override fun setSentimentView(value: Int) {
@@ -134,11 +135,11 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
             rsiStrength.setTextColor(rsi.indicatorColor)
             target.text = resources.getString(R.string.possible_target, converter.convertPrice(rsi.possibleTarget), String.format("%.2f", rsi.possibleTargetPerc))
             if(rsi.isPositive){
-                buySellText.text = getString(R.string.buy_text)
+                buySellTextRsi.text = getString(R.string.buy_text)
             }else {
-                buySellText.text = getString(R.string.sell_text)
+                buySellTextRsi.text = getString(R.string.sell_text)
             }
-            buySellText.setTextColor(rsi.indicatorColor)
+            buySellTextRsi.setTextColor(rsi.indicatorColor)
         }
     }
 
@@ -154,14 +155,12 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView {
         }
     }
 
-
-
     override fun setBinding(inflater: LayoutInflater, container: ViewGroup?): CoinDataFragmentBinding {
+        navController = findNavController()
         return CoinDataFragmentBinding.inflate(inflater, container, false)
     }
 
     override fun onErrorHandleClick() {
         pendingCoin?.let { presenter.loadData(it) }
     }
-
 }

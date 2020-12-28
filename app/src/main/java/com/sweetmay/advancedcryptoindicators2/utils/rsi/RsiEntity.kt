@@ -15,12 +15,12 @@ class RsiEntity(prices: List<Float> = emptyList(),
     val isPositive: Boolean = rsi <= 50
     var possibleTargetPerc = 0f
     var possibleSLPerc = 0f
+
     init {
         signalStrength = calculateStrenth()
         basePerc = calculateBasePercent()
         possibleTarget = calculateTarget(currentPrice)
         stopLoss = calculateSL(currentPrice)
-
     }
 
     private fun calculateStrenth(): Float {

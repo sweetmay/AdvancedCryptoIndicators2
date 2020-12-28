@@ -5,9 +5,10 @@ import com.sweetmay.advancedcryptoindicators2.IAppInjection
 import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
-import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.CoinsListRepo
+import com.sweetmay.advancedcryptoindicators2.model.settings.ISettings
 import com.sweetmay.advancedcryptoindicators2.presenter.callback.CoinsListPresenterCallbacks
 import com.sweetmay.advancedcryptoindicators2.presenter.list.CoinsListPresenter
+import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.utils.image.IImageLoader
 import com.sweetmay.advancedcryptoindicators2.view.CoinsListView
 import com.sweetmay.advancedcryptoindicators2.view.adapter.CoinsListAdapter
@@ -29,6 +30,10 @@ class ListFragmentPresenter(private val injection: IAppInjection) : MvpPresenter
     lateinit var favCache: IFavCoinsCache
     @Inject
     lateinit var imageLoader: IImageLoader<ImageView>
+    @Inject
+    lateinit var converter: Converter
+    @Inject
+    lateinit var settings: ISettings
 
     companion object{
         var stateRVPos: Int = 0
@@ -36,8 +41,7 @@ class ListFragmentPresenter(private val injection: IAppInjection) : MvpPresenter
     private val TAG: String = this::class.java.simpleName
 
 
-    val coinsListPresenter = CoinsListPresenter(this)
-
+    private val coinsListPresenter = CoinsListPresenter(this, converter)
 
     var pageToLoad = 1
 
@@ -60,9 +64,10 @@ class ListFragmentPresenter(private val injection: IAppInjection) : MvpPresenter
     override fun saveToCache(coinBase: CoinBase) {
         favCache.saveFavCoin(coinBase).subscribe()
     }
-    fun loadData(currencyAgainst: String = CoinsListRepo.Currency.usd.toString()) {
+    fun loadData(currencyAgainst: String = settings.currencyAgainst) {
         viewState.showLoading()
-            coinsRepo.getCoins(currencyAgainst, page = pageToLoad).observeOn(scheduler).subscribe({list ->
+            coinsRepo.getCoins(currencyAgainst, page = pageToLoad, order = settings.order)
+                    .observeOn(scheduler).subscribe({list ->
                 coinsListPresenter.coins.addAll(list)
                 pageToLoad++
                 viewState.updateList()

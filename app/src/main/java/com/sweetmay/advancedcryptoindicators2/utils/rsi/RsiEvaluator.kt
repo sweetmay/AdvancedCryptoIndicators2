@@ -12,7 +12,7 @@ class RsiEvaluator(val argbEvaluator: ArgbEvaluator) : IRsiEvaluator {
         return Single.fromCallable {
             val priceList = Converter().convertChartDataForRsi(chartData)
             val rsi = RsiEntity(priceList, period)
-            rsi.indicatorColor = argbEvaluator.evaluate(rsi.signalStrength/40, Color.RED, Color.GREEN) as Int
+            rsi.indicatorColor = argbEvaluator.evaluate(rsi.signalStrength/50, Color.RED, Color.GREEN) as Int
             return@fromCallable rsi
         }.subscribeOn(Schedulers.computation())
     }

@@ -12,7 +12,6 @@ import com.sweetmay.advancedcryptoindicators2.utils.image.IImageLoaderAsDrawable
 import com.sweetmay.advancedcryptoindicators2.utils.rsi.IRsiEvaluator
 import com.sweetmay.advancedcryptoindicators2.view.CoinDataView
 import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.core.Single
 import moxy.MvpPresenter
 import javax.inject.Inject
 
@@ -43,15 +42,22 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
         viewState.showLoading()
         viewState.setTitle(coinBase.name)
         viewState.setFavButton(coinBase)
-        coinDataRepo.getCoin(coinBase).observeOn(scheduler).subscribe ({ coinDetailed ->
+        coinDataRepo.getCoin(coinBase).observeOn(scheduler).doAfterSuccess {
+            viewState.hideLoading()
+        }.subscribe ({ coinDetailed ->
             setPrice(coinDetailed)
             setChange(coinDetailed)
             setSentiment(coinDetailed)
             loadImage(coinDetailed.image.small)
+            loadArimaAndRsi(coinBase)
         }, {
             viewState.renderError(it as Exception)
         })
-        loadAllData(coinBase)
+    }
+
+    private fun loadArimaAndRsi(coinBase: CoinBase) {
+        loadRsi(coinBase)
+        loadArima(coinBase)
     }
 
     private fun setPrice(coinDetailed: CoinDetailed) {
@@ -62,7 +68,7 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
 
     private fun setSentiment(coinDetailed: CoinDetailed) {
         val sentiment = coinDetailed.sentiment_votes_up_percentage.toInt()
-        if (sentiment > 0) {
+        if (sentiment > 0 && sentiment !=100) {
             viewState.setSentimentView(sentiment)
         }else{
             viewState.onSentimentError()
@@ -70,37 +76,45 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
     }
 
     private fun setChange(coinDetailed: CoinDetailed) {
-        val change = coinDetailed.market_data.price_change_percentage_24h_in_currency.usd
+        val change = settings.getChangeByPreference(coinDetailed.market_data
+                .price_change_percentage_24h_in_currency)
+
         val convertedChange = converter.convertChange(change)
         viewState.set24hChange(convertedChange)
     }
 
-    private fun loadAllData(coinBase: CoinBase) {
-        val rsiChartObservable = coinDataRepo
-                .getCoinMarketChartData(coinBase).observeOn(scheduler)
-        val arimaChartObservable = coinDataRepo
-                .getCoinMarketChartData(coinBase, period = "max").observeOn(scheduler)
-
-        //zip two chartdata requests
-        Single.zip(rsiChartObservable, arimaChartObservable, { t1, t2->
-            rsiEvaluator.calculateRsiEntity(t1)
-                    .observeOn(scheduler)
-                    .subscribe ({ rsi ->
-                        viewState.setRsi(rsi)
+    fun loadArima(coinBase: CoinBase?) {
+         if(coinBase != null) {
+            coinDataRepo.getCoinMarketChartData(coinBase,
+                    settings.currencyAgainst,
+                    settings.arimaTimeFrame).observeOn(scheduler).subscribe({ list ->
+                        arimaEvaluator.calculateArima(list, settings.arimaPredictionPeriod).observeOn(scheduler)
+                                .subscribe({ arimaEntity ->
+                                    viewState.setArima(arimaEntity)
+                                }, {
+                                    viewState.showArimaError()
+                                })
                     }, {
-                viewState.showRsiError()
-            })
-            arimaEvaluator.calculateArima(t2).observeOn(scheduler)
-                    .subscribe ({ forecast->
-                viewState.setArima(converter.convertPriceArima(forecast.last()))
-            }, {
-                viewState.showArimaError()
-            })
-        }).doAfterSuccess {
-            viewState.hideLoading()
-        }.subscribe({}, {
-            viewState.renderError(it as Exception)
-        })
+                        viewState.renderError(it as Exception)
+                    })
+        }
+    }
+
+    fun loadRsi(coinBase: CoinBase) {
+        coinDataRepo.getCoinMarketChartData(coinBase,
+                settings.currencyAgainst,
+                settings.rsiTimeFrame)
+                .observeOn(scheduler).subscribe({ chartData ->
+                    rsiEvaluator.calculateRsiEntity(chartData,
+                            settings.rsiPeriod).observeOn(scheduler)
+                            .subscribe({ rsi ->
+                                viewState.setRsi(rsi)
+                            }, {
+                                viewState.showRsiError()
+                            })
+                }, {
+                    viewState.renderError(it as Exception)
+                })
     }
 
     fun deleteFromCache(coinBase: CoinBase) {
@@ -117,24 +131,14 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
         }
     }
 
-
-    fun changeArima(period: Int, coinBase: CoinBase?) {
-        coinBase?.let { coin-> coinDataRepo
-                .getCoinMarketChartData(coin, period = "max").observeOn(scheduler).doOnError {
-                    viewState.renderError(it as Exception)
-                }.subscribe{chart->
-                    arimaEvaluator.calculateArima(chart, predictionPeriod = period).observeOn(scheduler)
-                            .subscribe ({ forecast->
-                                viewState.setArima(String.format("%.5f", forecast.last()))
-                            }, {
-                                viewState.showArimaError()
-                            })
-                }
-        }
+    fun saveSettings() {
+        settings.saveSettings()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         injection.releaseDetailedSubComponent()
     }
+
+
 }

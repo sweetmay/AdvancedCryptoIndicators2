@@ -1,10 +1,60 @@
 package com.sweetmay.advancedcryptoindicators2.model.settings
 
+import android.content.SharedPreferences
+import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.CurrentPrice
+import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.PriceChangePercentage24hInCurrency
+import kotlin.properties.Delegates
 
-class Settings: ISettings {
+class Settings(val prefs: SharedPreferences) : ISettings{
 
-    val preference = CurrencyAgainst.usd
+    override lateinit var currencyAgainst: String
+    override lateinit var order: String
+
+    override var arimaPredictionPeriod by Delegates.notNull<Int>()
+    override lateinit var arimaTimeFrame: String
+
+    override lateinit var rsiTimeFrame: String
+    override var rsiPeriod by Delegates.notNull<Int>()
+    var rsiRR by Delegates.notNull<Int>()
+
+    init {
+        initSettings()
+    }
+
+    private fun initSettings() {
+        currencyAgainst = prefs.getString(Keys.currencyAgainst.toString(),
+                CurrencyAgainst.usd.toString()).toString()
+        order = prefs.getString(Keys.order.toString(),
+                ListFilter.market_cap_desc.toString()).toString()
+        arimaPredictionPeriod = prefs.getInt(Keys.arimaPredictionPeriod.toString(), 30)
+        arimaTimeFrame = prefs.getString(Keys.arimaTimeFrame.toString(), "max").toString()
+        rsiTimeFrame = prefs.getString(Keys.rsiTimeFrame.toString(), "max").toString()
+        rsiPeriod = prefs.getInt(Keys.rsiPeriod.toString(), 14)
+        rsiRR = prefs.getInt(Keys.rsiRR.toString(), 1)
+        saveSettings()
+    }
+
+    enum class Keys{
+        order,
+        currencyAgainst,
+        arimaPredictionPeriod,
+        arimaTimeFrame,
+        rsiTimeFrame,
+        rsiPeriod,
+        rsiRR
+    }
+
+    enum class ListFilter {
+        market_cap_desc,
+        gecko_desc,
+        gecko_asc,
+        market_cap_asc,
+        volume_asc,
+        volume_desc,
+        id_asc,
+        id_desc
+    }
 
     enum class CurrencyAgainst {
         btc,
@@ -12,11 +62,54 @@ class Settings: ISettings {
         usd
     }
 
-    override fun getPriceByPreference(currentPrice: CurrentPrice): Float {
-        return when(preference){
-            CurrencyAgainst.usd->currentPrice.usd
-            CurrencyAgainst.rub->currentPrice.rub
-            CurrencyAgainst.btc->currentPrice.btc
+
+    override fun getPriceByPreference(currentPrice: CurrentPrice)=
+            when(currencyAgainst){
+            CurrencyAgainst.usd.toString()->currentPrice.usd
+            CurrencyAgainst.rub.toString()->currentPrice.rub
+            CurrencyAgainst.btc.toString()->currentPrice.btc
+                else -> currentPrice.usd
+            }
+
+    override fun getChangeByPreference(change: PriceChangePercentage24hInCurrency) =
+            when(currencyAgainst){
+            CurrencyAgainst.usd.toString()->change.usd
+            CurrencyAgainst.rub.toString()->change.rub
+            CurrencyAgainst.btc.toString()->change.btc
+                else -> change.usd
+            }
+
+    override fun getArimaTimeFrameRes(): Int {
+        return when(arimaTimeFrame){
+            "7"->R.string._7_days
+            "14"->R.string._14_days
+            "30"->R.string._30_days
+            "365"->R.string._365_days
+            "max"->R.string._Max
+            else -> R.string._Max
+        }
+    }
+
+    override fun getRsiTimeFrameRes(): Int {
+        return when(rsiTimeFrame){
+            "7"->R.string._7_days
+            "14"->R.string._14_days
+            "30"->R.string._30_days
+            "365"->R.string._365_days
+            "max"->R.string._Max
+            else -> R.string._Max
+        }
+    }
+
+    override fun saveSettings() {
+        with(prefs.edit()){
+            putString(Keys.currencyAgainst.toString(), currencyAgainst)
+            putString(Keys.order.toString(), order)
+            putInt(Keys.arimaPredictionPeriod.toString(), arimaPredictionPeriod)
+            putString(Keys.arimaTimeFrame.toString(), arimaTimeFrame)
+            putString(Keys.rsiTimeFrame.toString(), rsiTimeFrame)
+            putInt(Keys.rsiPeriod.toString(), rsiPeriod)
+            putInt(Keys.rsiRR.toString(), rsiRR).apply()
         }
     }
 }

@@ -5,7 +5,7 @@ import com.sweetmay.advancedcryptoindicators2.IAppInjection
 import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
-import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.CoinsListRepo
+import com.sweetmay.advancedcryptoindicators2.model.settings.ISettings
 import com.sweetmay.advancedcryptoindicators2.presenter.callback.FavListPresenterCallbacks
 import com.sweetmay.advancedcryptoindicators2.presenter.list.FavCoinsListPresenter
 import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
@@ -22,8 +22,6 @@ class FavListFragmentPresenter(private val injection: IAppInjection) : MvpPresen
         injection.initFavComponent()?.inject(this)
     }
 
-    val listPresenter = FavCoinsListPresenter(this)
-
     @Inject
     lateinit var coinsRepo: ICoinsListRepo
     @Inject
@@ -32,6 +30,12 @@ class FavListFragmentPresenter(private val injection: IAppInjection) : MvpPresen
     lateinit var favCache: IFavCoinsCache
     @Inject
     lateinit var imageLoader: IImageLoader<ImageView>
+    @Inject
+    lateinit var converter: Converter
+    @Inject
+    lateinit var settings: ISettings
+
+    private val listPresenter = FavCoinsListPresenter(this, converter)
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -61,11 +65,14 @@ class FavListFragmentPresenter(private val injection: IAppInjection) : MvpPresen
         }
     }
 
-    fun loadData(currencyAgainst: String = CoinsListRepo.Currency.usd.toString()){
+    fun loadData(currencyAgainst: String = settings.currencyAgainst){
         viewState.showLoading()
         favCache.getFavCoins().subscribe { listDb->
             if (listDb.isNotEmpty()){
-            coinsRepo.getCoins(currencyAgainst, ids = Converter().convertIdsToString(listDb)).observeOn(scheduler)
+            coinsRepo.getCoins(currencyAgainst,
+                    converter.convertIdsToString(listDb),
+                    settings.order)
+                    .observeOn(scheduler)
                     .subscribe ({ list->
                         listPresenter.coins.clear()
                         listPresenter.coins.addAll(list)

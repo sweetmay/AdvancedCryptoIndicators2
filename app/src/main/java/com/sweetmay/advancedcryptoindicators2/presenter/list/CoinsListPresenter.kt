@@ -5,7 +5,8 @@ import com.sweetmay.advancedcryptoindicators2.presenter.callback.CoinsListPresen
 import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.view.item.CoinItemView
 
-open class CoinsListPresenter(private val callback: CoinsListPresenterCallbacks) : ICoinsListPresenter {
+open class CoinsListPresenter(private val callback: CoinsListPresenterCallbacks,
+                              private val converter: Converter) : ICoinsListPresenter {
 
     val coins = ArrayList<CoinBase>()
 
@@ -33,7 +34,7 @@ open class CoinsListPresenter(private val callback: CoinsListPresenterCallbacks)
             setName(coins[view.getPos()].name)
             setPrice(coins[view.getPos()].current_price)
             setFavIcon(coins[view.getPos()].is_favorite)
-            setPriceChange(Converter()
+            setPriceChange(converter
                     .convertChange(coins[view.getPos()].price_change_percentage_24h))
         }
     }

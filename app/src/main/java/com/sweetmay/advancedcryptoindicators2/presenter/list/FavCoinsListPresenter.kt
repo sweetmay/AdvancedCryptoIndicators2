@@ -1,9 +1,12 @@
 package com.sweetmay.advancedcryptoindicators2.presenter.list
 
 import com.sweetmay.advancedcryptoindicators2.presenter.callback.FavListPresenterCallbacks
+import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.view.item.CoinItemView
 
-class FavCoinsListPresenter(val callback: FavListPresenterCallbacks): CoinsListPresenter(callback) {
+class FavCoinsListPresenter(val callback: FavListPresenterCallbacks,
+                            val converter: Converter)
+    : CoinsListPresenter(callback, converter) {
 
     override fun saveFav(view: CoinItemView) {
         //

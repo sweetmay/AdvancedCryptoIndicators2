@@ -135,28 +135,31 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stop_loss" />
+
+            <ImageView
+                android:id="@+id/settings_rsi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/rsi_indicator_name"
+                app:layout_constraintStart_toEndOf="@+id/rsi_indicator_name"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/settings_24px" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3">
+
             <TextView
+                android:id="@+id/buy_sell_text_rsi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/buy_sell_text"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/help_icon"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-            <ImageView
-                android:id="@+id/help_icon"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:contentDescription="@string/help_icon"
-                android:src="@drawable/help_outline_24px"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -166,13 +169,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/PrimaryCard">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/arima_block"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             style="@style/CoinDetailedBlocks">
-
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/arima_block"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
             <TextView
                 android:id="@+id/arima_indicator_name"
                 style="@style/IndicatorTextStyle"
@@ -183,13 +189,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/time_frame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/arima_indicator_name"/>
+
             <TextView
                 android:id="@+id/current_period"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/_30_day_prediction"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/arima_indicator_name" />
+                app:layout_constraintTop_toBottomOf="@id/time_frame" />
 
             <TextView
                 android:id="@+id/prediction"
@@ -198,16 +210,36 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/current_period" />
 
-            <ImageButton
-                android:id="@+id/day_prediction_picker"
+            <ImageView
+                android:id="@+id/settings_arima"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:src="@drawable/settings_24px"
+                android:layout_marginStart="4dp"
                 app:layout_constraintBottom_toBottomOf="@+id/arima_indicator_name"
                 app:layout_constraintStart_toEndOf="@+id/arima_indicator_name"
-                app:layout_constraintTop_toTopOf="@+id/arima_indicator_name" />
+                app:layout_constraintTop_toTopOf="@+id/arima_indicator_name"
+                app:srcCompat="@drawable/settings_24px" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3">
+
+                <TextView
+                    android:id="@+id/buy_sell_text_arima"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
     </com.google.android.material.card.MaterialCardView>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

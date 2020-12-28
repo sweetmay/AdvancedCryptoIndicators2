@@ -11,22 +11,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class CoinsListRepo(private val apiHolderCoinGecko: ApiHolderCoinGecko, private val cache: IFavCoinsCache) : ICoinsListRepo {
 
-    enum class Currency {
-        usd,
-        rub
-    }
-
-    enum class ListFilter {
-        market_cap_desc,
-        gecko_desc,
-        gecko_asc,
-        market_cap_asc,
-        volume_asc,
-        volume_desc,
-        id_asc,
-        id_desc
-    }
-
 
     override fun getCoins(currencyAgainst: String, ids: String, order: String, page: Int): Single<List<CoinBase>> {
         val apiObservable = apiHolderCoinGecko.dataSourceCoinGecko.getCoinsList(currencyAgainst, ids, order, page = page).subscribeOn(Schedulers.io())

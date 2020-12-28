@@ -7,11 +7,11 @@ import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
 
 class Converter {
 
-    fun convertChange(change: Double): ConvertedChange{
+    fun convertChange(change: Float): ConvertedChange{
         return ConvertedChange(change)
     }
 
-    class ConvertedChange(change: Double){
+    class ConvertedChange(change: Float){
         val color: Int
         val convertedPriceString: String
 

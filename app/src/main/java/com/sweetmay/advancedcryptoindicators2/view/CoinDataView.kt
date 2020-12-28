@@ -2,6 +2,7 @@ package com.sweetmay.advancedcryptoindicators2.view
 
 import android.graphics.drawable.Drawable
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
+import com.sweetmay.advancedcryptoindicators2.utils.arima.ArimaEntity
 import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.utils.rsi.RsiEntity
 import com.sweetmay.advancedcryptoindicators2.view.base.BaseView
@@ -13,7 +14,7 @@ interface CoinDataView: BaseView {
     fun set24hChange(convertedChange: Converter.ConvertedChange)
     fun showLoading()
     fun hideLoading()
-    fun setArima(prediction: String)
+    fun setArima(arimaEntity: ArimaEntity)
     fun setTitle(title: String)
     fun setLogo(image: Drawable)
     fun setRsi(rsi: RsiEntity)
