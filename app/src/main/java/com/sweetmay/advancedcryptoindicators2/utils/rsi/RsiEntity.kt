@@ -1,9 +1,10 @@
 package com.sweetmay.advancedcryptoindicators2.utils.rsi
 
 class RsiEntity(prices: List<Float> = emptyList(),
-                period: Int) {
+                period: Int,
+                rr: Int) {
 
-    private var basePerc: Float = 0.1f
+    private var basePerc: Float = 0.1f * rr
     private val currentPrice = prices[prices.size-1]
 
     val rsi = calculateRSI(prices, period)

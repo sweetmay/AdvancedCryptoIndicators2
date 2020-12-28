@@ -122,12 +122,27 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rsi_indicator_name" />
+
+            <TextView
+                android:id="@+id/time_frame_rsi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/rsi_strength"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/risk_reward_rsi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/time_frame_rsi"/>
+
             <TextView
                 android:id="@+id/stop_loss"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rsi_strength" />
+                app:layout_constraintTop_toBottomOf="@+id/risk_reward_rsi" />
             <TextView
                 android:id="@+id/target"
                 android:layout_width="wrap_content"
@@ -190,7 +205,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/time_frame"
+                    android:id="@+id/time_frame_arima"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
@@ -201,7 +216,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/time_frame" />
+                app:layout_constraintTop_toBottomOf="@id/time_frame_arima" />
 
             <TextView
                 android:id="@+id/prediction"

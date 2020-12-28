@@ -20,7 +20,7 @@ class SettingsModule {
 
     @Singleton
     @Provides
-    fun settings(prefs: SharedPreferences): ISettings{
-        return Settings(prefs)
+    fun settings(prefs: SharedPreferences, app: App): ISettings{
+        return Settings(prefs, app.applicationContext)
     }
 }

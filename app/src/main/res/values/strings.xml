@@ -24,6 +24,8 @@
     <string name="not_enough_data_error">Not enough data</string>
     <string name="current_prediction_period">Current prediction period: %1$d days </string>
     <string name="time_frame">Time Frame: %1$s</string>
+    <string name="risk_reward">Risk Reward: %1$s </string>
+
 
     <string name="action_search">action_search</string>
     <string name="search_fragment_title">Search</string>
@@ -52,11 +54,22 @@
     <string name="_Max">Max</string>
 
 
-    <string-array name="time_frame_arima">
+    <string name="lowRR">Low</string>
+    <string name="mediumRR">Medium</string>
+    <string name="highRR">High</string>
+    <string name="risk_reward_label">Risk/Reward</string>
+
+    <string-array name="time_frame">
         <item name="7_days">7 days</item>
         <item name="14_days">14 days</item>
         <item name="30_days">30 days</item>
         <item name="365_days">365 days</item>
         <item name="Max">Max</item>
+    </string-array>
+
+    <string-array name="risk_reward">
+        <item name="low">Low</item>
+        <item name="medium">Medium</item>
+        <item name="high">High</item>
     </string-array>
 </resources>

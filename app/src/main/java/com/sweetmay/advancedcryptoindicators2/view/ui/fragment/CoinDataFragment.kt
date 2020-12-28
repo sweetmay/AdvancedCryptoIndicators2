@@ -20,11 +20,13 @@ import com.sweetmay.advancedcryptoindicators2.view.CoinDataView
 import com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
 import com.sweetmay.advancedcryptoindicators2.view.ui.dialogs.ArimaCallBack
 import com.sweetmay.advancedcryptoindicators2.view.ui.dialogs.ArimaSettingsDialog
+import com.sweetmay.advancedcryptoindicators2.view.ui.dialogs.RsiCallBack
+import com.sweetmay.advancedcryptoindicators2.view.ui.dialogs.RsiSettingsDialog
 import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.base.BaseFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 
-class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, ArimaCallBack {
+class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, ArimaCallBack, RsiCallBack {
 
     init {
         App.injection.initDetailedComponent()?.inject(this)
@@ -49,17 +51,36 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, 
         pendingCoin?.let { presenter.loadData(it) }
 
         initArimaIndicator()
+        initRsiIndicator()
+    }
+
+    private fun initRsiIndicator() {
+        with(binding){
+            timeFrameRsi.text = getString(R.string.time_frame,
+                    getString(settings.getRsiTimeFrameRes()))
+            riskRewardRsi.text = getString(R.string.risk_reward,
+                    getString(settings.getRsiRiskRewardRes()))
+            settingsRsi.setOnClickListener {
+                val dialog = RsiSettingsDialog
+                        .getInstance(this@CoinDataFragment, settings)
+                dialog.show(requireActivity().supportFragmentManager, "RsiSettingsDialog")
+            }
+        }
     }
 
     private fun initArimaIndicator() {
-        binding.timeFrame.text = getString(R.string.time_frame,
-                getString(settings.getArimaTimeFrameRes()))
-        binding.currentPeriod.text = getString(R.string.current_prediction_period,
-                settings.arimaPredictionPeriod)
-        binding.settingsArima.setOnClickListener {
-            val dialog = ArimaSettingsDialog.getInstance(this, settings)
-            dialog.show(requireActivity().supportFragmentManager, "ArimaSettingsDialog")
+        with(binding){
+            timeFrameArima.text = getString(R.string.time_frame,
+                    getString(settings.getArimaTimeFrameRes()))
+            currentPeriod.text = getString(R.string.current_prediction_period,
+                    settings.arimaPredictionPeriod)
+            settingsArima.setOnClickListener {
+                val dialog = ArimaSettingsDialog
+                        .getInstance(this@CoinDataFragment, settings)
+                dialog.show(requireActivity().supportFragmentManager, "ArimaSettingsDialog")
+            }
         }
+
     }
 
     override fun setPrice(price: String) {
@@ -92,11 +113,25 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, 
     }
 
     override fun saveArimaSettings() {
-        binding.currentPeriod.text = getString(R.string.current_prediction_period,
-                settings.arimaPredictionPeriod)
-        binding.timeFrame.text = getString(R.string.time_frame,
-                getString(settings.getArimaTimeFrameRes()))
-        presenter.loadArima(pendingCoin)
+        with(binding){
+            currentPeriod.text = getString(R.string.current_prediction_period,
+                    settings.arimaPredictionPeriod)
+            timeFrameArima.text = getString(R.string.time_frame,
+                    getString(settings.getArimaTimeFrameRes()))
+
+            presenter.loadArima(pendingCoin)
+        }
+    }
+
+    override fun saveRsiSettings() {
+        with(binding){
+            timeFrameRsi.text = getString(R.string.time_frame,
+                    getString(settings.getRsiTimeFrameRes()))
+            riskRewardRsi.text = getString(R.string.risk_reward,
+                    getString(settings.getRsiRiskRewardRes()))
+
+            presenter.loadRsi(pendingCoin)
+        }
     }
 
     override fun setTitle(title: String) {

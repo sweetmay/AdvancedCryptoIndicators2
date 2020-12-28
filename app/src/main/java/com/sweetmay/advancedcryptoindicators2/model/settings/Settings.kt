@@ -1,12 +1,13 @@
 package com.sweetmay.advancedcryptoindicators2.model.settings
 
+import android.content.Context
 import android.content.SharedPreferences
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.CurrentPrice
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.PriceChangePercentage24hInCurrency
 import kotlin.properties.Delegates
 
-class Settings(val prefs: SharedPreferences) : ISettings{
+class Settings(val prefs: SharedPreferences, val context: Context) : ISettings{
 
     override lateinit var currencyAgainst: String
     override lateinit var order: String
@@ -16,7 +17,7 @@ class Settings(val prefs: SharedPreferences) : ISettings{
 
     override lateinit var rsiTimeFrame: String
     override var rsiPeriod by Delegates.notNull<Int>()
-    var rsiRR by Delegates.notNull<Int>()
+    override var rsiRR by Delegates.notNull<Int>()
 
     init {
         initSettings()
@@ -100,6 +101,24 @@ class Settings(val prefs: SharedPreferences) : ISettings{
             else -> R.string._Max
         }
     }
+
+    override fun getRsiRiskRewardRes(): Int {
+        return when(rsiRR){
+            1-> R.string.lowRR
+            2-> R.string.mediumRR
+            3-> R.string.highRR
+            else-> R.string.lowRR
+        }
+    }
+
+    override fun setRiskRewardByString(string: String) {
+        when(string){
+            context.getString(R.string.lowRR)-> rsiRR = 1
+            context.getString(R.string.mediumRR)-> rsiRR = 2
+            context.getString(R.string.highRR)-> rsiRR = 3
+        }
+    }
+
 
     override fun saveSettings() {
         with(prefs.edit()){

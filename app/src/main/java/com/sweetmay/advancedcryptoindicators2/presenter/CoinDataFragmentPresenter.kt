@@ -100,21 +100,24 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
         }
     }
 
-    fun loadRsi(coinBase: CoinBase) {
-        coinDataRepo.getCoinMarketChartData(coinBase,
-                settings.currencyAgainst,
-                settings.rsiTimeFrame)
-                .observeOn(scheduler).subscribe({ chartData ->
-                    rsiEvaluator.calculateRsiEntity(chartData,
-                            settings.rsiPeriod).observeOn(scheduler)
-                            .subscribe({ rsi ->
-                                viewState.setRsi(rsi)
-                            }, {
-                                viewState.showRsiError()
-                            })
-                }, {
-                    viewState.renderError(it as Exception)
-                })
+    fun loadRsi(coinBase: CoinBase?) {
+        if(coinBase!=null){
+            coinDataRepo.getCoinMarketChartData(coinBase,
+                    settings.currencyAgainst,
+                    settings.rsiTimeFrame)
+                    .observeOn(scheduler).subscribe({ chartData ->
+                        rsiEvaluator.calculateRsiEntity(chartData,
+                                settings.rsiPeriod, settings.rsiRR).observeOn(scheduler)
+                                .subscribe({ rsi ->
+                                    viewState.setRsi(rsi)
+                                }, {
+                                    viewState.showRsiError()
+                                })
+                    }, {
+                        viewState.renderError(it as Exception)
+                    })
+        }
+
     }
 
     fun deleteFromCache(coinBase: CoinBase) {
@@ -129,10 +132,6 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
         imageLoader.loadImageAsDrawable(url).observeOn(scheduler).subscribe { img ->
             viewState.setLogo(img)
         }
-    }
-
-    fun saveSettings() {
-        settings.saveSettings()
     }
 
     override fun onDestroy() {

@@ -19,7 +19,7 @@
                 android:hint="@string/time_frame_label">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/time_frame"
+                    android:id="@+id/time_frame_arima"
                     android:longClickable="false"
                     android:cursorVisible="false"
                     android:focusableInTouchMode="false"

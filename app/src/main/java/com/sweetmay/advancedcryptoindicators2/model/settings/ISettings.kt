@@ -10,6 +10,7 @@ interface ISettings {
     var currencyAgainst: String
     var order: String
     var rsiTimeFrame: String
+    var rsiRR: Int
     var arimaTimeFrame: String
 
     fun getPriceByPreference(currentPrice: CurrentPrice): Float
@@ -17,5 +18,6 @@ interface ISettings {
     fun getArimaTimeFrameRes(): Int
     fun getRsiTimeFrameRes(): Int
     fun saveSettings()
-
+    fun getRsiRiskRewardRes(): Int
+    fun setRiskRewardByString(string: String)
 }
