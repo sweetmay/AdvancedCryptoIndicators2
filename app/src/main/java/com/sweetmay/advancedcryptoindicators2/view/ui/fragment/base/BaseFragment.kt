@@ -29,7 +29,7 @@ abstract class BaseFragment<VB: ViewBinding>: MvpAppCompatFragment(), BaseView {
     }
 
     override fun renderError(e: Exception) {
-        Log.d("AAA", e.message?:"cunt")
+        Log.d(this.tag, e.message?:"error")
         val snackbar = Snackbar.make(binding.root, R.string.error_data_load, Snackbar.LENGTH_INDEFINITE)
         snackbar.setAction("retry"){
             onErrorHandleClick()

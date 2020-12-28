@@ -30,7 +30,15 @@ class SearchFragment: BaseFragment<SearchFragmentBinding>(), SearchView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbarInclude.toolbar.setNavigationIcon(R.drawable.navigate_before_24px)
+        binding.toolbarInclude.toolbar.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
         setOnSearchQueryListener()
+
+
     }
 
     private fun setOnSearchQueryListener() {

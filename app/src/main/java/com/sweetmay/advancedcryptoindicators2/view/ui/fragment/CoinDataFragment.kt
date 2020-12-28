@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.sweetmay.advancedcryptoindicators2.App
@@ -18,6 +19,7 @@ import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.utils.rsi.RsiEntity
 import com.sweetmay.advancedcryptoindicators2.view.CoinDataView
 import com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
+import com.sweetmay.advancedcryptoindicators2.view.custom.SentimentView
 import com.sweetmay.advancedcryptoindicators2.view.ui.dialogs.ArimaCallBack
 import com.sweetmay.advancedcryptoindicators2.view.ui.dialogs.ArimaSettingsDialog
 import com.sweetmay.advancedcryptoindicators2.view.ui.dialogs.RsiCallBack
@@ -46,9 +48,26 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         pendingCoin = arguments?.let { CoinDataFragmentArgs.fromBundle(it).coin }
         pendingCoin?.let { presenter.loadData(it) }
+
+        with(binding.toolbarInclude.toolbar){
+            setNavigationIcon(R.drawable.navigate_before_24px)
+            setNavigationOnClickListener {
+                requireActivity().onBackPressed()
+            }
+            inflateMenu(R.menu.help_menu)
+            setOnMenuItemClickListener {
+                when(it.itemId){
+                    R.id.help_button_menu->navController.navigate(CoinDataFragmentDirections
+                            .actionCoinDataFragmentToHelpCoinDetailedFragment())
+                }
+                true
+            }
+        }
+
+
+
 
         initArimaIndicator()
         initRsiIndicator()
@@ -154,8 +173,11 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, 
         }
     }
 
+
     override fun setSentimentView(value: Int) {
-        binding.sentiment.setSentiment(value)
+        binding.sentiment.doOnLayout {
+            (it as SentimentView).setSentimentAnim(value)
+        }
     }
 
     override fun onSentimentError() {

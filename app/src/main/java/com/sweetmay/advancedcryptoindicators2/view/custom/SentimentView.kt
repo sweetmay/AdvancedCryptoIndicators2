@@ -83,6 +83,22 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 
         val floatVal = value.toFloat()
         redRectangle.set(0, 0, sizeWidth, (sizeHeight-thumbSize*1.5f).toInt())
+        greenRectangle.set(0, 0, (sizeWidth*(floatVal)/100).toInt(),
+            (sizeHeight-thumbSize*1.5f).toInt())
+    }
+
+    fun setSentimentAnim(value: Int) {
+        positivePercent = (value).toString() + "%"
+        negativePercent = (100-value).toString() + "%"
+
+        textPaintUp.textSize = thumbSize.toFloat()*.75f
+        textPaintDown.textSize = thumbSize.toFloat()*.75f
+
+        textPaintUp.getTextBounds(positivePercent, 0, positivePercent.length, upRectangleBounds)
+        textPaintDown.getTextBounds(negativePercent, 0, negativePercent.length, downRectangleBounds)
+
+        val floatVal = value.toFloat()
+        redRectangle.set(0, 0, sizeWidth, (sizeHeight-thumbSize*1.5f).toInt())
         val valueAnimator = ValueAnimator.ofFloat(0f, floatVal)
         valueAnimator.duration = 1500
         valueAnimator.start()
@@ -92,12 +108,11 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
             greenRectangle.set(0,
                 0,
                 (sizeWidth*(it.animatedValue as Float)/100).toInt(),
-                    (sizeHeight-thumbSize*1.5f).toInt())
+                (sizeHeight-thumbSize*1.5f).toInt())
 
             invalidate()
         }
     }
-
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.let {
@@ -113,4 +128,6 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
             }
         }
     }
+
+
 }

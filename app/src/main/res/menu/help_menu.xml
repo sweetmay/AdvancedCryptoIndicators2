@@ -9,10 +9,4 @@
         android:title="@string/help_icon"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
-
-    <item
-        android:id="@+id/settings_button_menu"
-        android:icon="@drawable/settings_24px"
-        android:title="@string/settings_icon"
-        app:showAsAction="always" />
 </menu>

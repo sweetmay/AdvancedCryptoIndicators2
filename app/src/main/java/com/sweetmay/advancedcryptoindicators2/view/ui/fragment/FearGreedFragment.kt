@@ -23,7 +23,6 @@ class FearGreedFragment: BaseFragment<FearGreedFragmentBinding>(), FnGView{
         FearGreedFragmentPresenter(App.injection)
     }
 
-
     override fun setBinding(inflater: LayoutInflater, container: ViewGroup?): FearGreedFragmentBinding {
         navController = findNavController()
         return FearGreedFragmentBinding.inflate(inflater, container, false)
@@ -31,6 +30,22 @@ class FearGreedFragment: BaseFragment<FearGreedFragmentBinding>(), FnGView{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        with(binding.toolbarInclude.toolbar){
+            setNavigationIcon(R.drawable.navigate_before_24px)
+            setNavigationOnClickListener {
+                requireActivity().onBackPressed()
+            }
+            inflateMenu(R.menu.help_menu)
+            setOnMenuItemClickListener {
+                when(it.itemId){
+                    R.id.help_button_menu->navController.navigate(FearGreedFragmentDirections
+                            .actionFearGreedFragmentToHelpFngFragment())
+                }
+                true
+            }
+        }
+
         fragmentPresenter.loadData()
     }
 
