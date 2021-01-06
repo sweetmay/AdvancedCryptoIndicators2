@@ -74,8 +74,14 @@
     <string name="fear_greed_index">Fear &amp; greed index</string>
     <string name="fng_help_body">Each day sentiments from various sources are being crunched into one simple number representing the global market sentiment.
         \n\nFear (closer to 0) means that the market is oversold and it\'s a good opportunity to buy.
-        \nGreed (closer to 100) means that the market is overbought and it\'s a good oportunity to sell.
+        \nGreed (closer to 100) means that the market is overbought and it\'s a good opportunity to sell.
         \nProvided by <a href="https://alternative.me/">alternative.me</a></string>
+    <string name="caution">Caution</string>
+    <string name="not_an_advice">This is not a financial advice, always do your own research</string>
+    <string name="settings_bounce_indicator">settings bounce indicator</string>
+    <string name="settings_ai_prediction_button">settings ai prediction button</string>
+    <string name="image_help_strategy">image help strategy</string>
+    <string name="coin_image">coin image</string>
 
     <string-array name="time_frame">
         <item name="7_days">7 days</item>

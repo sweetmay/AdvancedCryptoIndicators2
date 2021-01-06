@@ -17,15 +17,28 @@
             style="@style/HeadingHelpStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fear_greed_index"></TextView>
+            android:text="@string/fear_greed_index" />
 
         <TextView
             android:id="@+id/fng_help_body"
             style="@style/BodyHelpStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/fng_help_body"></TextView>
+            android:text="@string/fng_help_body" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/HeadingHelpStyle"
+            android:text="@string/caution">
+        </TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/BodyHelpStyle"
+            android:text="@string/not_an_advice">
+        </TextView>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

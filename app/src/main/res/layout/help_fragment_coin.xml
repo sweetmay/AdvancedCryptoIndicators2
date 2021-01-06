@@ -71,7 +71,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY"></ImageView>
+            android:scaleType="fitXY"
+            android:contentDescription="@string/image_help_strategy"></ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/HeadingHelpStyle"
+            android:text="@string/caution">
+        </TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/BodyHelpStyle"
+            android:text="@string/not_an_advice">
+        </TextView>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </ScrollView>

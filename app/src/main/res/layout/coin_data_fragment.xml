@@ -159,7 +159,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/rsi_indicator_name"
                 app:layout_constraintStart_toEndOf="@+id/rsi_indicator_name"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/settings_24px" />
+                app:srcCompat="@drawable/settings_24px"
+                android:contentDescription="@string/settings_bounce_indicator" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -233,7 +234,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/arima_indicator_name"
                 app:layout_constraintStart_toEndOf="@+id/arima_indicator_name"
                 app:layout_constraintTop_toTopOf="@+id/arima_indicator_name"
-                app:srcCompat="@drawable/settings_24px" />
+                app:srcCompat="@drawable/settings_24px"
+                android:contentDescription="@string/settings_ai_prediction_button" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
