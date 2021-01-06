@@ -79,7 +79,7 @@ class SearchFragmentPresenter(private val injection: IAppInjection) : MvpPresent
         }
     }
 
-    fun fetchAllcoins() {
+    fun fetchAllCoins() {
         coinsRepo.saveFullList().subscribe ({list->
             allCoinsCache.saveCoins(list).subscribe()
         },{

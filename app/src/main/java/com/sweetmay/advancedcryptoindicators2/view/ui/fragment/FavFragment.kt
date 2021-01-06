@@ -16,7 +16,7 @@ import moxy.ktx.moxyPresenter
 
 class FavFragment : BaseFragment<FavFragmentBinding>(), FavView {
 
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
 
     private val presenter: FavListFragmentPresenter by moxyPresenter {
         FavListFragmentPresenter(App.injection)

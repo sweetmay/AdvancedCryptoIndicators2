@@ -4,7 +4,7 @@ import com.sweetmay.advancedcryptoindicators2.presenter.callback.FavListPresente
 import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.view.item.CoinItemView
 
-class FavCoinsListPresenter(val callback: FavListPresenterCallbacks,
+class FavCoinsListPresenter(private val callback: FavListPresenterCallbacks,
                             val converter: Converter)
     : CoinsListPresenter(callback, converter) {
 

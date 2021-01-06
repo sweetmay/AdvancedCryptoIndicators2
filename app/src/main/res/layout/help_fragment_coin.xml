@@ -44,26 +44,26 @@
             style="@style/HeadingHelpStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/arima_indicator_name"></TextView>
+            android:text="@string/arima_indicator_name" />
 
         <TextView
             style="@style/BodyHelpStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/arima_help"></TextView>
+            android:text="@string/arima_help" />
 
         <TextView
             android:id="@+id/strategy_heading"
             style="@style/HeadingHelpStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/possible_strategy"></TextView>
+            android:text="@string/possible_strategy" />
 
         <TextView
             style="@style/BodyHelpStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/help_strategy_text"></TextView>
+            android:text="@string/help_strategy_text" />
 
 
         <ImageView
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            android:contentDescription="@string/image_help_strategy"></ImageView>
+            android:contentDescription="@string/image_help_strategy" />
 
         <TextView
             android:layout_width="match_parent"

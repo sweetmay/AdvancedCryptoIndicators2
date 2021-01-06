@@ -10,7 +10,7 @@ interface CoinsListView: BaseView {
     fun initRv()
     fun updateList()
     fun setTitle()
-    fun restoreRVposition(pos: Int)
+    fun restoreRVPosition(pos: Int)
     fun showLoading()
     fun hideLoading()
     @Skip

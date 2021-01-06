@@ -41,7 +41,7 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, 
     @Inject
     lateinit var settings: ISettings
 
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
 
     private val presenter: CoinDataFragmentPresenter by moxyPresenter {
         CoinDataFragmentPresenter(App.injection)

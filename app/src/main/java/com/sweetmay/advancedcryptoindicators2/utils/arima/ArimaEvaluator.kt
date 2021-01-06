@@ -7,7 +7,7 @@ import com.sweetmay.advancedcryptoindicators2.utils.exception.ArimaException
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class ArimaEvaluator(val argbEvaluator: ArgbEvaluator, val converter: Converter) : IArimaEvaluator {
+class ArimaEvaluator(private val argbEvaluator: ArgbEvaluator, val converter: Converter) : IArimaEvaluator {
 
     override fun calculateArima(chartData: ChartData, predictionPeriod: Int): Single<ArimaEntity> {
         return Single.fromCallable{

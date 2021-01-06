@@ -7,7 +7,7 @@ import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.Current
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.PriceChangePercentage24hInCurrency
 import kotlin.properties.Delegates
 
-class Settings(val prefs: SharedPreferences, val context: Context) : ISettings{
+class Settings(private val prefs: SharedPreferences, val context: Context) : ISettings{
 
     override lateinit var currencyAgainst: String
     override lateinit var order: String

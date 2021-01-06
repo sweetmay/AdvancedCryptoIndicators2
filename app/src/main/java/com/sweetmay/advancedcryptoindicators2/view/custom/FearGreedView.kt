@@ -31,7 +31,7 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
     private val needle: Bitmap
 
     @Dimension (unit = DP) private var needleHeight: Int
-    @Dimension (unit = DP) private var needleWidtht: Int
+    @Dimension (unit = DP) private var needleWidth: Int
 
     init {
         paint.color = Color.BLACK
@@ -44,8 +44,8 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
                 0).apply {
             try {
                 needleHeight = this.getDimension(R.styleable.FearGreedView_needleHeight, 60f).toInt()
-                needleWidtht = this.getDimension(R.styleable.FearGreedView_needleWidth, 15f).toInt()
-                needleOrg = this.getDrawable(R.styleable.FearGreedView_needle)?.toBitmap(needleWidtht, needleHeight, null)
+                needleWidth = this.getDimension(R.styleable.FearGreedView_needleWidth, 15f).toInt()
+                needleOrg = this.getDrawable(R.styleable.FearGreedView_needle)?.toBitmap(needleWidth, needleHeight, null)
                         ?: throw IllegalArgumentException("Provide needle image for the view")
             }finally {
                 this.recycle()

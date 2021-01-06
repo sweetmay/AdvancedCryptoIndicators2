@@ -7,7 +7,7 @@ import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class RsiEvaluator(val argbEvaluator: ArgbEvaluator) : IRsiEvaluator {
+class RsiEvaluator(private val argbEvaluator: ArgbEvaluator) : IRsiEvaluator {
     override fun calculateRsiEntity(chartData: ChartData, period: Int, rr: Int): Single<RsiEntity> {
         return Single.fromCallable {
             val priceList = Converter().convertChartDataForRsi(chartData)

@@ -41,12 +41,11 @@ class ListFragmentPresenter(private val injection: IAppInjection) : MvpPresenter
     companion object{
         var stateRVPos: Int = 0
     }
-    private val TAG: String = this::class.java.simpleName
 
 
     private val coinsListPresenter = CoinsListPresenter(this, converter)
 
-    var pageToLoad = 1
+    private var pageToLoad = 1
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -75,7 +74,7 @@ class ListFragmentPresenter(private val injection: IAppInjection) : MvpPresenter
                 pageToLoad++
                 viewState.updateList()
                 viewState.hideLoading()
-                viewState.restoreRVposition(stateRVPos)
+                viewState.restoreRVPosition(stateRVPos)
             }, {
                 viewState.renderError(it as Exception)
                 viewState.hideLoading()

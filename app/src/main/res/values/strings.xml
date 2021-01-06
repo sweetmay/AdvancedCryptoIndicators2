@@ -6,7 +6,6 @@
     <string name="fav">FAV</string>
     <string name="nothing_to_show">Nothing to show</string>
     <string name="favorite_coins_title">Favorite coins</string>
-    <string name="search_title">Search</string>
     <string name="coins_list_title">Coins List</string>
     <string name="rsi_indicator_name">Bounce Indicator</string>
     <string name="arima_indicator_name">AI prediction</string>
@@ -20,7 +19,7 @@
     <string name="app_logo">app logo</string>
     <string name="help_icon">help icon</string>
     <string name="error_data_load">Couldn\'t load data</string>
-    <string name="retry">retry_text</string>
+    <string name="retry">retry</string>
     <string name="not_enough_data_error">Not enough data</string>
     <string name="current_prediction_period">Current prediction period: %1$d days </string>
     <string name="time_frame">Time Frame: %1$s</string>

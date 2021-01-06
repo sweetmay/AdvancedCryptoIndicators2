@@ -16,16 +16,11 @@ class AppInjection(val app: App): IAppInjection {
             .appModule(AppModule(app))
             .build()
 
-    var listSubComponent: ListSubComponent? = null
-        private set
-    var favSubComponent: FavSubComponent? = null
-        private set
-    var coinDetailedSubComponent: CoinDetailedSubComponent? = null
-        private set
-    var fnGSubComponent: FnGSubComponent? = null
-        private set
-    var searchSubComponent: SearchSubComponent? = null
-        private set
+    private var listSubComponent: ListSubComponent? = null
+    private var favSubComponent: FavSubComponent? = null
+    private var coinDetailedSubComponent: CoinDetailedSubComponent? = null
+    private var fnGSubComponent: FnGSubComponent? = null
+    private var searchSubComponent: SearchSubComponent? = null
 
 
     override fun initListComponent(): ListSubComponent? {

@@ -8,7 +8,7 @@ import com.sweetmay.advancedcryptoindicators2.utils.apiholder.ApiHolderCoinGecko
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class CoinDataRepo(val apiHolderCoinGecko: ApiHolderCoinGecko) : ICoinDataRepo {
+class CoinDataRepo(private val apiHolderCoinGecko: ApiHolderCoinGecko) : ICoinDataRepo {
 
     override fun getCoin(coinBase: CoinBase): Single<CoinDetailed> {
         return apiHolderCoinGecko.dataSourceCoinGecko.getCoinDetailedData(coinBase.id).subscribeOn(Schedulers.io())

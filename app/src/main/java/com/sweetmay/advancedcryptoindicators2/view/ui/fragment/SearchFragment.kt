@@ -21,11 +21,11 @@ class SearchFragment: BaseFragment<SearchFragmentBinding>(), SearchView {
 
     private val presenter: SearchFragmentPresenter by moxyPresenter { SearchFragmentPresenter(App.injection) }
 
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter.fetchAllcoins()
+        presenter.fetchAllCoins()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,7 +69,7 @@ class SearchFragment: BaseFragment<SearchFragmentBinding>(), SearchView {
     }
 
     override fun onErrorHandleClick() {
-        presenter.fetchAllcoins()
+        presenter.fetchAllCoins()
     }
 
     override fun updateList() {

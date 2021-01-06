@@ -18,13 +18,13 @@ class RsiEntity(prices: List<Float> = emptyList(),
     var possibleSLPerc = 0f
 
     init {
-        signalStrength = calculateStrenth()
+        signalStrength = calculateStrength()
         basePerc = calculateBasePercent()
         possibleTarget = calculateTarget(currentPrice)
         stopLoss = calculateSL(currentPrice)
     }
 
-    private fun calculateStrenth(): Float {
+    private fun calculateStrength(): Float {
         return if (isPositive){
             (100-rsi-50)/50*100
         }else {

@@ -38,7 +38,7 @@ class HelpFngFragment: BaseFragment<HelpFragmentFngBinding>() {
     override fun setBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): HelpFragmentFngBinding? {
+    ): HelpFragmentFngBinding {
         return HelpFragmentFngBinding.inflate(inflater, container, false)
     }
 

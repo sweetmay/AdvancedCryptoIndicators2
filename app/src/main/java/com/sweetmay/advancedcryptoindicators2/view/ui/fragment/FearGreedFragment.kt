@@ -18,7 +18,7 @@ import moxy.ktx.moxyPresenter
 
 class FearGreedFragment: BaseFragment<FearGreedFragmentBinding>(), FnGView{
 
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
     private val fragmentPresenter: FearGreedFragmentPresenter by moxyPresenter {
         FearGreedFragmentPresenter(App.injection)
     }

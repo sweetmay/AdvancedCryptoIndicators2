@@ -21,7 +21,7 @@ class ListFragment : BaseFragment<ListFragmentBinding>(), CoinsListView {
 
     val presenter: ListFragmentPresenter by moxyPresenter { ListFragmentPresenter(App.injection) }
 
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,7 +78,7 @@ class ListFragment : BaseFragment<ListFragmentBinding>(), CoinsListView {
         binding.toolbarInclude.toolbar.title = getString(R.string.coins_list_title)
     }
 
-    override fun restoreRVposition(pos: Int) {
+    override fun restoreRVPosition(pos: Int) {
         binding.coinRv.layoutManager?.scrollToPosition(presenter.restoreRVState())
     }
 
