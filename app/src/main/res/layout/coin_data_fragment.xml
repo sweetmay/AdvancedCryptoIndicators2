@@ -165,7 +165,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3">
+            android:layout_weight="5">
 
             <TextView
                 android:id="@+id/buy_sell_text_rsi"
@@ -240,7 +240,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3">
+                android:layout_weight="5">
 
                 <TextView
                     android:id="@+id/buy_sell_text_arima"

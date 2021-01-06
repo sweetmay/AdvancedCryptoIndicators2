@@ -16,7 +16,8 @@ import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import javax.inject.Inject
 
-class ListFragmentPresenter(private val injection: IAppInjection) : MvpPresenter<CoinsListView>(), CoinsListPresenterCallbacks {
+class ListFragmentPresenter(private val injection: IAppInjection) : MvpPresenter<CoinsListView>(),
+    CoinsListPresenterCallbacks {
 
     init {
         injection.initListComponent()?.inject(this)
@@ -24,8 +25,10 @@ class ListFragmentPresenter(private val injection: IAppInjection) : MvpPresenter
 
     @Inject
     lateinit var coinsRepo: ICoinsListRepo
+
     @Inject
     lateinit var scheduler: Scheduler
+
     @Inject
     lateinit var favCache: IFavCoinsCache
     @Inject

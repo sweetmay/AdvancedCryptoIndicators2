@@ -18,7 +18,8 @@ import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 import javax.inject.Inject
 
-class SearchFragmentPresenter(private val injection: IAppInjection): MvpPresenter<SearchView>(), CoinsListPresenterCallbacks {
+class SearchFragmentPresenter(private val injection: IAppInjection) : MvpPresenter<SearchView>(),
+    CoinsListPresenterCallbacks {
 
     init {
         injection.initSearchComponent()?.inject(this)
@@ -26,8 +27,10 @@ class SearchFragmentPresenter(private val injection: IAppInjection): MvpPresente
 
     @Inject
     lateinit var scheduler: Scheduler
+
     @Inject
     lateinit var allCoinsCache: IAllCoinsCache
+
     @Inject
     lateinit var coinsRepo: ICoinsListRepo
     @Inject

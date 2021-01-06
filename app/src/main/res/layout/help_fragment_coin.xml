@@ -1,16 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <include layout="@layout/app_bar"
-        android:id="@+id/toolbar_include"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="coin">
-    </TextView>
+        android:orientation="vertical">
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <include
+            android:id="@+id/toolbar_include"
+            layout="@layout/app_bar" />
+
+        <TextView
+            android:id="@+id/sentiment_help_head"
+            style="@style/HeadingHelpStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sentiment" />
+
+        <TextView
+            android:id="@+id/sentiment_help_body"
+            style="@style/BodyHelpStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sentiment_help_body" />
+
+        <TextView
+            android:id="@+id/rsi_heading"
+            style="@style/HeadingHelpStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rsi_indicator_name" />
+
+        <TextView
+            style="@style/BodyHelpStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rsi_help_body" />
+
+        <TextView
+            style="@style/HeadingHelpStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/arima_indicator_name"></TextView>
+
+        <TextView
+            style="@style/BodyHelpStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/arima_help"></TextView>
+
+        <TextView
+            android:id="@+id/strategy_heading"
+            style="@style/HeadingHelpStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/possible_strategy"></TextView>
+
+        <TextView
+            style="@style/BodyHelpStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/help_strategy_text"></TextView>
+
+
+        <ImageView
+            android:id="@+id/image_help_strategy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"></ImageView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</ScrollView>

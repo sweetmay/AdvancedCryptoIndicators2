@@ -1,7 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.view.ui.fragment.base
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,9 @@ abstract class BaseFragment<VB: ViewBinding>: MvpAppCompatFragment(), BaseView {
     private var _binding: VB? = null
     val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
         _binding = setBinding(inflater, container)
         return _binding!!.root
     }
@@ -29,9 +30,10 @@ abstract class BaseFragment<VB: ViewBinding>: MvpAppCompatFragment(), BaseView {
     }
 
     override fun renderError(e: Exception) {
-        Log.d(this.tag, e.message?:"error")
-        val snackbar = Snackbar.make(binding.root, R.string.error_data_load, Snackbar.LENGTH_INDEFINITE)
-        snackbar.setAction("retry"){
+        val snackbar = Snackbar.make(
+            binding.root, R.string.error_data_load, Snackbar.LENGTH_INDEFINITE
+        )
+        snackbar.setAction("retry") {
             onErrorHandleClick()
         }
         snackbar.show()

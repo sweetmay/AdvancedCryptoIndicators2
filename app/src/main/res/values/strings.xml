@@ -58,6 +58,24 @@
     <string name="mediumRR">Medium</string>
     <string name="highRR">High</string>
     <string name="risk_reward_label">Risk/Reward</string>
+    <string name="sentiment_help_body">General public opinion on the selected cryptocurrency.
+        \nProvided by <a href="http://coingecko.com">CoinGecko</a></string>
+    <string name="help">Help</string>
+    <string name="rsi_help_body">Indicator is based on RSI of 14 time period.
+        \nBased on the selected timeframe it quite accurately detects profitable entry points.
+        \nYou can manually choose risk/reward and the timeframe to observe.
+        \nFor Intraday trading it is best to use 30 days timeframe</string>
+    <string name="arima_help">This indicator is composed of Autoregressive Integrated Moving Average, or ARIMA.
+        \nThe method can very easily handle time-series data and predict the current trend.
+        \nYou can choose the timeframe and prediction period in days.</string>
+    <string name="possible_strategy">Possible Strategy</string>
+    <string name="help_strategy_text">While the bounce indicator is a trend-reversal indicator, ARIMA follows the trend.
+        \nIf bounce indicator and ARIMA are showing the same recommendation then there is a divergence in the trend, so it\'s the best opportunity to trade</string>
+    <string name="fear_greed_index">Fear &amp; greed index</string>
+    <string name="fng_help_body">Each day sentiments from various sources are being crunched into one simple number representing the global market sentiment.
+        \n\nFear (closer to 0) means that the market is oversold and it\'s a good opportunity to buy.
+        \nGreed (closer to 100) means that the market is overbought and it\'s a good oportunity to sell.
+        \nProvided by <a href="https://alternative.me/">alternative.me</a></string>
 
     <string-array name="time_frame">
         <item name="7_days">7 days</item>

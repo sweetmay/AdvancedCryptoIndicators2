@@ -12,15 +12,18 @@ class GlideImageLoaderAsDrawable(val context: Context): IImageLoaderAsDrawable {
 
     override fun loadImageAsDrawable(url: String): Single<Drawable> {
         return Single.create<Drawable>{
-            Glide.with(context).asDrawable().load(url).into<CustomTarget<Drawable>>(object : CustomTarget<Drawable>(){
-                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                    it.onSuccess(resource)
-                }
+            Glide.with(context).asDrawable().load(url)
+                .into<CustomTarget<Drawable>>(object : CustomTarget<Drawable>() {
+                    override fun onResourceReady(
+                        resource: Drawable, transition: Transition<in Drawable>?
+                    ) {
+                        it.onSuccess(resource)
+                    }
 
-                override fun onLoadCleared(placeholder: Drawable?) {
-                }
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                    }
 
-            })
+                })
         }.subscribeOn(Schedulers.io())
     }
 }

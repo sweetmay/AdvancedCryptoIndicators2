@@ -88,15 +88,16 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
             coinDataRepo.getCoinMarketChartData(coinBase,
                     settings.currencyAgainst,
                     settings.arimaTimeFrame).observeOn(scheduler).subscribe({ list ->
-                        arimaEvaluator.calculateArima(list, settings.arimaPredictionPeriod).observeOn(scheduler)
-                                .subscribe({ arimaEntity ->
-                                    viewState.setArima(arimaEntity)
-                                }, {
-                                    viewState.showArimaError()
-                                })
+                arimaEvaluator.calculateArima(list, settings.arimaPredictionPeriod)
+                    .observeOn(scheduler)
+                    .subscribe({ arimaEntity ->
+                        viewState.setArima(arimaEntity)
                     }, {
-                        viewState.renderError(it as Exception)
+                        viewState.showArimaError()
                     })
+            }, {
+                viewState.renderError(it as Exception)
+            })
         }
     }
 

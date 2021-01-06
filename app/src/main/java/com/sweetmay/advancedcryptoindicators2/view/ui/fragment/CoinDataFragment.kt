@@ -28,7 +28,8 @@ import com.sweetmay.advancedcryptoindicators2.view.ui.fragment.base.BaseFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
 
-class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, ArimaCallBack, RsiCallBack {
+class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, ArimaCallBack,
+    RsiCallBack {
 
     init {
         App.injection.initDetailedComponent()?.inject(this)
@@ -36,6 +37,7 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, 
 
     @Inject
     lateinit var converter: Converter
+
     @Inject
     lateinit var settings: ISettings
 
@@ -65,9 +67,6 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, 
                 true
             }
         }
-
-
-
 
         initArimaIndicator()
         initRsiIndicator()
@@ -196,7 +195,6 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, 
             }else {
                 buySellTextRsi.text = getString(R.string.sell_text)
             }
-            buySellTextRsi.setTextColor(rsi.indicatorColor)
         }
     }
 
