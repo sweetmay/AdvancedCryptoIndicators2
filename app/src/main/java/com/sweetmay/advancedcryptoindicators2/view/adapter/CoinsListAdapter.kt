@@ -2,8 +2,10 @@ package com.sweetmay.advancedcryptoindicators2.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.ItemCoinBinding
 import com.sweetmay.advancedcryptoindicators2.presenter.list.ICoinsListPresenter
 import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
@@ -26,10 +28,10 @@ class CoinsListAdapter(val presenter: ICoinsListPresenter, val imageLoader: IIma
             presenter.onItemClick(holder)
         }
 
-        holder.imageButton.setOnClickListener {
-            it as FavButton
-            it.checked = !it.checked
-            if (it.checked) {
+        holder.imageButtonHolder.setOnClickListener {
+            val button = it.findViewById<FavButton>(R.id.fav_button)
+            button.checked = !button.checked
+            if (button.checked) {
                 presenter.saveFav(holder)
             } else presenter.deleteFav(holder)
         }
@@ -43,7 +45,7 @@ class CoinsListAdapter(val presenter: ICoinsListPresenter, val imageLoader: IIma
 
     inner class ViewHolder(private val itemCoinBinding: ItemCoinBinding)
         : RecyclerView.ViewHolder(itemCoinBinding.root), CoinItemView {
-        val imageButton: FavButton = itemCoinBinding.favButton
+        val imageButtonHolder: FrameLayout = itemCoinBinding.favHolderLayout
         var itemPos = -1
 
         override fun setIcon(imgUrl: String) {
@@ -55,8 +57,7 @@ class CoinsListAdapter(val presenter: ICoinsListPresenter, val imageLoader: IIma
         }
 
         override fun setPrice(price: Float) {
-            var tmp = ""
-            tmp = if(price<1){
+            val tmp: String = if(price<1){
                 "$" + String.format("%.8f", price)
             }else{
                 "$$price"
