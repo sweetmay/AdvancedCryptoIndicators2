@@ -118,6 +118,7 @@
                 android:background="@drawable/bottom_layout_border"/>
             <TextView
                 android:id="@+id/rsi_strength"
+                style="@style/IndicatorInfoStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -125,6 +126,7 @@
 
             <TextView
                 android:id="@+id/time_frame_rsi"
+                style="@style/IndicatorInfoStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/rsi_strength"
@@ -132,6 +134,7 @@
 
             <TextView
                 android:id="@+id/risk_reward_rsi"
+                style="@style/IndicatorInfoStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -139,12 +142,14 @@
 
             <TextView
                 android:id="@+id/stop_loss"
+                style="@style/IndicatorInfoStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/risk_reward_rsi" />
             <TextView
                 android:id="@+id/target"
+                style="@style/IndicatorInfoStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -207,6 +212,7 @@
 
                 <TextView
                     android:id="@+id/time_frame_arima"
+                    style="@style/IndicatorInfoStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
@@ -214,6 +220,7 @@
 
             <TextView
                 android:id="@+id/current_period"
+                style="@style/IndicatorInfoStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -221,6 +228,7 @@
 
             <TextView
                 android:id="@+id/prediction"
+                style="@style/IndicatorInfoStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"

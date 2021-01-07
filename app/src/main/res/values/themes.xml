@@ -5,9 +5,13 @@
     </style>
 
     <style name="IndicatorTextStyle">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <style name="IndicatorInfoStyle">
+        <item name="android:paddingTop">3dp</item>
     </style>
 
     <style name="HeadingHelpStyle">
