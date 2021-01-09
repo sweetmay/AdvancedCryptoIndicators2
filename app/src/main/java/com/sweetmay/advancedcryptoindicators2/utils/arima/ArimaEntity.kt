@@ -7,7 +7,7 @@ import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.workday.insights.timeseries.arima.Arima
 import com.workday.insights.timeseries.arima.struct.ArimaParams
 
-class ArimaEntity(chartData: ChartData, period: Int, priceConverter: Converter, argbEvaluator: ArgbEvaluator) {
+class ArimaEntity(chartData: ChartData, period: Int, priceConverter: Converter, argbEvaluator: ArgbEvaluator, currentPrice: Float) {
 
     private val p = 3
     private val d = 0
@@ -22,7 +22,7 @@ class ArimaEntity(chartData: ChartData, period: Int, priceConverter: Converter, 
     val forecastLast: Double
 
     val priceList = priceConverter.convertChartDataForArima(chartData)
-    private val currentPrice = priceList[priceList.size-1]
+
     var isPositive: Boolean = false
     var indicatorColor = 0
 

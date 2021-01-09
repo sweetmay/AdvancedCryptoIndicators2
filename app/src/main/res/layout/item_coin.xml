@@ -15,7 +15,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="63">
+            android:layout_weight="60">
 
             <ImageView
                 android:id="@+id/coin_icon"
@@ -41,7 +41,7 @@
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="25">
+            android:layout_weight="28">
 
             <TextView
                 android:id="@+id/coin_price"

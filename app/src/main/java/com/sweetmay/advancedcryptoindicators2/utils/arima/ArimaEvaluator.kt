@@ -9,9 +9,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class ArimaEvaluator(private val argbEvaluator: ArgbEvaluator, val converter: Converter) : IArimaEvaluator {
 
-    override fun calculateArima(chartData: ChartData, predictionPeriod: Int): Single<ArimaEntity> {
+    override fun calculateArima(chartData: ChartData, predictionPeriod: Int, currentPrice: Float): Single<ArimaEntity> {
         return Single.fromCallable{
-            val arima = ArimaEntity(chartData, predictionPeriod, converter, argbEvaluator)
+            val arima = ArimaEntity(chartData, predictionPeriod, converter, argbEvaluator, currentPrice)
             if(arima.forecastLast<0){
                 throw ArimaException()
             }else {
