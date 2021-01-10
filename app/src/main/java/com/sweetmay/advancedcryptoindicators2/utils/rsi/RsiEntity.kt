@@ -1,13 +1,13 @@
 package com.sweetmay.advancedcryptoindicators2.utils.rsi
 
+
 class RsiEntity(prices: List<Float> = emptyList(),
                 period: Int,
-                rr: Int, currentPrice: Float) {
+                rr: Int) {
 
     private var basePerc: Float = 0.1f * rr
 
     val rsi = calculateRSI(prices, period)
-
     var indicatorColor: Int = 0
     val signalStrength: Float
     val possibleTarget: Float
@@ -19,8 +19,8 @@ class RsiEntity(prices: List<Float> = emptyList(),
     init {
         signalStrength = calculateStrength()
         basePerc = calculateBasePercent()
-        possibleTarget = calculateTarget(currentPrice)
-        stopLoss = calculateSL(currentPrice)
+        possibleTarget = calculateTarget(prices.first())
+        stopLoss = calculateSL(prices.first())
     }
 
     private fun calculateStrength(): Float {

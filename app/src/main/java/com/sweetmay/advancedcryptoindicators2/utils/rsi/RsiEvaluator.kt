@@ -11,7 +11,8 @@ class RsiEvaluator(private val argbEvaluator: ArgbEvaluator) : IRsiEvaluator {
     override fun calculateRsiEntity(chartData: ChartData, period: Int, rr: Int, currentPrice: Float): Single<RsiEntity> {
         return Single.fromCallable {
             val priceList = Converter().convertChartDataForRsi(chartData)
-            val rsi = RsiEntity(priceList, period, rr, currentPrice)
+            priceList[0] = currentPrice
+            val rsi = RsiEntity(priceList, period, rr)
             rsi.indicatorColor = argbEvaluator
                 .evaluate(rsi.signalStrength / 100, Color.RED, Color.GREEN) as Int
             return@fromCallable rsi

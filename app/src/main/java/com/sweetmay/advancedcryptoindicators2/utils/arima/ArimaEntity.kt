@@ -2,12 +2,10 @@ package com.sweetmay.advancedcryptoindicators2.utils.arima
 
 import android.animation.ArgbEvaluator
 import android.graphics.Color
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
-import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.workday.insights.timeseries.arima.Arima
 import com.workday.insights.timeseries.arima.struct.ArimaParams
 
-class ArimaEntity(chartData: ChartData, period: Int, priceConverter: Converter, argbEvaluator: ArgbEvaluator, currentPrice: Float) {
+class ArimaEntity(priceList: DoubleArray, period: Int, argbEvaluator: ArgbEvaluator) {
 
     private val p = 3
     private val d = 0
@@ -20,9 +18,7 @@ class ArimaEntity(chartData: ChartData, period: Int, priceConverter: Converter, 
     private val arimaParams = ArimaParams(p, d, q, P, D, Q, m)
     val forecastArray: DoubleArray
     val forecastLast: Double
-
-    val priceList = priceConverter.convertChartDataForArima(chartData)
-
+    val currentPrice = priceList.first()
     var isPositive: Boolean = false
     var indicatorColor = 0
 

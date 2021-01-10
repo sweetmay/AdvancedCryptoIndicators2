@@ -11,7 +11,8 @@ class ArimaEvaluator(private val argbEvaluator: ArgbEvaluator, val converter: Co
 
     override fun calculateArima(chartData: ChartData, predictionPeriod: Int, currentPrice: Float): Single<ArimaEntity> {
         return Single.fromCallable{
-            val arima = ArimaEntity(chartData, predictionPeriod, converter, argbEvaluator, currentPrice)
+            val priceList = converter.convertChartDataForArima(chartData, currentPrice)
+            val arima = ArimaEntity(priceList, predictionPeriod, argbEvaluator)
             if(arima.forecastLast<0){
                 throw ArimaException()
             }else {

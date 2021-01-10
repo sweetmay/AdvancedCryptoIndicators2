@@ -1,5 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
+import android.util.Log
 import com.sweetmay.advancedcryptoindicators2.IAppInjection
 import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
@@ -93,6 +94,7 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
                     .subscribe({ arimaEntity ->
                         viewState.setArima(arimaEntity)
                     }, {
+                        Log.d("A", it.message.toString())
                         viewState.showArimaError()
                     })
             }, {

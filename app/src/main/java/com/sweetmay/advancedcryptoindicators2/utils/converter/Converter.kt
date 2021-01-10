@@ -34,11 +34,12 @@ class Converter {
         return priceList
     }
 
-    fun convertChartDataForArima(chartData: ChartData): DoubleArray{
+    fun convertChartDataForArima(chartData: ChartData, currentPrice: Float): DoubleArray{
         val priceList = DoubleArray(chartData.prices.size)
         for (i in chartData.prices.indices) {
             priceList[i] = chartData.prices[i][1].toDouble()
         }
+        priceList[0] = currentPrice.toDouble()
         return priceList
     }
 
