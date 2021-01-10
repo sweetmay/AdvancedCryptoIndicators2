@@ -108,7 +108,7 @@ class CoinDataFragmentPresenter(val injection: IAppInjection) : MvpPresenter<Coi
                     settings.rsiTimeFrame)
                     .observeOn(scheduler).subscribe({ chartData ->
                         rsiEvaluator.calculateRsiEntity(chartData,
-                                settings.rsiPeriod, settings.rsiRR).observeOn(scheduler)
+                                settings.rsiPeriod, settings.rsiRR, coinBase.current_price).observeOn(scheduler)
                                 .subscribe({ rsi ->
                                     viewState.setRsi(rsi)
                                 }, {

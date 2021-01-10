@@ -8,10 +8,10 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class RsiEvaluator(private val argbEvaluator: ArgbEvaluator) : IRsiEvaluator {
-    override fun calculateRsiEntity(chartData: ChartData, period: Int, rr: Int): Single<RsiEntity> {
+    override fun calculateRsiEntity(chartData: ChartData, period: Int, rr: Int, currentPrice: Float): Single<RsiEntity> {
         return Single.fromCallable {
             val priceList = Converter().convertChartDataForRsi(chartData)
-            val rsi = RsiEntity(priceList, period, rr)
+            val rsi = RsiEntity(priceList, period, rr, currentPrice)
             rsi.indicatorColor = argbEvaluator
                 .evaluate(rsi.signalStrength / 100, Color.RED, Color.GREEN) as Int
             return@fromCallable rsi
