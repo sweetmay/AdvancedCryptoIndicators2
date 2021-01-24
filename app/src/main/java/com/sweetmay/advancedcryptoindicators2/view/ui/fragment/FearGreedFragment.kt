@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.doOnLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -30,13 +31,17 @@ class FearGreedFragment: BaseFragment<FearGreedFragmentBinding>(), FnGView{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        inflateToolbar(binding.toolbarInclude.toolbar, R.menu.fng_menu)
+        fragmentPresenter.loadData()
+    }
 
-        with(binding.toolbarInclude.toolbar){
+    override fun inflateToolbar(toolbar: Toolbar, menuRes: Int) {
+        super.inflateToolbar(toolbar, menuRes)
+        with(toolbar){
             setNavigationIcon(R.drawable.navigate_before_24px)
             setNavigationOnClickListener {
                 requireActivity().onBackPressed()
             }
-            inflateMenu(R.menu.help_menu)
             setOnMenuItemClickListener {
                 when(it.itemId){
                     R.id.help_button_menu->navController.navigate(FearGreedFragmentDirections
@@ -45,8 +50,6 @@ class FearGreedFragment: BaseFragment<FearGreedFragmentBinding>(), FnGView{
                 true
             }
         }
-
-        fragmentPresenter.loadData()
     }
 
     override fun onErrorHandleClick() {

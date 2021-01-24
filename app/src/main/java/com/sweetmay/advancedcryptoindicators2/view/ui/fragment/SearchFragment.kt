@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,15 +31,18 @@ class SearchFragment: BaseFragment<SearchFragmentBinding>(), SearchView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.toolbarInclude.toolbar.setNavigationIcon(R.drawable.navigate_before_24px)
-        binding.toolbarInclude.toolbar.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
-        }
-
+        inflateToolbar(binding.toolbarInclude.toolbar, R.menu.fav_menu)
         setOnSearchQueryListener()
+    }
 
-
+    override fun inflateToolbar(toolbar: Toolbar, menuRes: Int) {
+        super.inflateToolbar(toolbar, menuRes)
+        with(toolbar){
+            setNavigationIcon(R.drawable.navigate_before_24px)
+            setNavigationOnClickListener {
+                requireActivity().onBackPressed()
+            }
+        }
     }
 
     private fun setOnSearchQueryListener() {

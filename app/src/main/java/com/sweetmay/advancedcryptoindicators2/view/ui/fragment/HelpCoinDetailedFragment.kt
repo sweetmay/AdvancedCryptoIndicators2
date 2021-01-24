@@ -14,13 +14,13 @@ class HelpCoinDetailedFragment: BaseFragment<HelpFragmentCoinBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initToolbar()
         initLink()
         setHelpImage()
     }
 
     private fun initToolbar() {
+        inflateToolbar(binding.toolbarInclude.toolbar, R.menu.help_menu)
         with(binding.toolbarInclude) {
             progressBar.hide()
             toolbar.setTitle(R.string.help)

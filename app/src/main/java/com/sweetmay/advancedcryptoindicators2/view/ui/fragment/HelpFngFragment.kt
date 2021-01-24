@@ -14,12 +14,12 @@ class HelpFngFragment: BaseFragment<HelpFragmentFngBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initToolbar()
         initLink()
     }
 
     private fun initToolbar() {
+        inflateToolbar(binding.toolbarInclude.toolbar, R.menu.help_menu)
         with(binding.toolbarInclude) {
             progressBar.hide()
             toolbar.setTitle(R.string.help)

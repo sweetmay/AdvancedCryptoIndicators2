@@ -11,6 +11,7 @@ class App: Application() {
     lateinit var favCoinsDao: FavCoinsDao
     lateinit var generalInfoDao: CoinsGeneralInfoDao
 
+    val THEME_KEY = "theme"
     val SETTINGS = "prefs"
     val BASE_URL_CG = "https://api.coingecko.com/"
     val BASE_URL_FNG = "https://api.alternative.me/"

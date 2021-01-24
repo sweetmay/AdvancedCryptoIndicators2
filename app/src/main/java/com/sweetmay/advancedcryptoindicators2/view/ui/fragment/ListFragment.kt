@@ -25,12 +25,12 @@ class ListFragment : BaseFragment<ListFragmentBinding>(), CoinsListView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        inflateToolbar(binding.toolbarInclude.toolbar, R.menu.options_menu_main)
         navigateToSearch()
     }
 
     private fun navigateToSearch() {
         with(binding.toolbarInclude.toolbar) {
-            inflateMenu(R.menu.options_menu_search)
             menu.findItem(R.id.search_button_menu).setOnMenuItemClickListener {
                 navController.navigate(ListFragmentDirections.actionListFragmentToSearchFragment())
                 true

@@ -1,6 +1,8 @@
 package com.sweetmay.advancedcryptoindicators2.view.ui.fragment
 
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -25,6 +27,11 @@ class FavFragment : BaseFragment<FavFragmentBinding>(), FavView {
     override fun setBinding(inflater: LayoutInflater, container: ViewGroup?): FavFragmentBinding {
         navController = findNavController()
         return FavFragmentBinding.inflate(inflater, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        inflateToolbar(binding.toolbarInclude.toolbar, R.menu.fav_menu)
     }
 
     override fun initRv() {

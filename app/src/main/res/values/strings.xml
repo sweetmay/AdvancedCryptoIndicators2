@@ -81,6 +81,7 @@
     <string name="settings_ai_prediction_button">settings ai prediction button</string>
     <string name="image_help_strategy">image help strategy</string>
     <string name="coin_image">coin image</string>
+    <string name="action_night_mode">action_night_mode</string>
 
     <string-array name="time_frame">
         <item name="7_days">7 days</item>
