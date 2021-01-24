@@ -1,5 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.view.ui.fragment
 
+import android.app.AlertDialog
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -52,7 +53,6 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, 
         super.onViewCreated(view, savedInstanceState)
         pendingCoin = arguments?.let { CoinDataFragmentArgs.fromBundle(it).coin }
         pendingCoin?.let { presenter.loadData(it) }
-
         with(binding.toolbarInclude.toolbar){
             setNavigationIcon(R.drawable.navigate_before_24px)
             setNavigationOnClickListener {
@@ -78,6 +78,7 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, 
                     getString(settings.getRsiTimeFrameRes()))
             riskRewardRsi.text = getString(R.string.risk_reward,
                     getString(settings.getRsiRiskRewardRes()))
+
             settingsRsi.setOnClickListener {
                 val dialog = RsiSettingsDialog
                         .getInstance(this@CoinDataFragment, settings)
@@ -95,6 +96,7 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, 
             settingsArima.setOnClickListener {
                 val dialog = ArimaSettingsDialog
                         .getInstance(this@CoinDataFragment, settings)
+                (dialog as AlertDialog)
                 dialog.show(requireActivity().supportFragmentManager, "ArimaSettingsDialog")
             }
         }

@@ -23,6 +23,7 @@ abstract class BaseAlertDialog<VB: ViewBinding>: DialogFragment() {
         }?: throw IllegalStateException("Activity cannot be null")
     }
 
+
     abstract fun setBinding(inflater: LayoutInflater): VB
 
     override fun onDestroy() {

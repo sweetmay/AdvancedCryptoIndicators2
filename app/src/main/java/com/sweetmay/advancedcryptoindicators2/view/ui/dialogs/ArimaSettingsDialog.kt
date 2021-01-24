@@ -44,7 +44,6 @@ class ArimaSettingsDialog private constructor(): BaseAlertDialog<ArimaSettingsDi
             }
 
             onButtonsClick(builder, binding.timeFrameArima, binding.predictionPeriod)
-
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }

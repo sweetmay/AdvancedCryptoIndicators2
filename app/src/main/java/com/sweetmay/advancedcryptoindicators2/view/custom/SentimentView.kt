@@ -45,9 +45,9 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
                 0,
                 0).apply {
             try {
-
+                textPaintUp.color = this.getColor(R.styleable.SentimentView_textColorUpDown, Color.BLACK)
+                textPaintDown.color = this.getColor(R.styleable.SentimentView_textColorUpDown, Color.BLACK)
                 thumbSize = this.getDimension(R.styleable.SentimentView_thumbSize, 24f).toInt()
-
                 thumbUp = this.getDrawable(R.styleable.SentimentView_thumbUp)?.toBitmap(thumbSize, thumbSize, null)
                         ?: throw IllegalArgumentException("Provide thumb up image for the view")
                 thumbDown = this.getDrawable(R.styleable.SentimentView_thumbDown)?.toBitmap(thumbSize, thumbSize, null)
@@ -58,9 +58,6 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
         }
         redPaint.color = Color.RED
         greenPaint.color = Color.GREEN
-        textPaintUp.color = Color.BLACK
-        textPaintDown.color = Color.BLACK
-
 
     }
 

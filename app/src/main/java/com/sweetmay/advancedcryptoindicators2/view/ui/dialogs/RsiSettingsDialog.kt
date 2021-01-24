@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.sweetmay.advancedcryptoindicators2.R
@@ -53,6 +54,14 @@ class RsiSettingsDialog private constructor(): BaseAlertDialog<RsiSettingsDialog
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
+    override fun onStart() {
+        super.onStart()
+        (dialog as AlertDialog).apply{
+            getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(requireContext(), R.color.onSurface))
+            getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(requireContext(), R.color.onSurface))
+        }
+    }
+
     private fun onButtonsClick(builder: AlertDialog.Builder, timeFrame: MaterialAutoCompleteTextView, rr: MaterialAutoCompleteTextView) {
         builder.setPositiveButton(getString(R.string.positive_dialog_button)) { dialog, which ->
             when (timeFrame.text.toString()) {
@@ -66,7 +75,6 @@ class RsiSettingsDialog private constructor(): BaseAlertDialog<RsiSettingsDialog
             settings.saveSettings()
             listener.saveRsiSettings()
         }
-
         builder.setNegativeButton(getString(R.string.negative_dialog_button)) { dialog, which ->
             //nothing to do
         }

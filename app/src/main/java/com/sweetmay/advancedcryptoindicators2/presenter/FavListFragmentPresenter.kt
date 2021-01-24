@@ -70,7 +70,7 @@ class FavListFragmentPresenter(private val injection: IAppInjection) : MvpPresen
 
     fun loadData(currencyAgainst: String = settings.currencyAgainst){
         viewState.showLoading()
-        favCache.getFavCoins().subscribe { listDb->
+        favCache.getFavCoins().observeOn(scheduler).subscribe { listDb->
             if (listDb.isNotEmpty()){
             coinsRepo.getCoins(currencyAgainst,
                     converter.convertIdsToString(listDb),

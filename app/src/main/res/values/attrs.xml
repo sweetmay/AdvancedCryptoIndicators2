@@ -10,5 +10,16 @@
         <attr name="thumbUp" format="integer"/>
         <attr name="thumbDown" format="integer"/>
         <attr name="thumbSize" format="dimension"/>
+        <attr name="textColorUpDown" format="color"/>
     </declare-styleable>
+
+    <declare-styleable name="iconsColor">
+        <attr name="colorIcons" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="textColorsCustom">
+        <attr name="textMain" format="color"/>
+        <attr name="textSecondary" format="color"/>
+    </declare-styleable>
+
 </resources>
