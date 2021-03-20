@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import com.sweetmay.advancedcryptoindicators2.R
@@ -29,7 +30,13 @@ class ArimaSettingsDialog private constructor(): BaseAlertDialog<ArimaSettingsDi
     override fun setBinding(inflater: LayoutInflater): ArimaSettingsDialogBinding {
         return ArimaSettingsDialogBinding.inflate(inflater)
     }
-
+    override fun onStart() {
+        super.onStart()
+        (dialog as AlertDialog).apply{
+            getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(requireContext(), R.color.onSurface))
+            getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(requireContext(), R.color.onSurface))
+        }
+    }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
         return activity?.let {

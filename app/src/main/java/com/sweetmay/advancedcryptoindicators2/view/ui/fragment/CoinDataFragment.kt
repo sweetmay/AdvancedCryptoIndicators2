@@ -1,6 +1,5 @@
 package com.sweetmay.advancedcryptoindicators2.view.ui.fragment
 
-import android.app.AlertDialog
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -101,7 +100,6 @@ class CoinDataFragment : BaseFragment<CoinDataFragmentBinding>(), CoinDataView, 
             settingsArima.setOnClickListener {
                 val dialog = ArimaSettingsDialog
                         .getInstance(this@CoinDataFragment, settings)
-                (dialog as AlertDialog)
                 dialog.show(requireActivity().supportFragmentManager, "ArimaSettingsDialog")
             }
         }
