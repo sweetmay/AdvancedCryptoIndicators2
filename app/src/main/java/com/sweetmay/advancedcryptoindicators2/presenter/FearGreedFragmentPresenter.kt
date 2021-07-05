@@ -1,47 +1,50 @@
 package com.sweetmay.advancedcryptoindicators2.presenter
 
 import com.sweetmay.advancedcryptoindicators2.IAppInjection
+import com.sweetmay.advancedcryptoindicators2.model.repo.ResultWrapper
 import com.sweetmay.advancedcryptoindicators2.model.repo.IFnGRepo
 import com.sweetmay.advancedcryptoindicators2.view.FnGView
-import io.reactivex.rxjava3.core.Scheduler
+import kotlinx.coroutines.*
 import moxy.MvpPresenter
+import java.lang.Exception
 import javax.inject.Inject
 
-class FearGreedFragmentPresenter(private val injection: IAppInjection): MvpPresenter<FnGView>() {
+class FearGreedFragmentPresenter(private val injection: IAppInjection) : MvpPresenter<FnGView>() {
 
-    init {
-        injection.initFngComponent()?.inject(this)
+  init {
+    injection.initFngComponent()?.inject(this)
+  }
+
+  @Inject
+  lateinit var fngRepo: IFnGRepo
+
+  override fun onFirstViewAttach() {
+    super.onFirstViewAttach()
+    setTitle()
+    loadData()
+  }
+
+  fun loadData() {
+    viewState.showLoading()
+    CoroutineScope(Dispatchers.IO).launch {
+      val result = fngRepo.getFng("31")
+      withContext(Dispatchers.Main) {
+        when(result){
+          is ResultWrapper.Success-> viewState.showData(result.value)
+          is ResultWrapper.Error-> viewState.renderError(Exception(result.errorMsg))
+        }
+        viewState.hideLoading()
+      }
     }
 
-    @Inject
-    lateinit var fngRepo: IFnGRepo
-    @Inject
-    lateinit var scheduler: Scheduler
+  }
 
+  private fun setTitle() {
+    viewState.setTitle()
+  }
 
-    override fun onFirstViewAttach() {
-        super.onFirstViewAttach()
-        setTitle()
-        loadData()
-    }
-
-    fun loadData() {
-        viewState.showLoading()
-        fngRepo.getFnG("31").observeOn(scheduler).subscribe ({ fng->
-            viewState.showData(fng)
-            viewState.hideLoading()
-        }, {
-            viewState.renderError(it as Exception)
-        })
-
-    }
-
-    private fun setTitle() {
-        viewState.setTitle()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        injection.releaseFngSubComponent()
-    }
+  override fun onDestroy() {
+    super.onDestroy()
+    injection.releaseFngSubComponent()
+  }
 }
