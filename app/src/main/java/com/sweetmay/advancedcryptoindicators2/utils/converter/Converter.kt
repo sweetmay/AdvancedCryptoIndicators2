@@ -4,6 +4,7 @@ import android.graphics.Color
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinDb
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.GeneralInfoCoinDb
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
+import com.sweetmay.advancedcryptoindicators2.model.entity.coin.trending.CoinTrending
 
 class Converter {
 
@@ -63,6 +64,18 @@ class Converter {
                 result.append(",${coin.id}")
             }else {
                 result.append(coin.id)
+            }
+        }
+        return result.toString()
+    }
+
+    fun convertTrendingCoinIdsToString(coinTrending: CoinTrending): String{
+        val result = StringBuilder()
+        coinTrending.coins.forEach {
+            if(result.isNotEmpty()){
+                result.append(",${it.item.id}")
+            }else {
+                result.append(it.item.id)
             }
         }
         return result.toString()

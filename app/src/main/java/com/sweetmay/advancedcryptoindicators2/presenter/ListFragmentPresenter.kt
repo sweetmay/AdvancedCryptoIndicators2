@@ -25,10 +25,8 @@ class ListFragmentPresenter(private val injection: IAppInjection) : MvpPresenter
 
     @Inject
     lateinit var coinsRepo: ICoinsListRepo
-
     @Inject
     lateinit var scheduler: Scheduler
-
     @Inject
     lateinit var favCache: IFavCoinsCache
     @Inject

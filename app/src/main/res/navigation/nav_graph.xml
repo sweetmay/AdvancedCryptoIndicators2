@@ -57,4 +57,16 @@
         android:id="@+id/helpCoinDetailedFragment"
         android:name="com.sweetmay.advancedcryptoindicators2.view.ui.fragment.HelpCoinDetailedFragment"
         android:label="HelpCoinDetailedFragment" />
+    <fragment
+      android:id="@+id/trendingCoinsFragment"
+      android:name="com.sweetmay.advancedcryptoindicators2.view.ui.fragment.TrendingCoinsFragment"
+      android:label="TrendingCoinsFragment">
+        <argument
+          android:name="coin"
+          app:argType="com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase" />
+        <action
+          android:id="@+id/action_trendingCoinsFragment_to_coinDataFragment"
+          app:destination="@id/coinDataFragment"
+          />
+    </fragment>
 </navigation>
