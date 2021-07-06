@@ -82,8 +82,10 @@
     <string name="image_help_strategy">image help strategy</string>
     <string name="coin_image">coin image</string>
     <string name="action_night_mode">action_night_mode</string>
+    <string name="trending">TRENDING</string>
+  <string name="trending_coins">Trending coins</string>
 
-    <string-array name="time_frame">
+  <string-array name="time_frame">
         <item name="7_days">7 days</item>
         <item name="14_days">14 days</item>
         <item name="30_days">30 days</item>

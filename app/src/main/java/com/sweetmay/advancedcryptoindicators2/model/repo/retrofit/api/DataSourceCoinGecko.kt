@@ -4,6 +4,7 @@ import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.GeneralInfoCoinDb
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.CoinDetailed
+import com.sweetmay.advancedcryptoindicators2.model.entity.coin.trending.CoinTrending
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -31,4 +32,7 @@ interface DataSourceCoinGecko {
     fun getMarketChart(@Path("coin") id: String,
                        @Query("vs_currency") currencyAgainst: String,
                        @Query("days") days: String): Single<ChartData>
+
+    @GET("/api/v3/search/trending")
+    fun getTrending(): Single<CoinTrending>
 }

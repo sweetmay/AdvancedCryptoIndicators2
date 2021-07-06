@@ -6,6 +6,7 @@ import com.sweetmay.advancedcryptoindicators2.di.modules.CoinListRepoModule
 import com.sweetmay.advancedcryptoindicators2.di.modules.ImageLoaderModule
 import com.sweetmay.advancedcryptoindicators2.di.search.SearchSubComponent
 import com.sweetmay.advancedcryptoindicators2.presenter.ListFragmentPresenter
+import com.sweetmay.advancedcryptoindicators2.vm.TrendingCoinsViewModel
 import dagger.Subcomponent
 
 @ListSubComponentScope
@@ -18,4 +19,5 @@ interface ListSubComponent {
     fun coinDetailedSubComponent(): CoinDetailedSubComponent
     fun searchComponent(): SearchSubComponent
     fun inject(listFragmentPresenter: ListFragmentPresenter)
+    fun inject(trendingFragmentViewModel: TrendingCoinsViewModel)
 }
