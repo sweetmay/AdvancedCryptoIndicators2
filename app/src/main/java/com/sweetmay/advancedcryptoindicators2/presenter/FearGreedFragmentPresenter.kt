@@ -17,6 +17,7 @@ class FearGreedFragmentPresenter(private val injection: IAppInjection) : MvpPres
 
   @Inject
   lateinit var fngRepo: IFnGRepo
+  private val scope = CoroutineScope(Dispatchers.IO)
 
   override fun onFirstViewAttach() {
     super.onFirstViewAttach()
@@ -26,7 +27,7 @@ class FearGreedFragmentPresenter(private val injection: IAppInjection) : MvpPres
 
   fun loadData() {
     viewState.showLoading()
-    CoroutineScope(Dispatchers.IO).launch {
+    scope.launch {
       val result = fngRepo.getFng("31")
       withContext(Dispatchers.Main) {
         when(result){
@@ -45,6 +46,7 @@ class FearGreedFragmentPresenter(private val injection: IAppInjection) : MvpPres
 
   override fun onDestroy() {
     super.onDestroy()
+    scope.cancel()
     injection.releaseFngSubComponent()
   }
 }
