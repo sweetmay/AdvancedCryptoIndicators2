@@ -5,56 +5,56 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.sweetmay.advancedcryptoindicators2.view.ui.fragment.ListFragment"
+        android:name="com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.ListFragment"
         android:label="ListFragment" >
-        <action
-            android:id="@+id/action_listFragment_to_coinDataFragment"
-            app:destination="@id/coinDataFragment" />
-        <action
-            android:id="@+id/action_listFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+<!--        <action-->
+<!--            android:id="@+id/action_listFragment_to_coinDataFragment"-->
+<!--            app:destination="@id/coinDataFragment" />-->
+<!--        <action-->
+<!--            android:id="@+id/action_listFragment_to_searchFragment"-->
+<!--            app:destination="@id/searchFragment" />-->
     </fragment>
-    <fragment
-        android:id="@+id/favFragment"
-        android:name="com.sweetmay.advancedcryptoindicators2.view.ui.fragment.FavFragment"
-        android:label="FavFragment" >
-        <action
-            android:id="@+id/action_favFragment_to_coinDataFragment"
-            app:destination="@id/coinDataFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/fearGreedFragment"
-        android:name="com.sweetmay.advancedcryptoindicators2.view.ui.fragment.FearGreedFragment"
-        android:label="FearGreedFragment" >
-        <action
-            android:id="@+id/action_fearGreedFragment_to_helpFngFragment"
-            app:destination="@id/helpFngFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/coinDataFragment"
-        android:name="com.sweetmay.advancedcryptoindicators2.view.ui.fragment.CoinDataFragment"
-        android:label="CoinDataFragment" >
-        <argument
-            android:name="coin"
-            app:argType="com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase" />
-        <action
-            android:id="@+id/action_coinDataFragment_to_helpCoinDetailedFragment"
-            app:destination="@id/helpCoinDetailedFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.sweetmay.advancedcryptoindicators2.view.ui.fragment.SearchFragment"
-        android:label="SearchFragment" >
-        <action
-            android:id="@+id/action_searchFragment_to_coinDataFragment"
-            app:destination="@id/coinDataFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/helpFngFragment"
-        android:name="com.sweetmay.advancedcryptoindicators2.view.ui.fragment.HelpFngFragment"
-        android:label="HelpFngFragment" />
-    <fragment
-        android:id="@+id/helpCoinDetailedFragment"
-        android:name="com.sweetmay.advancedcryptoindicators2.view.ui.fragment.HelpCoinDetailedFragment"
-        android:label="HelpCoinDetailedFragment" />
+<!--    <fragment-->
+<!--        android:id="@+id/favFragment"-->
+<!--        android:name="com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.FavFragment"-->
+<!--        android:label="FavFragment" >-->
+<!--        <action-->
+<!--            android:id="@+id/action_favFragment_to_coinDataFragment"-->
+<!--            app:destination="@id/coinDataFragment" />-->
+<!--    </fragment>-->
+<!--    <fragment-->
+<!--        android:id="@+id/fearGreedFragment"-->
+<!--        android:name="com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.FearGreedFragment"-->
+<!--        android:label="FearGreedFragment" >-->
+<!--        <action-->
+<!--            android:id="@+id/action_fearGreedFragment_to_helpFngFragment"-->
+<!--            app:destination="@id/helpFngFragment" />-->
+<!--    </fragment>-->
+<!--    <fragment-->
+<!--        android:id="@+id/coinDataFragment"-->
+<!--        android:name="com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.CoinDataFragment"-->
+<!--        android:label="CoinDataFragment" >-->
+<!--        <argument-->
+<!--            android:name="coin"-->
+<!--            app:argType="com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase" />-->
+<!--        <action-->
+<!--            android:id="@+id/action_coinDataFragment_to_helpCoinDetailedFragment"-->
+<!--            app:destination="@id/helpCoinDetailedFragment" />-->
+<!--    </fragment>-->
+<!--    <fragment-->
+<!--        android:id="@+id/searchFragment"-->
+<!--        android:name="com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.SearchFragment"-->
+<!--        android:label="SearchFragment" >-->
+<!--        <action-->
+<!--            android:id="@+id/action_searchFragment_to_coinDataFragment"-->
+<!--            app:destination="@id/coinDataFragment" />-->
+<!--    </fragment>-->
+<!--    <fragment-->
+<!--        android:id="@+id/helpFngFragment"-->
+<!--        android:name="com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.HelpFngFragment"-->
+<!--        android:label="HelpFngFragment" />-->
+<!--    <fragment-->
+<!--        android:id="@+id/helpCoinDetailedFragment"-->
+<!--        android:name="com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.HelpCoinDetailedFragment"-->
+<!--        android:label="HelpCoinDetailedFragment" />-->
 </navigation>

@@ -1,4 +1,4 @@
-package com.sweetmay.advancedcryptoindicators2.view.ui.dialogs
+package com.sweetmay.advancedcryptoindicators2.presentation.ui.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
@@ -11,7 +11,7 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.RsiSettingsDialogBinding
 import com.sweetmay.advancedcryptoindicators2.model.settings.ISettings
-import com.sweetmay.advancedcryptoindicators2.view.ui.dialogs.base.BaseAlertDialog
+import com.sweetmay.advancedcryptoindicators2.presentation.ui.dialogs.base.BaseAlertDialog
 
 class RsiSettingsDialog private constructor(): BaseAlertDialog<RsiSettingsDialogBinding>(){
     private lateinit var listener: RsiCallBack

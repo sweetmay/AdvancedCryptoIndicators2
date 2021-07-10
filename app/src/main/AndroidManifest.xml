@@ -11,8 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AdvancedCryptoIndicators2">
-        <activity android:name=".view.ui.MainActivity"
-            android:screenOrientation="portrait"
+        <activity android:name="com.sweetmay.advancedcryptoindicators2.presentation.ui.MainActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

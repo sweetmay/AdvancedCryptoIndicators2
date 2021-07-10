@@ -1,4 +1,4 @@
-package com.sweetmay.advancedcryptoindicators2.view.ui.dialogs.base
+package com.sweetmay.advancedcryptoindicators2.presentation.ui.dialogs.base
 
 import android.app.Dialog
 import android.os.Bundle

@@ -1,23 +1,21 @@
-package com.sweetmay.advancedcryptoindicators2.view.ui
+package com.sweetmay.advancedcryptoindicators2.presentation.ui
 
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.sweetmay.advancedcryptoindicators2.App
+import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.ActivityMainBinding
-import com.sweetmay.advancedcryptoindicators2.presenter.MainPresenter
 import com.sweetmay.advancedcryptoindicators2.presenter.callback.CallBackToChangeTheme
-import com.sweetmay.advancedcryptoindicators2.view.MainActivityView
-import moxy.MvpAppCompatActivity
-import moxy.ktx.moxyPresenter
 
-class MainActivity : MvpAppCompatActivity(), MainActivityView, CallBackToChangeTheme {
+class MainActivity : AppCompatActivity(), CallBackToChangeTheme {
 
-    private val presenter: MainPresenter by moxyPresenter { MainPresenter() }
     private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPreferences: SharedPreferences
     private var nightMode: Boolean = false
@@ -28,10 +26,12 @@ class MainActivity : MvpAppCompatActivity(), MainActivityView, CallBackToChangeT
         binding = ActivityMainBinding.inflate(layoutInflater)
         setThemeAccordingToPrefs(checkDarkTheme())
         setContentView(binding.root)
+        initBottomNav()
     }
 
-    override fun initBottomNav() {
-        val navController = findNavController(this,  binding.navHostFragment.id)
+    private fun initBottomNav() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
     }
 
@@ -50,7 +50,6 @@ class MainActivity : MvpAppCompatActivity(), MainActivityView, CallBackToChangeT
         sharedPreferences.edit().putBoolean(App.instance.THEME_KEY, true).apply()
     }
         recreate()
-
     }
 
     private fun checkDarkTheme(): Boolean {

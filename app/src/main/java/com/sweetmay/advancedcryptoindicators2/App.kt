@@ -20,19 +20,19 @@ class App: Application() {
         lateinit var instance: App
         private set
 
-        lateinit var injection: IAppInjection
-        private set
+//        lateinit var injection: IAppInjection
+//        private set
     }
 
     override fun onCreate() {
         super.onCreate()
         instance = this
         initDb()
-        initInjection()
+//        initInjection()
     }
 
     private fun initInjection() {
-        injection = AppInjection(this)
+//        injection = AppInjection(this)
     }
 
     private fun initDb() {

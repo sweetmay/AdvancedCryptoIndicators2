@@ -2,21 +2,22 @@ package com.sweetmay.advancedcryptoindicators2.model.db.dao
 
 import androidx.room.*
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinDb
+import com.sweetmay.advancedcryptoindicators2.model.repo.ResultWrapper
 
 @Dao
 interface FavCoinsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(coin: CoinDb)
+    suspend fun insert(coin: CoinDb)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(coins: List<CoinDb>)
+    suspend fun insert(coins: List<CoinDb>)
 
     @Delete
-    fun delete(coin: CoinDb)
+    suspend fun delete(coin: CoinDb)
 
     @Delete
-    fun delete(coins: List<CoinDb>)
+    suspend fun delete(coins: List<CoinDb>)
 
     @Query("SELECT * FROM CoinDb")
-    fun getAll(): List<CoinDb>
+    suspend fun getAll(): List<CoinDb>
 }
