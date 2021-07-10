@@ -32,7 +32,6 @@ class FearGreedFragment: BaseFragment<FearGreedFragmentBinding>(), FnGView{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         inflateToolbar(binding.toolbarInclude.toolbar, R.menu.fng_menu)
-        fragmentPresenter.loadData()
     }
 
     override fun inflateToolbar(toolbar: Toolbar, menuRes: Int) {
