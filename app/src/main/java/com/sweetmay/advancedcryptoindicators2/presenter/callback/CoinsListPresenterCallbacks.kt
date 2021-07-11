@@ -6,4 +6,5 @@ interface CoinsListPresenterCallbacks {
     fun navigateToDetailedScreen(coinBase: CoinBase)
     fun saveToCache(coinBase: CoinBase)
     fun deleteFromCache(coinBase: CoinBase)
+    fun loadMore(pageToLoad: Int)
 }

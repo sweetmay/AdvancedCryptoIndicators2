@@ -6,4 +6,5 @@ interface ICoinsListPresenter: IListPresenter<CoinItemView> {
     fun onFavButtonClicked(view: CoinItemView, state: Boolean)
     fun saveFav(view: CoinItemView)
     fun deleteFav(view: CoinItemView)
+    fun loadNextPage(currentBindingPosition: Int)
 }

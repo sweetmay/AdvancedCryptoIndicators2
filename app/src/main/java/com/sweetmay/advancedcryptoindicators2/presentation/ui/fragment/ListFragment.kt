@@ -1,6 +1,7 @@
 package com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +11,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.ListFragmentBinding
 import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
 import com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.base.BaseFragment
 import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.MainListViewModel
 import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.ViewState
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 
 class ListFragment : BaseFragment<ListFragmentBinding, List<CoinBase>>() {
@@ -30,10 +31,14 @@ class ListFragment : BaseFragment<ListFragmentBinding, List<CoinBase>>() {
     inflateToolbar(binding.toolbarInclude.toolbar, R.menu.options_menu_main)
     navigateToSearch()
     initRv()
+
     lifecycleScope.launchWhenCreated {
       viewModel.uiState.collect {
-        when(it){
-          is ViewState.Loading -> binding.toolbarInclude.progressBar.show()
+        when (it) {
+          is ViewState.Loading -> {
+            binding.toolbarInclude.progressBar.show()
+            Log.d("A", "LOADING")
+          }
           is ViewState.Success -> {
             binding.toolbarInclude.progressBar.hide()
             viewModel.addCoinsToAdapter(it.value)
@@ -43,7 +48,7 @@ class ListFragment : BaseFragment<ListFragmentBinding, List<CoinBase>>() {
             Toast.makeText(requireContext(), "error", Toast.LENGTH_LONG).show()
           }
           is ViewState.Empty -> {
-            Toast.makeText(requireContext(), "empty", Toast.LENGTH_LONG).show()
+
           }
         }
       }
@@ -64,7 +69,6 @@ class ListFragment : BaseFragment<ListFragmentBinding, List<CoinBase>>() {
     with(binding.coinRv) {
       layoutManager = LinearLayoutManager(context)
       adapter = viewModel.createAdapter()
-//      extendListOnScroll()
     }
   }
 
@@ -81,15 +85,19 @@ class ListFragment : BaseFragment<ListFragmentBinding, List<CoinBase>>() {
 //        if (!recyclerView.canScrollVertically(1)
 //          && newState == RecyclerView.SCROLL_STATE_IDLE
 //        ) {
-//          viewModel.saveRVPos(
-//            (layoutManager as LinearLayoutManager)
-//              .findFirstCompletelyVisibleItemPosition()
-//          )
-//          viewModel.loadData()
+//          viewModel.setRvState
+////          viewModel.setRvPos(
+////            (layoutManager as LinearLayoutManager)
+////              .findFirstCompletelyVisibleItemPosition()
+////          )
+//          lifecycleScope.launchWhenResumed {
+//            viewModel.loadData()
+//          }
 //        }
 //      }
 //    })
 //  }
+//}
 
 //  override fun onPause() {
 //    super.onPause()

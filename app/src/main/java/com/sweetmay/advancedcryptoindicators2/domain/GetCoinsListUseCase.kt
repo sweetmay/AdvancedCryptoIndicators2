@@ -7,7 +7,7 @@ import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.model.repo.ResultWrapper
 import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.ViewState
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 
 class GetCoinsListUseCase(
   private val coinsRepo: ICoinsListRepo,
@@ -15,18 +15,17 @@ class GetCoinsListUseCase(
   private val coroutineScope: CoroutineScope,
   private val currencyAgainst: String = "usd",
   private val order: String = "market_cap_desc",
-  private val page: Int = 1
+  private var page: Int = 1
 ) : IGetCoinsListUseCase {
 
-  override suspend fun invoke(): ViewState<List<CoinBase>> {
-
-    val coins = coroutineScope.async {
+  override suspend fun getCoins(): ViewState<List<CoinBase>> {
+    val coins = withContext(coroutineScope.coroutineContext) {
       coinsRepo.getCoins(currencyAgainst, order = order, page = page)
-    }.await()
+    }
 
-    val favs = coroutineScope.async {
+    val favs = withContext(coroutineScope.coroutineContext) {
       favCoinsRepo.getFavCoins()
-    }.await()
+    }
 
     if (coins is ResultWrapper.Error) {
       return ViewState.Error(coins.errorMsg)
@@ -41,6 +40,12 @@ class GetCoinsListUseCase(
       (favs as ResultWrapper.Success).value
     )
   }
+
+  override suspend fun loadMore(pageToLoad: Int): ViewState<List<CoinBase>> {
+    page = pageToLoad
+    return getCoins()
+  }
+
 
   private fun matchFavsWithCoins(
     coins: List<CoinBase>,
