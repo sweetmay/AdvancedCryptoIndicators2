@@ -1,17 +1,20 @@
 package com.sweetmay.advancedcryptoindicators2.presenter.list
 
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
+import androidx.recyclerview.widget.RecyclerView
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.base_coin.CoinView
 import com.sweetmay.advancedcryptoindicators2.presenter.callback.CoinsListPresenterCallbacks
-import com.sweetmay.advancedcryptoindicators2.utils.PagingConfig
+import com.sweetmay.advancedcryptoindicators2.utils.PagingState
 import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.view.item.CoinItemView
+import java.util.*
 
 open class CoinsListPresenter(
   private val callback: CoinsListPresenterCallbacks,
-  private val converter: Converter, private val pagingConfig: PagingConfig
+  private val converter: Converter,
+  val pagingState: PagingState
 ) : ICoinsListPresenter {
 
-  val coins = ArrayList<CoinBase>()
+  val coins = LinkedList<CoinView>()
 
   override fun onFavButtonClicked(view: CoinItemView, state: Boolean) {
     coins[view.getPos()].is_favorite = state
@@ -27,16 +30,26 @@ open class CoinsListPresenter(
     callback.deleteFromCache(coins[view.getPos()])
   }
 
-  override fun loadNextPage(currentBindingPosition: Int) {
-    if(coins.size - currentBindingPosition <= pagingConfig.pageThreshold){
-      callback.loadMore(coins.size / pagingConfig.perPageLimit + 1)
+  override fun updatePagingState(firstItem: Int, lastItem: Int) {
+    pagingState.apply {
+      this.firstItem = firstItem
+      this.lastItem = lastItem
     }
+    if(!pagingState.loading && lastItem >= coins.size-pagingState.pagingConfig.pageThreshold){
+      pagingState.page++
+      callback.loadData()
+      return
+    }
+
+  }
+
+  override fun scrollToLastPos(rv: RecyclerView) {
+    rv.scrollToPosition(pagingState.firstItem)
   }
 
   override fun onItemClick(view: CoinItemView) {
     callback.navigateToDetailedScreen((coins[view.getPos()]))
   }
-
 
   override fun bindView(view: CoinItemView) {
     with(view) {

@@ -1,43 +1,44 @@
 package com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.ListFragmentBinding
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.base_coin.CoinView
 import com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.base.BaseFragment
 import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.MainListViewModel
 import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.ViewState
 import kotlinx.coroutines.flow.collect
 
-class ListFragment : BaseFragment<ListFragmentBinding, List<CoinBase>>() {
+class ListFragment : BaseFragment<ListFragmentBinding, List<CoinView>>() {
 
-  override val viewModel: MainListViewModel by viewModels()
+  override val viewModel: MainListViewModel
+    by navGraphViewModels(R.id.nav_graph)
 
   private lateinit var navController: NavController
+
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     inflateToolbar(binding.toolbarInclude.toolbar, R.menu.options_menu_main)
     navigateToSearch()
     initRv()
-
+    setTitle()
     lifecycleScope.launchWhenCreated {
       viewModel.uiState.collect {
         when (it) {
           is ViewState.Loading -> {
             binding.toolbarInclude.progressBar.show()
-            Log.d("A", "LOADING")
           }
           is ViewState.Success -> {
             binding.toolbarInclude.progressBar.hide()
@@ -45,7 +46,7 @@ class ListFragment : BaseFragment<ListFragmentBinding, List<CoinBase>>() {
             binding.coinRv.adapter?.notifyDataSetChanged()
           }
           is ViewState.Error -> {
-            Toast.makeText(requireContext(), "error", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), it.errorMsg, Toast.LENGTH_LONG).show()
           }
           is ViewState.Empty -> {
 
@@ -76,52 +77,12 @@ class ListFragment : BaseFragment<ListFragmentBinding, List<CoinBase>>() {
     navController = findNavController()
     return ListFragmentBinding.inflate(inflater, container, false)
   }
+
+
+  private fun setTitle() {
+    binding.toolbarInclude.toolbar.title = getString(R.string.coins_list_title)
+  }
 }
-
-//  private fun RecyclerView.extendListOnScroll() {
-//    addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//      override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//        super.onScrollStateChanged(recyclerView, newState)
-//        if (!recyclerView.canScrollVertically(1)
-//          && newState == RecyclerView.SCROLL_STATE_IDLE
-//        ) {
-//          viewModel.setRvState
-////          viewModel.setRvPos(
-////            (layoutManager as LinearLayoutManager)
-////              .findFirstCompletelyVisibleItemPosition()
-////          )
-//          lifecycleScope.launchWhenResumed {
-//            viewModel.loadData()
-//          }
-//        }
-//      }
-//    })
-//  }
-//}
-
-//  override fun onPause() {
-//    super.onPause()
-//    viewModel.saveRVPos(
-//      (binding.coinRv.layoutManager as LinearLayoutManager)
-//        .findFirstCompletelyVisibleItemPosition()
-//    )
-//}
-//
-//  override fun setTitle() {
-//    binding.toolbarInclude.toolbar.title = getString(R.string.coins_list_title)
-//  }
-//
-//  override fun restoreRVPosition(pos: Int) {
-//    binding.coinRv.layoutManager?.scrollToPosition(presenter.restoreRVState())
-//  }
-//
-//  override fun showLoading() {
-//    binding.toolbarInclude.progressBar.show()
-//  }
-//
-//  override fun hideLoading() {
-//    binding.toolbarInclude.progressBar.hide()
-//  }
 //
 //  override fun selectCoin(coinBase: CoinBase) {
 //    val action = ListFragmentDirections.actionListFragmentToCoinDataFragment(coinBase)

@@ -1,11 +1,13 @@
 package com.sweetmay.advancedcryptoindicators2.domain
 
 import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinDb
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.base_coin.CoinItem
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.base_coin.CoinView
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.db.CoinDb
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.model.repo.ResultWrapper
 import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.ViewState
+import com.sweetmay.advancedcryptoindicators2.utils.PagingState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
 
@@ -15,12 +17,11 @@ class GetCoinsListUseCase(
   private val coroutineScope: CoroutineScope,
   private val currencyAgainst: String = "usd",
   private val order: String = "market_cap_desc",
-  private var page: Int = 1
 ) : IGetCoinsListUseCase {
 
-  override suspend fun getCoins(): ViewState<List<CoinBase>> {
+  override suspend fun getCoins(pagingState: PagingState): ViewState<List<CoinView>> {
     val coins = withContext(coroutineScope.coroutineContext) {
-      coinsRepo.getCoins(currencyAgainst, order = order, page = page)
+      coinsRepo.getCoins(currencyAgainst, order = order, page = pagingState.page)
     }
 
     val favs = withContext(coroutineScope.coroutineContext) {
@@ -41,24 +42,24 @@ class GetCoinsListUseCase(
     )
   }
 
-  override suspend fun loadMore(pageToLoad: Int): ViewState<List<CoinBase>> {
-    page = pageToLoad
-    return getCoins()
-  }
-
-
   private fun matchFavsWithCoins(
-    coins: List<CoinBase>,
+    coins: List<CoinItem>,
     favs: List<CoinDb>
-  ): ViewState<List<CoinBase>> {
+  ): ViewState<List<CoinView>> {
+    val resultCoinsView = arrayListOf<CoinView>()
     for (coin in coins) {
+
+      val coinToAdd = coin.toCoinView(coin)
+      resultCoinsView.add(coinToAdd)
+
       for (fav in favs) {
         if (coin.id == fav.id) {
-          coin.is_favorite = true
+          coinToAdd.is_favorite = true
           break
         }
       }
+
     }
-    return ViewState.Success(coins)
+    return ViewState.Success(resultCoinsView)
   }
 }

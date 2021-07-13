@@ -1,17 +1,17 @@
 package com.sweetmay.advancedcryptoindicators2.utils.converter
 
 import android.graphics.Color
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinDb
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.GeneralInfoCoinDb
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.db.CoinDb
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.db.GeneralInfoCoinDb
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.chart.ChartData
 
 class Converter {
 
-    fun convertChange(change: Float): ConvertedChange{
+    fun convertChange(change: Double): ConvertedChange{
         return ConvertedChange(change)
     }
 
-    class ConvertedChange(change: Float){
+    class ConvertedChange(change: Double){
         val color: Int
         val convertedPriceString: String
 

@@ -2,7 +2,7 @@ package com.sweetmay.advancedcryptoindicators2.utils.rsi
 
 import android.animation.ArgbEvaluator
 import android.graphics.Color
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.chart.ChartData
 import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers

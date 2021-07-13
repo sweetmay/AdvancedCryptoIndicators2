@@ -1,7 +1,7 @@
 package com.sweetmay.advancedcryptoindicators2.model.settings
 
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.CurrentPrice
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.PriceChangePercentage24hInCurrency
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.detailed.CurrentPrice
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.detailed.PriceChangePercentage24hInCurrency
 
 interface ISettings {
 

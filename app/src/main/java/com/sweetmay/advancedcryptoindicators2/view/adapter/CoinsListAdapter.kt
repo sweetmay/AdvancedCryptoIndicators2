@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.ItemCoinBinding
@@ -24,9 +25,24 @@ class CoinsListAdapter(
     return ViewHolder(itemBinding)
   }
 
+  override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+    super.onAttachedToRecyclerView(recyclerView)
+
+    presenter.scrollToLastPos(recyclerView)
+
+    recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+      override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        super.onScrolled(recyclerView, dx, dy)
+        val layoutManager = (recyclerView.layoutManager as LinearLayoutManager)
+        presenter.updatePagingState(
+          layoutManager.findFirstVisibleItemPosition(),
+          layoutManager.findLastVisibleItemPosition()
+        )
+      }
+    })
+  }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    presenter.loadNextPage(position)
 
     holder.itemPos = position
     holder.itemView.setOnClickListener {
@@ -53,7 +69,6 @@ class CoinsListAdapter(
     val imageButtonHolder: FrameLayout = itemCoinBinding.favHolderLayout
     var itemPos = -1
 
-
     override fun setIcon(imgUrl: String) {
       imageLoader.loadImageIntoView(imgUrl, itemCoinBinding.coinIcon)
     }
@@ -62,7 +77,7 @@ class CoinsListAdapter(
       itemCoinBinding.coinName.text = name
     }
 
-    override fun setPrice(price: Float) {
+    override fun setPrice(price: Double) {
       val tmp: String = if (price < 1) {
         "$" + String.format("%.8f", price)
       } else {

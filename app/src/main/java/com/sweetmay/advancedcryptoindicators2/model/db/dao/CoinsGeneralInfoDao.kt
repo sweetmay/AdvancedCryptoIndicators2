@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.GeneralInfoCoinDb
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.db.GeneralInfoCoinDb
 
 @Dao
 interface CoinsGeneralInfoDao {

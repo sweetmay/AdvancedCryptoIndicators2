@@ -1,8 +1,7 @@
 package com.sweetmay.advancedcryptoindicators2.model.db.dao
 
 import androidx.room.*
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinDb
-import com.sweetmay.advancedcryptoindicators2.model.repo.ResultWrapper
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.db.CoinDb
 
 @Dao
 interface FavCoinsDao {

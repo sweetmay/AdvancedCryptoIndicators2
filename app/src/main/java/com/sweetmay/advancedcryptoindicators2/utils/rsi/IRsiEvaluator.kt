@@ -1,6 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.utils.rsi
 
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.chart.ChartData
 import io.reactivex.rxjava3.core.Single
 
 interface IRsiEvaluator {

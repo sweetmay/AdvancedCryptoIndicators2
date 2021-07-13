@@ -1,4 +1,4 @@
-package com.sweetmay.advancedcryptoindicators2.model.entity.coin
+package com.sweetmay.advancedcryptoindicators2.model.entity.crypto.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

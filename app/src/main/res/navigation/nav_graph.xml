@@ -22,14 +22,14 @@
 <!--            android:id="@+id/action_favFragment_to_coinDataFragment"-->
 <!--            app:destination="@id/coinDataFragment" />-->
 <!--    </fragment>-->
-<!--    <fragment-->
-<!--        android:id="@+id/fearGreedFragment"-->
-<!--        android:name="com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.FearGreedFragment"-->
-<!--        android:label="FearGreedFragment" >-->
+    <fragment
+        android:id="@+id/fearGreedFragment"
+        android:name="com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.FearGreedFragment"
+        android:label="FearGreedFragment" >
 <!--        <action-->
 <!--            android:id="@+id/action_fearGreedFragment_to_helpFngFragment"-->
 <!--            app:destination="@id/helpFngFragment" />-->
-<!--    </fragment>-->
+    </fragment>
 <!--    <fragment-->
 <!--        android:id="@+id/coinDataFragment"-->
 <!--        android:name="com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.CoinDataFragment"-->

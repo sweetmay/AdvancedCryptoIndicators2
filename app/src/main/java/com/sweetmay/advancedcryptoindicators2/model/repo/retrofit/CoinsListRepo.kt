@@ -1,7 +1,8 @@
 package com.sweetmay.advancedcryptoindicators2.model.repo.retrofit
 
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.GeneralInfoCoinDb
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.base_coin.CoinItem
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.base_coin.CoinView
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.db.GeneralInfoCoinDb
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.model.repo.ResultWrapper
 import com.sweetmay.advancedcryptoindicators2.utils.PagingConfig
@@ -18,7 +19,7 @@ class CoinsListRepo(
     ids: String,
     order: String,
     page: Int
-  ): ResultWrapper<List<CoinBase>> {
+  ): ResultWrapper<List<CoinItem>> {
     return try {
       ResultWrapper.Success(
         apiHolderCoinGecko.dataSourceCoinGecko.getCoinsList(

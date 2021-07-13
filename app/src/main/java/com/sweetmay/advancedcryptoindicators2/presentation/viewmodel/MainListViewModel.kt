@@ -1,23 +1,28 @@
 package com.sweetmay.advancedcryptoindicators2.presentation.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import com.sweetmay.advancedcryptoindicators2.App
 import com.sweetmay.advancedcryptoindicators2.domain.GetCoinsListUseCase
 import com.sweetmay.advancedcryptoindicators2.domain.IGetCoinsListUseCase
 import com.sweetmay.advancedcryptoindicators2.model.db.cache.room.FavCoinsCache
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.base_coin.CoinView
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.CoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.base.BaseViewModel
 import com.sweetmay.advancedcryptoindicators2.presenter.callback.CoinsListPresenterCallbacks
 import com.sweetmay.advancedcryptoindicators2.presenter.list.CoinsListPresenter
 import com.sweetmay.advancedcryptoindicators2.utils.PagingConfig
+import com.sweetmay.advancedcryptoindicators2.utils.PagingState
 import com.sweetmay.advancedcryptoindicators2.utils.apiholder.ApiHolderCoinGecko
 import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.utils.image.GlideImageLoader
 import com.sweetmay.advancedcryptoindicators2.view.adapter.CoinsListAdapter
 import kotlinx.coroutines.launch
+import java.util.*
 
-class MainListViewModel : BaseViewModel<List<CoinBase>>(), CoinsListPresenterCallbacks {
+class MainListViewModel : BaseViewModel<List<CoinView>>(),
+  CoinsListPresenterCallbacks {
+
   private val pagingConfig = PagingConfig(20, 100)
   private val converter = Converter()
   private val imageLoader = GlideImageLoader()
@@ -26,44 +31,47 @@ class MainListViewModel : BaseViewModel<List<CoinBase>>(), CoinsListPresenterCal
   private val favCoinsCache = FavCoinsCache(App.instance.favCoinsDao)
   private val getCoinsListUseCase: IGetCoinsListUseCase =
     GetCoinsListUseCase(coinsRepo, favCoinsCache, this)
-  private val coinsListPresenter = CoinsListPresenter(this, converter, pagingConfig)
+
+  private val pagingState = PagingState(pagingConfig = pagingConfig)
+
+  private val coinsListPresenter = CoinsListPresenter(this, converter, pagingState)
 
   init {
-    _uiState.value = ViewState.Loading
-    launch {
-      loadData()
-    }
+    loadData()
   }
 
-  private suspend fun loadData(){
-    _uiState.value = getCoinsListUseCase.getCoins()
+  override fun loadData() {
+    _uiState.value = ViewState.Loading
+    pagingState.loading = true
+    launch {
+      _uiState.value =
+        getCoinsListUseCase.getCoins(pagingState)
+    }
+    pagingState.loading = false
+  }
+
+  fun addCoinsToAdapter(value: List<CoinView>) {
+    coinsListPresenter.coins.addAll(value)
   }
 
   fun createAdapter(): CoinsListAdapter {
     return CoinsListAdapter(coinsListPresenter, imageLoader)
   }
 
-  override fun navigateToDetailedScreen(coinBase: CoinBase) {
+  override fun navigateToDetailedScreen(coinView: CoinView) {
     TODO("Not yet implemented")
   }
 
-  override fun saveToCache(coinBase: CoinBase) {
+  override fun saveToCache(coinView: CoinView) {
     TODO("Not yet implemented")
   }
 
-  override fun deleteFromCache(coinBase: CoinBase) {
+  override fun deleteFromCache(coinView: CoinView) {
     TODO("Not yet implemented")
   }
 
-  override fun loadMore(pageToLoad: Int) {
-    _uiState.value = ViewState.Loading
-    launch {
-      _uiState.value = getCoinsListUseCase.loadMore(pageToLoad)
-    }
-  }
-
-  fun addCoinsToAdapter(value: List<CoinBase>) {
-    coinsListPresenter.coins.addAll(value)
+  override fun onCleared() {
+    super.onCleared()
   }
 
 }

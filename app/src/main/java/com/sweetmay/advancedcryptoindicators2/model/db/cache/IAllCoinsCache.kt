@@ -1,6 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.model.db.cache
 
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.GeneralInfoCoinDb
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.db.GeneralInfoCoinDb
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 

@@ -1,11 +1,10 @@
 package com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.api
 
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.GeneralInfoCoinDb
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.CoinDetailed
-import com.sweetmay.advancedcryptoindicators2.model.repo.ResultWrapper
-import io.reactivex.rxjava3.core.Single
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.base_coin.CoinItem
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.base_coin.CoinView
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.db.GeneralInfoCoinDb
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.chart.ChartData
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.detailed.CoinDetailed
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -17,7 +16,7 @@ interface DataSourceCoinGecko {
     @Query("ids") ids: String = "",
     @Query("order") order: String,
     @Query("per_page") perPage: Int = 100, @Query("page") page: Int
-  ): List<CoinBase>
+  ): List<CoinItem>
 
   @GET("api/v3/coins/list")
   suspend fun getCompleteList(): List<GeneralInfoCoinDb>

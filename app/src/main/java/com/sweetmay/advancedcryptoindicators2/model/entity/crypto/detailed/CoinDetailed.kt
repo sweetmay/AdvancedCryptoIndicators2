@@ -1,6 +1,6 @@
-package com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed
+package com.sweetmay.advancedcryptoindicators2.model.entity.crypto.detailed
 
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.chart.ChartData
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.chart.ChartData
 
 data class CoinDetailed(
     val community_data: CommunityData,

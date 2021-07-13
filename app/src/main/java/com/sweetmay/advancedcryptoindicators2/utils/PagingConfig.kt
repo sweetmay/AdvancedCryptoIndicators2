@@ -1,3 +1,7 @@
 package com.sweetmay.advancedcryptoindicators2.utils
 
-data class PagingConfig(val pageThreshold: Int, val perPageLimit: Int)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class PagingConfig(val pageThreshold: Int, val perPageLimit: Int): Parcelable

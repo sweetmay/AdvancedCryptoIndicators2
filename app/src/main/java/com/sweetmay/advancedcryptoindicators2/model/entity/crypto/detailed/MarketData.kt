@@ -1,4 +1,4 @@
-package com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed
+package com.sweetmay.advancedcryptoindicators2.model.entity.crypto.detailed
 
 data class MarketData(
     val circulating_supply: Double,

@@ -3,8 +3,8 @@ package com.sweetmay.advancedcryptoindicators2.model.settings
 import android.content.Context
 import android.content.SharedPreferences
 import com.sweetmay.advancedcryptoindicators2.R
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.CurrentPrice
-import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.PriceChangePercentage24hInCurrency
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.detailed.CurrentPrice
+import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.detailed.PriceChangePercentage24hInCurrency
 import kotlin.properties.Delegates
 
 class Settings(private val prefs: SharedPreferences, val context: Context) : ISettings{
