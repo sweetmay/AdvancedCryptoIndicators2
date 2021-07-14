@@ -29,13 +29,13 @@ data class CoinItem(
     val total_volume: Double
 ){
 
-    fun toCoinView(coin: CoinItem): CoinView {
+    fun toCoinView(): CoinView {
         return CoinView(
-            coin.id,
-            coin.name,
-            coin.image,
-            coin.current_price,
-            coin.price_change_percentage_24h
+            id,
+            name,
+            image,
+            current_price,
+            price_change_percentage_24h
         )
     }
 }

@@ -6,50 +6,52 @@ import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.base_coin.Coin
 import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.db.CoinDb
 import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
 import com.sweetmay.advancedcryptoindicators2.model.repo.ResultWrapper
-import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.ViewState
+import com.sweetmay.advancedcryptoindicators2.model.settings.ISettings
+import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.viewstate.base.MainListViewState
 import com.sweetmay.advancedcryptoindicators2.utils.PagingState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class GetCoinsListUseCase(
-  private val coinsRepo: ICoinsListRepo,
-  private val favCoinsRepo: IFavCoinsCache,
-  private val coroutineScope: CoroutineScope,
-  private val currencyAgainst: String = "usd",
-  private val order: String = "market_cap_desc",
+    private val coinsRepo: ICoinsListRepo,
+    private val favCoinsRepo: IFavCoinsCache,
+    private val coroutineScope: CoroutineScope,
+    private val settings: ISettings
 ) : IGetCoinsListUseCase {
 
-  override suspend fun getCoins(pagingState: PagingState): ViewState<List<CoinView>> {
-    val coins = withContext(coroutineScope.coroutineContext) {
-      coinsRepo.getCoins(currencyAgainst, order = order, page = pagingState.page)
+  override suspend fun getCoins(pagingState: PagingState): MainListViewState<List<CoinView>> {
+    val coins = coroutineScope.async {
+      coinsRepo.getCoins(settings.currencyAgainst, order =  settings.order, page = pagingState.page)
     }
 
-    val favs = withContext(coroutineScope.coroutineContext) {
+    val favs = coroutineScope.async {
       favCoinsRepo.getFavCoins()
     }
 
-    if (coins is ResultWrapper.Error) {
-      return ViewState.Error(coins.errorMsg)
+    val resultCoins = coins.await()
+    val resultFavs = favs.await()
+
+    if (resultCoins is ResultWrapper.Error) {
+      return MainListViewState.Error(resultCoins.errorMsg)
     }
 
-    if (favs is ResultWrapper.Error) {
-      return ViewState.Error(favs.errorMsg)
+    if (resultFavs is ResultWrapper.Error) {
+      return MainListViewState.Error(resultFavs.errorMsg)
     }
 
     return matchFavsWithCoins(
-      (coins as ResultWrapper.Success).value,
-      (favs as ResultWrapper.Success).value
-    )
+        (resultCoins as ResultWrapper.Success).value,
+        (resultFavs as ResultWrapper.Success).value)
   }
 
   private fun matchFavsWithCoins(
-    coins: List<CoinItem>,
-    favs: List<CoinDb>
-  ): ViewState<List<CoinView>> {
+      coins: List<CoinItem>,
+      favs: List<CoinDb>
+  ): MainListViewState<List<CoinView>> {
+
     val resultCoinsView = arrayListOf<CoinView>()
     for (coin in coins) {
 
-      val coinToAdd = coin.toCoinView(coin)
+      val coinToAdd = coin.toCoinView()
       resultCoinsView.add(coinToAdd)
 
       for (fav in favs) {
@@ -60,6 +62,6 @@ class GetCoinsListUseCase(
       }
 
     }
-    return ViewState.Success(resultCoinsView)
+    return MainListViewState.Success(resultCoinsView)
   }
 }

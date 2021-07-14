@@ -5,6 +5,7 @@ import com.sweetmay.advancedcryptoindicators2.model.db.dao.FavCoinsDao
 import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.base_coin.CoinView
 import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.db.CoinDb
 import com.sweetmay.advancedcryptoindicators2.model.repo.ResultWrapper
+import java.lang.Exception
 
 class FavCoinsCache(private val daoFav: FavCoinsDao): IFavCoinsCache{
 

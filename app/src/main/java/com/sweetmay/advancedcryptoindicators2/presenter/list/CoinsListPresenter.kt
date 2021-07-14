@@ -11,7 +11,7 @@ import java.util.*
 open class CoinsListPresenter(
   private val callback: CoinsListPresenterCallbacks,
   private val converter: Converter,
-  val pagingState: PagingState
+  val pagingState: PagingState?
 ) : ICoinsListPresenter {
 
   val coins = LinkedList<CoinView>()
@@ -31,20 +31,25 @@ open class CoinsListPresenter(
   }
 
   override fun updatePagingState(firstItem: Int, lastItem: Int) {
-    pagingState.apply {
-      this.firstItem = firstItem
-      this.lastItem = lastItem
+    pagingState?.let {
+      pagingState.apply {
+        this.firstItem = firstItem
+        this.lastItem = lastItem
+      }
+      if(!pagingState.loading && lastItem >= coins.size-pagingState.pagingConfig.pageThreshold){
+        pagingState.page++
+        callback.loadData()
+        return
+      }
     }
-    if(!pagingState.loading && lastItem >= coins.size-pagingState.pagingConfig.pageThreshold){
-      pagingState.page++
-      callback.loadData()
-      return
-    }
-
   }
 
   override fun scrollToLastPos(rv: RecyclerView) {
-    rv.scrollToPosition(pagingState.firstItem)
+    pagingState?.let {
+      if(pagingState.firstItem != 1){
+        rv.scrollToPosition(pagingState.firstItem)
+      }
+    }
   }
 
   override fun onItemClick(view: CoinItemView) {

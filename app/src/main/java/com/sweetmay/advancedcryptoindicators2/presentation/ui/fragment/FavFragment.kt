@@ -6,78 +6,63 @@
 //import android.view.ViewGroup
 //import androidx.navigation.NavController
 //import androidx.navigation.fragment.findNavController
+//import androidx.navigation.navGraphViewModels
 //import androidx.recyclerview.widget.LinearLayoutManager
-//import com.sweetmay.advancedcryptoindicators2.App
 //import com.sweetmay.advancedcryptoindicators2.R
 //import com.sweetmay.advancedcryptoindicators2.databinding.FavFragmentBinding
-//import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
-//import com.sweetmay.advancedcryptoindicators2.presenter.FavListFragmentPresenter
-//import com.sweetmay.advancedcryptoindicators2.view.FavView
+//import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.base_coin.CoinView
 //import com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.base.BaseFragment
-//import moxy.ktx.moxyPresenter
+//import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.base.BaseViewModel
 //
-//class FavFragment : BaseFragment<FavFragmentBinding>(), FavView {
+//class FavFragment : BaseFragment<FavFragmentBinding, CoinView>() {
 //
-//    private lateinit var navController: NavController
+//  override val viewModel: BaseViewModel<CoinView> by navGraphViewModels(R.id.nav_graph)
 //
-//    private val presenter: FavListFragmentPresenter by moxyPresenter {
-//        FavListFragmentPresenter(App.injection)
+//  private lateinit var navController: NavController
+//
+//  override fun setBinding(inflater: LayoutInflater, container: ViewGroup?): FavFragmentBinding {
+//    navController = findNavController()
+//    return FavFragmentBinding.inflate(inflater, container, false)
+//  }
+//
+//  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//    super.onViewCreated(view, savedInstanceState)
+//    inflateToolbar(binding.toolbarInclude.toolbar, R.menu.fav_menu)
+//    setTitle()
+//  }
+//
+//  private fun initRv() {
+//    with(binding.coinFavRv) {
+//      layoutManager = LinearLayoutManager(context)
+//      adapter = viewModel.createAdapter()
 //    }
+//  }
 //
-//    override fun setBinding(inflater: LayoutInflater, container: ViewGroup?): FavFragmentBinding {
-//        navController = findNavController()
-//        return FavFragmentBinding.inflate(inflater, container, false)
-//    }
+//  override fun updateList() {
+//    binding.coinFavRv.adapter?.notifyDataSetChanged()
+//  }
 //
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        inflateToolbar(binding.toolbarInclude.toolbar, R.menu.fav_menu)
+//  override fun notifyItemRemoved(pos: Int, newSize: Int) {
+//    with(binding.coinFavRv.adapter) {
+//      this?.notifyItemRemoved(pos)
+//      this?.notifyItemRangeChanged(pos, newSize)
 //    }
+//  }
 //
-//    override fun initRv() {
-//        with(binding.coinFavRv) {
-//            layoutManager = LinearLayoutManager(context)
-//            adapter = presenter.createAdapter()
-//        }
+//  private fun setTitle() {
+//    with(binding.toolbarInclude.toolbar) {
+//      title = getString(R.string.favorite_coins_title)
+//      logo = null
 //    }
+//  }
 //
-//    override fun updateList() {
-//        binding.coinFavRv.adapter?.notifyDataSetChanged()
-//    }
+////    override fun navigateToDetailed(coinBase: CoinBase) {
+////        val action = FavFragmentDirections.actionFavFragmentToCoinDataFragment(coinBase)
+////        navController.navigate(action)
+////    }
 //
-//    override fun notifyItemRemoved(pos: Int, newSize: Int) {
-//        with(binding.coinFavRv.adapter) {
-//            this?.notifyItemRemoved(pos)
-//            this?.notifyItemRangeChanged(pos, newSize)
-//        }
-//    }
-//
-//    override fun setTitle() {
-//        with(binding.toolbarInclude.toolbar) {
-//            title = getString(R.string.favorite_coins_title)
-//            logo = null
-//        }
-//    }
-//
-//    override fun showLoading() {
-//        binding.toolbarInclude.progressBar.show()
-//    }
-//
-//    override fun hideLoading() {
-//        binding.toolbarInclude.progressBar.hide()
-//    }
-//
-//    override fun navigateToDetailed(coinBase: CoinBase) {
-//        val action = FavFragmentDirections.actionFavFragmentToCoinDataFragment(coinBase)
-//        navController.navigate(action)
-//    }
-//
-//    override fun showNoCoins() {
-//        binding.error.text = getString(R.string.nothing_to_show)
-//    }
-//
-//    override fun onErrorHandleClick() {
-//        presenter.loadData()
-//    }
+//  private fun showNoCoins() {
+//    binding.error.text = getString(R.string.nothing_to_show)
+//  }
 //
 //}

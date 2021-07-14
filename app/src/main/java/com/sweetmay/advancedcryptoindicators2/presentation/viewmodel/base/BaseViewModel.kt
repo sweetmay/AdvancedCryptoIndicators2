@@ -1,7 +1,7 @@
 package com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.base
 
 import androidx.lifecycle.ViewModel
-import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.ViewState
+import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.viewstate.MainListViewState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -16,8 +16,8 @@ open class BaseViewModel<T>: ViewModel(), CoroutineScope{
     Dispatchers.Default + Job()
   }
 
-  protected val _uiState = MutableStateFlow<ViewState<T>>(ViewState.Empty)
-  val uiState: StateFlow<ViewState<T>> = _uiState
+  protected val _uiState = MutableStateFlow<MainListViewState<T>>(MainListViewState.Empty)
+  val uiStateMainList: StateFlow<MainListViewState<T>> = _uiState
 
   override fun onCleared() {
     coroutineContext.cancel()

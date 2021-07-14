@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -17,7 +15,7 @@ import com.sweetmay.advancedcryptoindicators2.databinding.ListFragmentBinding
 import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.base_coin.CoinView
 import com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.base.BaseFragment
 import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.MainListViewModel
-import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.ViewState
+import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.viewstate.base.MainListViewState
 import kotlinx.coroutines.flow.collect
 
 class ListFragment : BaseFragment<ListFragmentBinding, List<CoinView>>() {
@@ -35,20 +33,20 @@ class ListFragment : BaseFragment<ListFragmentBinding, List<CoinView>>() {
     initRv()
     setTitle()
     lifecycleScope.launchWhenCreated {
-      viewModel.uiState.collect {
+      viewModel.uiStateMainList.collect {
         when (it) {
-          is ViewState.Loading -> {
+          is MainListViewState.Loading -> {
             binding.toolbarInclude.progressBar.show()
           }
-          is ViewState.Success -> {
+          is MainListViewState.Success -> {
             binding.toolbarInclude.progressBar.hide()
             viewModel.addCoinsToAdapter(it.value)
             binding.coinRv.adapter?.notifyDataSetChanged()
           }
-          is ViewState.Error -> {
+          is MainListViewState.Error -> {
             Toast.makeText(requireContext(), it.errorMsg, Toast.LENGTH_LONG).show()
           }
-          is ViewState.Empty -> {
+          else -> {
 
           }
         }

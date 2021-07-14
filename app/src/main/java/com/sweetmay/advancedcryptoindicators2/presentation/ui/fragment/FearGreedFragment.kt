@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.doOnLayout
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -16,7 +16,7 @@ import com.sweetmay.advancedcryptoindicators2.databinding.FearGreedFragmentBindi
 import com.sweetmay.advancedcryptoindicators2.model.entity.fng.FnGView
 import com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.base.BaseFragment
 import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.FearGreedViewModel
-import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.ViewState
+import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.viewstate.base.MainListViewState
 import kotlinx.coroutines.flow.collect
 
 class FearGreedFragment : BaseFragment<FearGreedFragmentBinding, FnGView>() {
@@ -39,12 +39,12 @@ class FearGreedFragment : BaseFragment<FearGreedFragmentBinding, FnGView>() {
     setTitle()
 
     lifecycleScope.launchWhenCreated {
-      viewModel.uiState.collect {
+      viewModel.uiStateMainList.collect {
         when (it) {
-          is ViewState.Loading -> binding.toolbarInclude.progressBar.show()
-          is ViewState.Success -> renderFng(it.value)
-          is ViewState.Error -> renderError(it.errorMsg)
-          is ViewState.Empty -> {
+          is MainListViewState.Loading -> binding.toolbarInclude.progressBar.show()
+          is MainListViewState.Success -> renderFng(it.value)
+          is MainListViewState.Error -> renderError(it.errorMsg)
+          is MainListViewState.Empty -> {
 
           }
         }
@@ -54,7 +54,7 @@ class FearGreedFragment : BaseFragment<FearGreedFragmentBinding, FnGView>() {
   }
 
   private fun renderError(errorMsg: String) {
-
+    Toast.makeText(requireContext() ,errorMsg, Toast.LENGTH_SHORT).show()
   }
 
   private fun renderFng(data: FnGView) {

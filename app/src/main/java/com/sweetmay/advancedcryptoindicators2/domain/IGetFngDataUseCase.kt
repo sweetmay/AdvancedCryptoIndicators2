@@ -1,9 +1,8 @@
 package com.sweetmay.advancedcryptoindicators2.domain
 
-import com.sweetmay.advancedcryptoindicators2.model.entity.fng.FnGData
 import com.sweetmay.advancedcryptoindicators2.model.entity.fng.FnGView
-import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.ViewState
+import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.viewstate.base.MainListViewState
 
 interface IGetFngDataUseCase {
-  suspend fun getFngView(): ViewState<FnGView>
+  suspend fun getFngView(): MainListViewState<FnGView>
 }
