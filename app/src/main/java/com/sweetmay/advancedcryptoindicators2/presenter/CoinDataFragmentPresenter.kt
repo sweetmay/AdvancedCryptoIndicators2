@@ -2,16 +2,16 @@
 //
 //import android.util.Log
 //import com.sweetmay.advancedcryptoindicators2.IAppInjection
-//import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
-//import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
-//import com.sweetmay.advancedcryptoindicators2.model.entity.coin.detailed.CoinDetailed
-//import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinDataRepo
-//import com.sweetmay.advancedcryptoindicators2.model.settings.ISettings
+//import com.sweetmay.advancedcryptoindicators2.data.db.cache.IFavCoinsCache
+//import com.sweetmay.advancedcryptoindicators2.domain.model.entity.coin.CoinBase
+//import com.sweetmay.advancedcryptoindicators2.domain.model.entity.coin.detailed.CoinDetailed
+//import com.sweetmay.advancedcryptoindicators2.data.repo.ICoinDataRepo
+//import com.sweetmay.advancedcryptoindicators2.data.settings.ISettings
 //import com.sweetmay.advancedcryptoindicators2.utils.arima.IArimaEvaluator
 //import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 //import com.sweetmay.advancedcryptoindicators2.utils.image.IImageLoaderAsDrawable
 //import com.sweetmay.advancedcryptoindicators2.utils.rsi.IRsiEvaluator
-//import com.sweetmay.advancedcryptoindicators2.view.CoinDataView
+//import com.sweetmay.advancedcryptoindicators2.presentation.view.CoinDataView
 //import io.reactivex.rxjava3.core.Scheduler
 //import moxy.MvpPresenter
 //import javax.inject.Inject

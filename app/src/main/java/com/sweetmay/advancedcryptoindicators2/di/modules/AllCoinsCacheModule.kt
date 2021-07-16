@@ -2,9 +2,9 @@
 //
 //import com.sweetmay.advancedcryptoindicators2.App
 //import com.sweetmay.advancedcryptoindicators2.di.search.SearchComponentScope
-//import com.sweetmay.advancedcryptoindicators2.model.db.cache.IAllCoinsCache
-//import com.sweetmay.advancedcryptoindicators2.model.db.cache.room.AllCoinsCache
-//import com.sweetmay.advancedcryptoindicators2.model.db.dao.CoinsGeneralInfoDao
+//import com.sweetmay.advancedcryptoindicators2.data.db.cache.IAllCoinsCache
+//import com.sweetmay.advancedcryptoindicators2.data.db.cache.room.AllCoinsCache
+//import com.sweetmay.advancedcryptoindicators2.data.db.dao.CoinsGeneralInfoDao
 //import dagger.Module
 //import dagger.Provides
 //

@@ -2,16 +2,16 @@
 //
 //import android.widget.ImageView
 //import com.sweetmay.advancedcryptoindicators2.IAppInjection
-//import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
-//import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
-//import com.sweetmay.advancedcryptoindicators2.model.repo.ICoinsListRepo
-//import com.sweetmay.advancedcryptoindicators2.model.settings.ISettings
-//import com.sweetmay.advancedcryptoindicators2.presenter.callback.FavListPresenterCallbacks
+//import com.sweetmay.advancedcryptoindicators2.data.db.cache.IFavCoinsCache
+//import com.sweetmay.advancedcryptoindicators2.domain.model.entity.coin.CoinBase
+//import com.sweetmay.advancedcryptoindicators2.data.repo.ICoinsListRepo
+//import com.sweetmay.advancedcryptoindicators2.data.settings.ISettings
+//import com.sweetmay.advancedcryptoindicators2.presentation.callback.FavListPresenterCallbacks
 //import com.sweetmay.advancedcryptoindicators2.presenter.list.FavCoinsListPresenter
 //import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 //import com.sweetmay.advancedcryptoindicators2.utils.image.IImageLoader
-//import com.sweetmay.advancedcryptoindicators2.view.FavView
-//import com.sweetmay.advancedcryptoindicators2.view.adapter.CoinsListAdapter
+//import com.sweetmay.advancedcryptoindicators2.presentation.view.FavView
+//import com.sweetmay.advancedcryptoindicators2.presentation.adapter.CoinsListAdapter
 //import io.reactivex.rxjava3.core.Scheduler
 //import moxy.MvpPresenter
 //import javax.inject.Inject

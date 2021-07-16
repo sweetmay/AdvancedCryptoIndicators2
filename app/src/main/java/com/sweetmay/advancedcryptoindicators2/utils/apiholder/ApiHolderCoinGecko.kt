@@ -1,6 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.utils.apiholder
 
-import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.api.DataSourceCoinGecko
+import com.sweetmay.advancedcryptoindicators2.data.repo.retrofit.api.DataSourceCoinGecko
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory

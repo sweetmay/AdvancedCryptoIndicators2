@@ -1,9 +1,9 @@
 //package com.sweetmay.advancedcryptoindicators2.presenter
 //
 //import com.sweetmay.advancedcryptoindicators2.IAppInjection
-//import com.sweetmay.advancedcryptoindicators2.model.repo.ResultWrapper
-//import com.sweetmay.advancedcryptoindicators2.model.repo.IFnGRepo
-//import com.sweetmay.advancedcryptoindicators2.view.FnGView
+//import com.sweetmay.advancedcryptoindicators2.data.repo.ResultWrapper
+//import com.sweetmay.advancedcryptoindicators2.data.repo.IFnGRepo
+//import com.sweetmay.advancedcryptoindicators2.presentation.view.FnGView
 //import kotlinx.coroutines.*
 //import moxy.MvpPresenter
 //import java.lang.Exception

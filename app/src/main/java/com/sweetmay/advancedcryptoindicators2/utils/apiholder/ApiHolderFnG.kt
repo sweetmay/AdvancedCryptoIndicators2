@@ -1,6 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.utils.apiholder
 
-import com.sweetmay.advancedcryptoindicators2.model.repo.retrofit.api.DataSourceAlternative
+import com.sweetmay.advancedcryptoindicators2.data.repo.retrofit.api.DataSourceAlternative
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

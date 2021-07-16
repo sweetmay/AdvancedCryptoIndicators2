@@ -10,7 +10,7 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.ArimaSettingsDialogBinding
-import com.sweetmay.advancedcryptoindicators2.model.settings.ISettings
+import com.sweetmay.advancedcryptoindicators2.data.settings.ISettings
 import com.sweetmay.advancedcryptoindicators2.presentation.ui.dialogs.base.BaseAlertDialog
 
 class ArimaSettingsDialog private constructor(): BaseAlertDialog<ArimaSettingsDialogBinding>() {

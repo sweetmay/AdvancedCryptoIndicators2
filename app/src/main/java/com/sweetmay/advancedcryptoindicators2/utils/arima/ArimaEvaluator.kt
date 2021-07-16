@@ -1,7 +1,7 @@
 package com.sweetmay.advancedcryptoindicators2.utils.arima
 
 import android.animation.ArgbEvaluator
-import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.chart.ChartData
+import com.sweetmay.advancedcryptoindicators2.domain.model.entity.crypto.chart.ChartData
 import com.sweetmay.advancedcryptoindicators2.utils.converter.Converter
 import com.sweetmay.advancedcryptoindicators2.utils.exception.ArimaException
 import io.reactivex.rxjava3.core.Single

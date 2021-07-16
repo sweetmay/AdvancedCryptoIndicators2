@@ -1,6 +1,6 @@
 package com.sweetmay.advancedcryptoindicators2.utils.arima
 
-import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.chart.ChartData
+import com.sweetmay.advancedcryptoindicators2.domain.model.entity.crypto.chart.ChartData
 import io.reactivex.rxjava3.core.Single
 
 interface IArimaEvaluator {

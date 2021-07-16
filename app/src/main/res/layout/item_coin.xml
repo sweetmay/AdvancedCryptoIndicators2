@@ -68,7 +68,7 @@
             android:layout_height="match_parent"
             android:layout_weight="12">
 
-            <com.sweetmay.advancedcryptoindicators2.view.custom.FavButton
+            <com.sweetmay.advancedcryptoindicators2.presentation.view.custom.FavButton
                 android:id="@+id/fav_button"
                 android:layout_width="24dp"
                 android:layout_height="24dp"

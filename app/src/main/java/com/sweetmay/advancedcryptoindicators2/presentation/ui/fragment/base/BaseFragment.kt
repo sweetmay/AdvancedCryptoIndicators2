@@ -7,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.base.BaseViewModel
-import com.sweetmay.advancedcryptoindicators2.presenter.callback.CallBackToChangeTheme
+import com.sweetmay.advancedcryptoindicators2.presentation.callback.CallBackToChangeTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

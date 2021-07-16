@@ -24,7 +24,7 @@
             android:paddingStart="24dp"
             android:paddingEnd="24dp">
 
-            <com.sweetmay.advancedcryptoindicators2.view.custom.FearGreedView
+            <com.sweetmay.advancedcryptoindicators2.presentation.view.custom.FearGreedView
                 android:paddingTop="24dp"
                 android:id="@+id/fearGreedView"
                 android:layout_width="match_parent"

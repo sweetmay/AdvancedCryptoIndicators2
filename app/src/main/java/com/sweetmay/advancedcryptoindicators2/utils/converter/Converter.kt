@@ -1,9 +1,9 @@
 package com.sweetmay.advancedcryptoindicators2.utils.converter
 
 import android.graphics.Color
-import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.db.CoinDb
-import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.db.GeneralInfoCoinDb
-import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.chart.ChartData
+import com.sweetmay.advancedcryptoindicators2.domain.model.entity.crypto.db.CoinDb
+import com.sweetmay.advancedcryptoindicators2.domain.model.entity.crypto.db.GeneralInfoCoinDb
+import com.sweetmay.advancedcryptoindicators2.domain.model.entity.crypto.chart.ChartData
 
 class Converter {
 

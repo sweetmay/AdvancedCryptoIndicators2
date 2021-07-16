@@ -6,13 +6,12 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.sweetmay.advancedcryptoindicators2.App
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.ActivityMainBinding
-import com.sweetmay.advancedcryptoindicators2.presenter.callback.CallBackToChangeTheme
+import com.sweetmay.advancedcryptoindicators2.presentation.callback.CallBackToChangeTheme
 
 class MainActivity : AppCompatActivity(), CallBackToChangeTheme {
 

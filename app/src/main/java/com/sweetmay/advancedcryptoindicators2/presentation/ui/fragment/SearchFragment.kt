@@ -11,11 +11,11 @@
 //import com.sweetmay.advancedcryptoindicators2.App
 //import com.sweetmay.advancedcryptoindicators2.R
 //import com.sweetmay.advancedcryptoindicators2.databinding.SearchFragmentBinding
-//import com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase
+//import com.sweetmay.advancedcryptoindicators2.domain.model.entity.coin.CoinBase
 //import com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.base.BaseFragment
 //import com.sweetmay.advancedcryptoindicators2.presenter.SearchFragmentPresenter
 //import com.sweetmay.advancedcryptoindicators2.utils.exception.NoResultsException
-//import com.sweetmay.advancedcryptoindicators2.view.SearchView
+//import com.sweetmay.advancedcryptoindicators2.presentation.view.SearchView
 //import moxy.ktx.moxyPresenter
 //
 //class SearchFragment : BaseFragment<SearchFragmentBinding>(), SearchView {

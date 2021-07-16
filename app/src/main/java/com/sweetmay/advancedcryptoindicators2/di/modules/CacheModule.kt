@@ -1,9 +1,9 @@
 //package com.sweetmay.advancedcryptoindicators2.di.modules
 //
 //import com.sweetmay.advancedcryptoindicators2.App
-//import com.sweetmay.advancedcryptoindicators2.model.db.cache.IFavCoinsCache
-//import com.sweetmay.advancedcryptoindicators2.model.db.cache.room.FavCoinsCache
-//import com.sweetmay.advancedcryptoindicators2.model.db.dao.FavCoinsDao
+//import com.sweetmay.advancedcryptoindicators2.data.db.cache.IFavCoinsCache
+//import com.sweetmay.advancedcryptoindicators2.data.db.cache.room.FavCoinsCache
+//import com.sweetmay.advancedcryptoindicators2.data.db.dao.FavCoinsDao
 //import dagger.Module
 //import dagger.Provides
 //

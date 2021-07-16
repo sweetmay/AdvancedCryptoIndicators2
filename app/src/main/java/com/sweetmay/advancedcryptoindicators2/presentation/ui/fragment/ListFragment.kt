@@ -1,6 +1,7 @@
 package com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +13,10 @@ import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.ListFragmentBinding
-import com.sweetmay.advancedcryptoindicators2.model.entity.crypto.base_coin.CoinView
+import com.sweetmay.advancedcryptoindicators2.domain.model.entity.crypto.base_coin.CoinView
 import com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.base.BaseFragment
 import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.MainListViewModel
-import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.viewstate.base.MainListViewState
+import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.viewstate.MainListViewState
 import kotlinx.coroutines.flow.collect
 
 class ListFragment : BaseFragment<ListFragmentBinding, List<CoinView>>() {
@@ -33,12 +34,14 @@ class ListFragment : BaseFragment<ListFragmentBinding, List<CoinView>>() {
     initRv()
     setTitle()
     lifecycleScope.launchWhenCreated {
-      viewModel.uiStateMainList.collect {
+      viewModel.uiState.collect {
         when (it) {
           is MainListViewState.Loading -> {
+            Log.d("AAAAA", "LOADING")
             binding.toolbarInclude.progressBar.show()
           }
           is MainListViewState.Success -> {
+            Log.d("AAAAA", "SUCCESS")
             binding.toolbarInclude.progressBar.hide()
             viewModel.addCoinsToAdapter(it.value)
             binding.coinRv.adapter?.notifyDataSetChanged()
@@ -46,8 +49,12 @@ class ListFragment : BaseFragment<ListFragmentBinding, List<CoinView>>() {
           is MainListViewState.Error -> {
             Toast.makeText(requireContext(), it.errorMsg, Toast.LENGTH_LONG).show()
           }
+          is MainListViewState.ScrollingToLastPos -> {
+            binding.toolbarInclude.progressBar.hide()
+            binding.coinRv.scrollToPosition(it.pos)
+          }
           else -> {
-
+            Log.d("AAAAA", "ELSE")
           }
         }
       }
@@ -67,7 +74,7 @@ class ListFragment : BaseFragment<ListFragmentBinding, List<CoinView>>() {
   private fun initRv() {
     with(binding.coinRv) {
       layoutManager = LinearLayoutManager(context)
-      adapter = viewModel.createAdapter()
+      adapter = viewModel.adapter
     }
   }
 

@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.RsiSettingsDialogBinding
-import com.sweetmay.advancedcryptoindicators2.model.settings.ISettings
+import com.sweetmay.advancedcryptoindicators2.data.settings.ISettings
 import com.sweetmay.advancedcryptoindicators2.presentation.ui.dialogs.base.BaseAlertDialog
 
 class RsiSettingsDialog private constructor(): BaseAlertDialog<RsiSettingsDialogBinding>(){

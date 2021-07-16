@@ -3,8 +3,8 @@
 //import android.content.Context
 //import android.content.SharedPreferences
 //import com.sweetmay.advancedcryptoindicators2.App
-//import com.sweetmay.advancedcryptoindicators2.model.settings.ISettings
-//import com.sweetmay.advancedcryptoindicators2.model.settings.Settings
+//import com.sweetmay.advancedcryptoindicators2.data.settings.ISettings
+//import com.sweetmay.advancedcryptoindicators2.data.settings.Settings
 //import dagger.Module
 //import dagger.Provides
 //import javax.inject.Singleton

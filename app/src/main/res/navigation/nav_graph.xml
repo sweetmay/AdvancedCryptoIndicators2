@@ -14,14 +14,14 @@
 <!--            android:id="@+id/action_listFragment_to_searchFragment"-->
 <!--            app:destination="@id/searchFragment" />-->
     </fragment>
-<!--    <fragment-->
-<!--        android:id="@+id/favFragment"-->
-<!--        android:name="com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.FavFragment"-->
-<!--        android:label="FavFragment" >-->
+    <fragment
+        android:id="@+id/favFragment"
+        android:name="com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.FavFragment"
+        android:label="FavFragment" >
 <!--        <action-->
 <!--            android:id="@+id/action_favFragment_to_coinDataFragment"-->
 <!--            app:destination="@id/coinDataFragment" />-->
-<!--    </fragment>-->
+    </fragment>
     <fragment
         android:id="@+id/fearGreedFragment"
         android:name="com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.FearGreedFragment"
@@ -36,7 +36,7 @@
 <!--        android:label="CoinDataFragment" >-->
 <!--        <argument-->
 <!--            android:name="coin"-->
-<!--            app:argType="com.sweetmay.advancedcryptoindicators2.model.entity.coin.CoinBase" />-->
+<!--            app:argType="com.sweetmay.advancedcryptoindicators2.domain.model.entity.coin.CoinBase" />-->
 <!--        <action-->
 <!--            android:id="@+id/action_coinDataFragment_to_helpCoinDetailedFragment"-->
 <!--            app:destination="@id/helpCoinDetailedFragment" />-->

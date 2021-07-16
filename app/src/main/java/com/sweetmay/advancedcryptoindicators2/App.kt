@@ -2,11 +2,11 @@ package com.sweetmay.advancedcryptoindicators2
 
 import android.app.Application
 import androidx.room.Room
-import com.sweetmay.advancedcryptoindicators2.model.db.DataBase
-import com.sweetmay.advancedcryptoindicators2.model.db.dao.CoinsGeneralInfoDao
-import com.sweetmay.advancedcryptoindicators2.model.db.dao.FavCoinsDao
-import com.sweetmay.advancedcryptoindicators2.model.settings.ISettings
-import com.sweetmay.advancedcryptoindicators2.model.settings.Settings
+import com.sweetmay.advancedcryptoindicators2.data.db.DataBase
+import com.sweetmay.advancedcryptoindicators2.data.db.dao.CoinsGeneralInfoDao
+import com.sweetmay.advancedcryptoindicators2.data.db.dao.FavCoinsDao
+import com.sweetmay.advancedcryptoindicators2.data.settings.ISettings
+import com.sweetmay.advancedcryptoindicators2.data.settings.Settings
 import com.sweetmay.advancedcryptoindicators2.utils.PagingConfig
 
 class App : Application() {

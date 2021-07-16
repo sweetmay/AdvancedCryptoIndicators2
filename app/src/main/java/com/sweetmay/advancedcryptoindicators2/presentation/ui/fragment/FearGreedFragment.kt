@@ -13,10 +13,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.sweetmay.advancedcryptoindicators2.R
 import com.sweetmay.advancedcryptoindicators2.databinding.FearGreedFragmentBinding
-import com.sweetmay.advancedcryptoindicators2.model.entity.fng.FnGView
+import com.sweetmay.advancedcryptoindicators2.domain.model.entity.fng.FnGView
 import com.sweetmay.advancedcryptoindicators2.presentation.ui.fragment.base.BaseFragment
 import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.FearGreedViewModel
-import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.viewstate.base.MainListViewState
+import com.sweetmay.advancedcryptoindicators2.presentation.viewmodel.viewstate.FnGViewState
 import kotlinx.coroutines.flow.collect
 
 class FearGreedFragment : BaseFragment<FearGreedFragmentBinding, FnGView>() {
@@ -39,12 +39,12 @@ class FearGreedFragment : BaseFragment<FearGreedFragmentBinding, FnGView>() {
     setTitle()
 
     lifecycleScope.launchWhenCreated {
-      viewModel.uiStateMainList.collect {
+      viewModel.uiState.collect {
         when (it) {
-          is MainListViewState.Loading -> binding.toolbarInclude.progressBar.show()
-          is MainListViewState.Success -> renderFng(it.value)
-          is MainListViewState.Error -> renderError(it.errorMsg)
-          is MainListViewState.Empty -> {
+          is FnGViewState.Loading -> binding.toolbarInclude.progressBar.show()
+          is FnGViewState.Success -> renderFng(it.value)
+          is FnGViewState.Error -> renderError(it.errorMsg)
+          else -> {
 
           }
         }
@@ -54,12 +54,12 @@ class FearGreedFragment : BaseFragment<FearGreedFragmentBinding, FnGView>() {
   }
 
   private fun renderError(errorMsg: String) {
-    Toast.makeText(requireContext() ,errorMsg, Toast.LENGTH_SHORT).show()
+    Toast.makeText(requireContext(), errorMsg, Toast.LENGTH_SHORT).show()
   }
 
   private fun renderFng(data: FnGView) {
-    binding.toolbarInclude.progressBar.hide()
     animateFnGView(data.currentFng.first)
+    binding.toolbarInclude.progressBar.hide()
     with(binding) {
       textNowFngStatus.text = data.currentFng.second
       valueNow.text = data.currentFng.first.toString()
